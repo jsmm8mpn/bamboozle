@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="Blone">
+    <Require feature="rpc"/>
+      <Require feature="views" />
+  </ModulePrefs>
+  <Content type="html">
+    <![CDATA[
+
+     <link rel="stylesheet" type="text/css" href="https://zarala.aws.af.cm/stylesheets/app.css" />
+
+	 <script type="text/javascript"
+      src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
+
+     <script type="text/javascript" src="https://zarala.aws.af.cm/javascripts/util.js"></script>
+
+     <script type="text/javascript" src="https://zarala.aws.af.cm/javascripts/server.js"></script>
+
+	<div id="mainDiv">
+    <table id="mainTable">
+        <tr>
+            <td>
+                <div id="timer"></div>
+                <div id="board"></div>
+
+                <input type="text" id="wordInput" onkeypress="return submitWord(event)"/>
+                <div id="wordResult"></div>
+            </td>
+            <td>
+                <div id="wordList"></div>
+            </td>
+        </tr>
+    </table>
+    </div>
+    <div id="results" style="display:none"></div>
+    <div id="startDiv" style="display:none">
+        <input type="text" name="timeLimit" id="timeLimit" size="3" value="90"/>
+        <input type="button" name="start" value="Start New Game" onclick="javascript:newGame()"/>
+    </div>
+
+
+    ]]>
+  </Content>
+</Module>

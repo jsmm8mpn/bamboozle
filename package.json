@@ -25,6 +25,8 @@
   },
 
   "dependencies": {
+	"express": "3.2.5",
+    "socket.io": "0.9"
   },
   "devDependencies": {},
   "bundleDependencies": [],
