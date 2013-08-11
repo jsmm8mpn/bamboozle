@@ -58,7 +58,9 @@
         testResults();
     });
 
-    var socket = io.connect('http://testnode-zarala.rhcloud.com/');
+    alert(document.location.host);
+
+    var socket = io.connect('http://'+document.location.host);
 
     socket.on('game', setupGame);
 
