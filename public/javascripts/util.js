@@ -3,6 +3,7 @@ var metadata_;
 var participants_;
 var hangoutId;
 var userId;
+var socket;
 
 var firstPlayer = false;
 
@@ -75,7 +76,7 @@ function init() {
                 hangoutId = gapi.hangout.getHangoutId();
                 userId = gapi.hangout.getLocalParticipantId();
 
-                var socket = io.connect('https://bamboozle-zarala.rhcloud.com:8443');
+                socket = io.connect('https://bamboozle-zarala.rhcloud.com:8443');
                 socket.on('game', setupGame);
                 register();
 
