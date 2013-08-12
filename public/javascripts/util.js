@@ -75,6 +75,8 @@ function init() {
                 hangoutId = gapi.hangout.getHangoutId();
                 userId = gapi.hangout.getLocalParticipantId();
 
+                var socket = io.connect('http://bamboozle-zarala.rhcloud.com:8000');
+                socket.on('game', setupGame);
                 register();
 
                 gapi.hangout.onApiReady.remove(initHangout);
