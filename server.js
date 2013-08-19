@@ -32,14 +32,14 @@ io.sockets.on('connection', function (socket) {
         socket.username = o.userId;
         socket.room = o.hangoutId;
         socket.join(o.hangoutId);
-        var result = game.register(o);
+        var result = game.register(o.hangoutId, o.userId);
         if (result) {
             socket.emit('game', result);
         }
     });
 
-    socket.on('ready', function(o) {
-        var result = game.ready(o);
+    socket.on('ready', function() {
+        var result = game.ready(socket.room, socket.username);
         if (result) {
             io.sockets.in(socket.room).emit('game', result);
         }
@@ -47,7 +47,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('newGame', game.newGame);
     socket.on('word', game.submitWord);
     socket.on('quit', game.quit);
-    socket.on('ping', game.ping);
+    //socket.on('ping', game.ping);
 });
 
 

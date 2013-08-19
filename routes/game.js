@@ -1,11 +1,10 @@
 var games = {};
 
-exports.register = function(o){
+exports.register = function(hangoutId, userId){
     var result;
 
-    var game = games[o.hangoutId];
+    var game = games[hangoutId];
     if (game) {
-        console.log(game.start);
         if (game.start) {
             result = {
                 start: game.start,
@@ -22,24 +21,16 @@ exports.register = function(o){
             minWordLength: 3,
             created: new Date().getTime()
         };
-        games[o.hangoutId] = game;
+        games[hangoutId] = game;
     }
 
-    game.participants[o.userId] = {
+	console.log(userId + ' has registered in ' + hangoutId);
+
+    game.participants[userId] = {
         words: []
     };
     return result;
 };
-
-exports.ping = function(o) {
-    var game = games[o.hangoutId];
-    if (game) {
-        var user = game.participants[o.userId];
-        if (user) {
-            user.lastPing = new Date().getTime();
-        }
-    }
-}
 
 exports.getGame = function(req, res) {
     var game = games[req.query.hangoutId];
@@ -54,12 +45,10 @@ exports.getGame = function(req, res) {
     res.end();
 };
 
-
-
-exports.ready = function(o) {
-    var game = games[o.hangoutId];
+exports.ready = function(hangoutId, userId) {
+    var game = games[hangoutId];
     if (game) {
-        var user = game.participants[o.userId];
+        var user = game.participants[userId];
         if (user) {
             user.ready = true;
 
