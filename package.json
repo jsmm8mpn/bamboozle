@@ -26,11 +26,16 @@
 
   "dependencies": {
 	"express": "3.2.5",
-    "socket.io": "0.9"
+    "socket.io": "0.9",
+    "coffee-script": "*"
   },
   "devDependencies": {},
   "bundleDependencies": [],
 
   "private": true,
-  "main": "server.js"
+  "main": "server.js",
+
+  "scripts": {
+    "start": "coffee server.coffee"
+  }
 }
