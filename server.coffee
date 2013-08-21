@@ -11,6 +11,8 @@ port    = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080
 http.listen(port, ipaddr)
 
 app.use(express.static(path.join(__dirname, 'public')))
+app.set('views', __dirname + '/views')
+app.set('view engine', 'jade')
 
 app.get '/letters', game.getLetters
 app.get '/games', game.printGames
@@ -18,6 +20,11 @@ app.get '/words', game.printWords
 app.get '/time', game.getTimeRemaining
 app.get '/results', game.getResults
 app.get '/game', game.getGame
+
+app.get '/test', (req, res) ->
+  res.render(__dirname+'/view/page.jade', 
+    something: 'blah5'
+  );
 
 io.sockets.on 'connection', (socket) ->
   socket.on 'register', (o) ->
