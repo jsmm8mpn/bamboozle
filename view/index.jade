@@ -1,3 +1,4 @@
+!!! 5
 html
   head
     link(type='text/css', rel='stylesheet', href='stylesheets/app.css')
@@ -7,19 +8,19 @@ html
     script(src="javascripts/helper.js")
   body
     #mainDiv
-      table#mainTable
+      table
         tr
           td 
             #timer 
             #board
-            input(type='text', style='display: none;', onkeypress='return submitWord(event)')
+            input#wordInput(type='text', style='display: none;', onkeypress='return submitWord(event)')
             #wordResult
           td
             #wordList
     #results(style='display:none;')
     #startDiv(style='display:none;')
       input(type='button', name='ready', value='Start', onclick='javascript:ready()')
-    #quiteDiv(style='display:none;')
+    #quitDiv(style='display:none;')
       input(type='button', name='quit', value='Vote Quit', onclick='javascript:voteQuit()')
     #settingsDiv
       a(href='javascript:document.getElementById("innerSettingsDiv").style.display = (document.getElementById("innerSettingsDiv").style.display=="none")?"block":"none"') Settings
