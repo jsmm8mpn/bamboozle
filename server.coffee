@@ -22,9 +22,9 @@ app.get '/results', game.getResults
 app.get '/game', game.getGame
 
 app.get '/test', (req, res) ->
-  res.render(__dirname+'/view/page.jade', 
-    something: 'blah5'
-  );
+  res.render(__dirname+'/view/index.jade')
+  
+
 
 io.sockets.on 'connection', (socket) ->
   socket.on 'register', (o) ->

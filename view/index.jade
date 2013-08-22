@@ -1,0 +1,30 @@
+html
+  head
+    link(type='text/css', rel='stylesheet', href='stylesheets/app.css')
+    script(src="socket.io/socket.io.js")
+    script(src="javascripts/app.js")
+    script(src="javascripts/ajax.js")
+    script(src="javascripts/helper.js")
+  body
+    #mainDiv
+      table#mainTable
+        tr
+          td 
+            #timer 
+            #board
+            input(type='text', style='display: none;', onkeypress='return submitWord(event)')
+            #wordResult
+          td
+            #wordList
+    #results(style='display:none;')
+    #startDiv(style='display:none;')
+      input(type='button', name='ready', value='Start', onclick='javascript:ready()')
+    #quiteDiv(style='display:none;')
+      input(type='button', name='quit', value='Vote Quit', onclick='javascript:voteQuit()')
+    #settingsDiv
+      a(href='javascript:document.getElementById("innerSettingsDiv").style.display = (document.getElementById("innerSettingsDiv").style.display=="none")?"block":"none"') Settings
+      #innerSettingsDiv(style='display:none')
+        input#timeLimit(type='text', name='timeLimit', size='3', value='90')
+        input(type='button', name='start', value='Change Settings', onclick='javascript:newGame()')
+        
+    script(src='javascripts/index.js')
