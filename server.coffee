@@ -4,11 +4,27 @@ game = require './routes/game'
 http = require('http').createServer(app)
 io = require('socket.io').listen(http)
 path = require 'path'
+coffee = require 'coffee-middleware'
+fs = require 'fs'
+less = require 'less-middleware'
 
 ipaddr  = process.env.OPENSHIFT_NODEJS_IP || process.env.IP || "127.0.0.1"
 port    = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080
 
 http.listen(port, ipaddr)
+
+coffeeDir = path.join(__dirname, 'coffee')
+jsDir = path.join(__dirname, 'public/javascripts')
+
+app.use(less(
+  src: path.join(__dirname, 'public/stylesheets')
+  prefix: '/stylesheets'
+))
+
+app.use(coffee(
+  src: path.join(__dirname, 'public/javascripts')
+  prefix: '/javascripts'
+))
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', __dirname + '/views')
@@ -23,8 +39,6 @@ app.get '/game', game.getGame
 
 app.get '/test', (req, res) ->
   res.render(__dirname+'/view/index.jade')
-  
-
 
 io.sockets.on 'connection', (socket) ->
   socket.on 'register', (o) ->
