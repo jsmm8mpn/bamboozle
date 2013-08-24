@@ -1,4 +1,4 @@
-register = (callback) ->
+@register = (callback) ->
   socket.emit "register",
     hangoutId: hangoutId
     userId: userId
@@ -17,7 +17,8 @@ register = (callback) ->
       userId: userId
 
   ), 10000
-ready = ->
+
+@ready = ->
   clearResults()
   socket.emit "ready",
     hangoutId: hangoutId
@@ -25,7 +26,7 @@ ready = ->
 
 
 #startGameChecker();
-newGame = ->
+@newGame = ->
   timeLimit = 90
   timeLimitField = document.getElementById("timeLimit")
   timeLimit = timeLimitField.value  if timeLimitField
@@ -59,7 +60,7 @@ setupGame = (game) ->
       show "quitDiv"
 
   ), (game.timeLeft - game.timeLimit) * 1000
-voteQuit = ->
+@voteQuit = ->
   hide "quitDiv"
   socket.emit "quit",
     hangoutId: hangoutId
@@ -115,7 +116,7 @@ timerExpired = ->
   hide "wordInput"
   clearInterval timerId
   getResults()
-submitWord = (e) ->
+@submitWord = (e) ->
   if e and e.keyCode is 13
     word = document.getElementById("wordInput").value
     body =
@@ -131,7 +132,7 @@ submitWord = (e) ->
         document.getElementById("wordResult").innerHTML = result.error
 
     document.getElementById("wordInput").value = ""
-getResults = ->
+@getResults = ->
   get "results?hangoutId=" + hangoutId, (result) ->
     writeResults result
 
@@ -158,4 +159,4 @@ writeResults = (results) ->
   hide "mainDiv"
   show "results"
   show "startDiv"
-timerId = undefined
+@timerId = undefined

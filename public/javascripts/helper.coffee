@@ -1,6 +1,6 @@
-hide = (id) ->
+@hide = (id) ->
   document.getElementById(id).style.display = "none"
-show = (id) ->
+@show = (id) ->
   document.getElementById(id).style.display = "block"
-clear = (id) ->
+@clear = (id) ->
   document.getElementById(id).innerHTML = ""

@@ -37,8 +37,11 @@ app.get '/time', game.getTimeRemaining
 app.get '/results', game.getResults
 app.get '/game', game.getGame
 
-app.get '/test', (req, res) ->
+app.get '/', (req, res) ->
   res.render(__dirname+'/view/index.jade')
+
+app.get '/h', (req, res) ->
+  res.render(__dirname+'/view/hindex.jade')
 
 io.sockets.on 'connection', (socket) ->
   socket.on 'register', (o) ->
