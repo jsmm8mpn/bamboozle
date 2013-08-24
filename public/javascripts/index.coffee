@@ -15,6 +15,6 @@ document.addEventListener "timerExpired", ->
 # TODO: Add dynamic URL
 #var socket = io.connect('http://bamboozle-zarala.rhcloud.com:8000');
 @socket = io.connect("http://localhost:8080")
-#socket.on "game", setupGame
+socket.on "game", setupGame
 register()
 document.getElementById("startDiv").style.display = "block"

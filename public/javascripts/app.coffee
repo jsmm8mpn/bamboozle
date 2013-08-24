@@ -50,7 +50,7 @@
 #    }, 1000);
 #}
 #
-setupGame = (game) ->
+@setupGame = (game) ->
   startTimer game.timeLeft, game.timeLimit
   hide "startDiv"
   setTimeout (->
