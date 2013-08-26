@@ -1,6 +1,7 @@
 express = require 'express'
 app = express()
 game = require './routes/game'
+rest = require('./routes/simple-rest').init(app)
 http = require('http').createServer(app)
 io = require('socket.io').listen(http)
 path = require 'path'
@@ -30,12 +31,23 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 
-app.get '/letters', game.getLetters
-app.get '/games', game.printGames
-app.get '/words', game.printWords
-app.get '/time', game.getTimeRemaining
-app.get '/results', game.getResults
-app.get '/game', game.getGame
+rest.get '/letters', (query) ->
+  game.getLetters(query.hangoutId)
+
+rest.get '/games', (query) ->
+  game.getGames()
+
+rest.get '/words', (query) ->
+  game.getWords(query.hangoutId, query.userId)
+
+rest.get '/time', (query) ->
+  game.getTimeRemaining(query.hangoutId)
+
+rest.get '/results', (query) ->
+  game.getResults(query.hangoutId)
+
+rest.get '/game', (query) ->
+  game.getGame(query.hangoutId)
 
 app.get '/', (req, res) ->
   res.render(__dirname+'/view/index.jade')
