@@ -1,6 +1,6 @@
 express = require 'express'
 app = express()
-game = require './routes/game'
+game = require './routes/game-manager'
 rest = require('./routes/simple-rest').init(app)
 http = require('http').createServer(app)
 io = require('socket.io').listen(http)
@@ -31,8 +31,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 
-rest.get '/letters', (query) ->
-  game.getLetters(query.hangoutId)
+#rest.get '/letters', (query) ->
+  #game.getRoom(query.roomId).getGame().getLetters()
 
 rest.get '/games', (query) ->
   game.getGames()
@@ -58,19 +58,22 @@ app.get '/h', (req, res) ->
 io.sockets.on 'connection', (socket) ->
   socket.on 'register', (o) ->
     socket.username = o.userId
-    socket.room = o.hangoutId
-    socket.join o.hangoutId
-    result = game.register(o.hangoutId, o.userId)
-    if (result)
-      socket.emit('game', result)
+    socket.room = o.roomId
+    socket.join o.roomId
+    room = game.register(o.roomId, o.userId)
+    socket.emit('game', room.getGame()) if room.getGame()
 
   socket.on 'ready', ->
-    result = game.ready(socket.room, socket.username)
-    if (result)
-      io.sockets.in(socket.room).emit('game', result)
+    if game.ready(socket.room, socket.username)
+      currentGame = game.getRoom(socket.room).createGame()
+      io.sockets.in(socket.room).emit('game', currentGame)
+      setTimeout( ->
+        io.sockets.in(socket.room).emit('letters', currentGame.getLetters())
+      , 5000)
 
-  socket.on('newGame', game.newGame)
-  socket.on('word', game.submitWord)
-  socket.on('quit', game.quit)
+  #socket.on('newGame', game.newGame)
+  socket.on 'word', (o, fn) ->
+    fn(game.getRoom(socket.room).submitWord(socket.username, o.word))
+  #socket.on('quit', game.quit)
 
   #socket.on('ping', game.ping)

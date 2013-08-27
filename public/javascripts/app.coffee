@@ -1,6 +1,6 @@
 @register = (callback) ->
   socket.emit "register",
-    hangoutId: hangoutId
+    roomId: hangoutId
     userId: userId
   , (data) ->
     if result and result.start
@@ -11,17 +11,10 @@
     # startGameChecker();
     callback result  if callback
 
-  setInterval (->
-    socket.emit "ping",
-      hangoutId: hangoutId
-      userId: userId
-
-  ), 10000
-
 @ready = ->
   clearResults()
   socket.emit "ready",
-    hangoutId: hangoutId
+    roomId: hangoutId
     userId: userId
 
 
@@ -29,7 +22,7 @@
 @newGame = ->
   timeLimit = 90
   timeLimitField = document.getElementById("timeLimit")
-  timeLimit = timeLimitField.value  if timeLimitField
+  timeLimit = timeLimitField.value if timeLimitField
   game =
     hangoutId: hangoutId
     userId: userId
@@ -53,13 +46,22 @@
 @setupGame = (game) ->
   startTimer game.timeLeft, game.timeLimit
   hide "startDiv"
+
+  ###
   setTimeout (->
-    get "letters?hangoutId=" + hangoutId, (letters) ->
+    get "letters?roomId=" + hangoutId, (letters) ->
       populateBoard letters
       displayBoard()
       show "quitDiv"
 
   ), (game.timeLeft - game.timeLimit) * 1000
+  ###
+
+@onLetters = (letters) ->
+  populateBoard letters
+  displayBoard()
+  show "quitDiv"
+
 @voteQuit = ->
   hide "quitDiv"
   socket.emit "quit",

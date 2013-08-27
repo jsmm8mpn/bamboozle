@@ -2,8 +2,7 @@ assert = require('chai').assert
 Game = require '../routes/game'
 
 describe 'Regular Game', ->
-  game = new Game(99, 100)
-  console.log(JSON.stringify(game))
+  game = new Game(99, 100, [['A','B','C','D'],['E','F','G','H'],['I','J','K','L'],['N','M','O','P']])
   game2 = new Game(101, 5000)
   it 'should have a time limit of 99', ->
     assert.equal(game.timeLimit, 99)
@@ -20,3 +19,20 @@ describe 'Regular Game', ->
     assert(game.getTimeRemaining() <= 99)
   it 'should be active', ->
     assert(game.isActive())
+
+  letters = game.getLetters()
+  it 'should accept a good word', ->
+    result = game.checkWord('MOP')
+    assert(result.success)
+  it 'should not accept a word not in dictionary', ->
+    result = game.checkWord('ABCD')
+    assert(!result.success)
+    assert.equal(result.error, 'word not in dictionary')
+  it 'should not accept a word not on board', ->
+    result = game.checkWord('TOOL')
+    assert(!result.success)
+    assert.equal(result.error, 'word not on board')
+  it 'should not accept a word too short', ->
+    result = game.checkWord('BA')
+    assert(!result.success)
+    assert.equal(result.error, 'word too short')

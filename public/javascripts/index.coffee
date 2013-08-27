@@ -16,5 +16,6 @@ document.addEventListener "timerExpired", ->
 #var socket = io.connect('http://bamboozle-zarala.rhcloud.com:8000');
 @socket = io.connect("http://localhost:8080")
 socket.on "game", setupGame
+socket.on "letters", onLetters
 register()
 document.getElementById("startDiv").style.display = "block"
