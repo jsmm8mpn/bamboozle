@@ -1,6 +1,6 @@
 express = require 'express'
 app = express()
-game = require './routes/game-manager'
+Room = require './routes/game-room'
 rest = require('./routes/simple-rest').init(app)
 http = require('http').createServer(app)
 io = require('socket.io').listen(http)
@@ -31,23 +31,22 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 
-#rest.get '/letters', (query) ->
-  #game.getRoom(query.roomId).getGame().getLetters()
+rooms = {}
 
 rest.get '/games', (query) ->
-  game.getGames()
+  #game.getGames()
 
 rest.get '/words', (query) ->
-  game.getWords(query.hangoutId, query.userId)
+  #game.getWords(query.hangoutId, query.userId)
 
 rest.get '/time', (query) ->
-  game.getTimeRemaining(query.hangoutId)
+  #game.getTimeRemaining(query.hangoutId)
 
 rest.get '/results', (query) ->
-  game.getResults(query.hangoutId)
+  #game.getResults(query.hangoutId)
 
 rest.get '/game', (query) ->
-  game.getGame(query.hangoutId)
+  #game.getGame(query.hangoutId)
 
 app.get '/', (req, res) ->
   res.render(__dirname+'/view/index.jade')
@@ -60,20 +59,27 @@ io.sockets.on 'connection', (socket) ->
     socket.username = o.userId
     socket.room = o.roomId
     socket.join o.roomId
-    room = game.register(o.roomId, o.userId)
-    socket.emit('game', room.getGame()) if room.getGame()
+    room = rooms[socket.room]
+    if !room
+      room = new Room(socket.room)
+      rooms[socket.room] = room
+    console.log socket.username + " has registered in " + socket.room
+    room.register(socket.username)
+    socket.emit('game', room.getGame().serialize()) if room.getGame()
 
   socket.on 'ready', ->
-    if game.ready(socket.room, socket.username)
-      currentGame = game.getRoom(socket.room).createGame()
-      io.sockets.in(socket.room).emit('game', currentGame)
+    room = rooms[socket.room]
+    if room.ready(socket.username)
+      currentGame = room.createGame()
+      io.sockets.in(socket.room).emit('game', currentGame.serialize())
       setTimeout( ->
         io.sockets.in(socket.room).emit('letters', currentGame.getLetters())
       , 5000)
 
   #socket.on('newGame', game.newGame)
   socket.on 'word', (o, fn) ->
-    fn(game.getRoom(socket.room).submitWord(socket.username, o.word))
+    room = rooms[socket.room]
+    fn(room.submitWord(socket.username, o.word))
   #socket.on('quit', game.quit)
 
   #socket.on('ping', game.ping)

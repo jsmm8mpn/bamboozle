@@ -96,16 +96,10 @@ clearResults = ->
   clear "results"
   clear "timer"
 startTimer = (timeLeft, timeLimit) ->
+  console.log(timeLeft + ', ' + timeLimit)
   show "timer"
   timerId = setInterval(->
     timeLeft = timeLeft - 1
-    if timeLeft % 5 is 0
-      get "time?hangoutId=" + hangoutId, (result) ->
-        if result
-          timeLeft = result
-        else
-          timerExpired()
-
     secondsLeft = timeLeft
     if secondsLeft > timeLimit
       secondsLeft = secondsLeft - timeLimit
