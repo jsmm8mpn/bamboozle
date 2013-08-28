@@ -18,5 +18,6 @@ document.addEventListener "timerExpired", ->
 socket.on "game", setupGame
 socket.on "letters", onLetters
 socket.on 'time', updateTime
+socket.on 'results', writeResults
 register()
 document.getElementById("startDiv").style.display = "block"

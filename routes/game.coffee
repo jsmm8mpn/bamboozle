@@ -6,7 +6,7 @@ class Game
     letters = options.letters || populateLetters()
     @getLetters = ->
       letters if (new Date() > @started)
-    @timeLimit = options.timeLimit || 90
+    @timeLimit = options.timeLimit || 5
     @minWordLength = options.minWordLength || 3
 
   serialize: ->
@@ -41,20 +41,30 @@ class Game
     return "word not on board"  unless checkWordInBoard(word, @getLetters())
     "word not in dictionary"  unless checkWordInDictionary(word)
 
-###
+  scoreWord: (word) ->
+    word.length - 2
+
   score: (players) ->
+    results = {}
+    words = {}
     for id, player of players
-      #compile words
+      for word in player.words
+        words[word] = true
     for id, player of players
-      #score
-      result = new Result(0, {})
+      playerWords = {}
+      score = 0
+      for word in player.words
+        playerWords[word] = not words[word]
+        score += @scoreWord(word)
+      result = new Result(score, playerWords)
+      results[id] = result
       player.addResult(result)
-###
+    results
+
 module.exports = Game
 
-#class Result
-#  constructor: (@score, @scoreDetail) ->
-
+class Result
+  constructor: (@score, @words) ->
 
 
 populateLetters = ->

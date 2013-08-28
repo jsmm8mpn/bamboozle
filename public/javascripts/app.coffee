@@ -1,3 +1,5 @@
+@timerId = undefined
+
 @register = (callback) ->
   socket.emit "register",
     roomId: hangoutId
@@ -84,21 +86,24 @@ populateBoard = (letters) ->
     y++
   table += "</table>"
   board.innerHTML = table
+
 displayBoard = ->
   hide "results"
   show "mainDiv"
   show "wordInput"
   document.getElementById("wordInput").focus()
+
 clearResults = ->
   clear "board"
   clear "wordList"
   clear "wordResult"
   clear "results"
   clear "timer"
+
 startTimer = (timeLeft, timeLimit) ->
   console.log(timeLeft + ', ' + timeLimit)
   show "timer"
-  timerId = setInterval(->
+  @timerId = setInterval(->
     timeLeft = timeLeft - 1
     secondsLeft = timeLeft
     if secondsLeft > timeLimit
@@ -107,13 +112,17 @@ startTimer = (timeLeft, timeLimit) ->
     document.getElementById("timer").innerHTML = secondsLeft
     timerExpired()  if secondsLeft is 0
   , 1000)
+
 timerExpired = ->
   hide "quitDiv"
   hide "wordInput"
-  clearInterval timerId
-  getResults()
+  #hide "results"
+  clearInterval @timerId
+  #getResults()
+
 @updateTime = (time) ->
   console.log('time left: ' + time)
+
 @submitWord = (e) ->
   if e and e.keyCode is 13
     word = document.getElementById("wordInput").value
@@ -130,31 +139,23 @@ timerExpired = ->
         document.getElementById("wordResult").innerHTML = result.error
 
     document.getElementById("wordInput").value = ""
-@getResults = ->
-  get "results?hangoutId=" + hangoutId, (result) ->
-    writeResults result
 
-writeResults = (results) ->
+@writeResults = (results) ->
   html = ""
-  for userId of results
-    result = results[userId]
+  for userId,result of results
     playerWords = result.words
-    playerWords.sort()
+    #playerWords.sort()
     html += "<div class=\"playerResult\">"
     html += "<h1>" + userId + "</h1>"
-    wNum = 0
 
-    while wNum < playerWords.length
-      word = playerWords[wNum]
-      if result.scoredWords[word]
+    for word,scored of playerWords
+      if scored
         html += "<li class=\"scored\">" + word + "</li>"
       else
         html += "<li class=\"unscored\">" + word + "</li>"
-      wNum++
     html += "<div class=\"score\">" + result.score + "</div>"
     html += "</div>"
   document.getElementById("results").innerHTML = html
   hide "mainDiv"
   show "results"
   show "startDiv"
-@timerId = undefined

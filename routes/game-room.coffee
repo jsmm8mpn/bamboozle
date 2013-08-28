@@ -33,4 +33,7 @@ class Room
     @players[userId].addWord(word) if result.success
     result
 
+  populateResults: ->
+    @currentGame.score(@players)
+
 module.exports = Room

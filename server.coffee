@@ -77,7 +77,9 @@ io.sockets.on 'connection', (socket) ->
         timerId = setInterval( ->
           if currentGame.getTimeRemaining() > 0
             io.sockets.in(socket.room).emit('time', currentGame.getTimeRemaining())
-          else clearInterval(timerId)
+          else
+            clearInterval(timerId)
+            io.sockets.in(socket.room).emit('results', room.populateResults())
         , 1000)
       , 5000)
 
