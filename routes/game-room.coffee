@@ -19,7 +19,7 @@ class Room
     @currentGame
 
   ready: (userId) ->
-    @players[userId].ready()
+    @players[userId].setReady()
     checkReady()
 
   checkReady = ->
@@ -29,6 +29,8 @@ class Room
     return true
 
   submitWord: (userId, word) ->
-    @currentGame.checkWord(word) if @currentGame
+    result = @currentGame.checkWord(word) if @currentGame
+    @players[userId].addWord(word) if result.success
+    result
 
 module.exports = Room

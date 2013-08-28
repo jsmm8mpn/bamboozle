@@ -17,5 +17,6 @@ document.addEventListener "timerExpired", ->
 @socket = io.connect("http://localhost:8080")
 socket.on "game", setupGame
 socket.on "letters", onLetters
+socket.on 'time', updateTime
 register()
 document.getElementById("startDiv").style.display = "block"

@@ -74,6 +74,11 @@ io.sockets.on 'connection', (socket) ->
       io.sockets.in(socket.room).emit('game', currentGame.serialize())
       setTimeout( ->
         io.sockets.in(socket.room).emit('letters', currentGame.getLetters())
+        timerId = setInterval( ->
+          if currentGame.getTimeRemaining() > 0
+            io.sockets.in(socket.room).emit('time', currentGame.getTimeRemaining())
+          else clearInterval(timerId)
+        , 1000)
       , 5000)
 
   #socket.on('newGame', game.newGame)

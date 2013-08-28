@@ -112,6 +112,8 @@ timerExpired = ->
   hide "wordInput"
   clearInterval timerId
   getResults()
+@updateTime = (time) ->
+  console.log('time left: ' + time)
 @submitWord = (e) ->
   if e and e.keyCode is 13
     word = document.getElementById("wordInput").value

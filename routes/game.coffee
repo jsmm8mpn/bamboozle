@@ -41,7 +41,21 @@ class Game
     return "word not on board"  unless checkWordInBoard(word, @getLetters())
     "word not in dictionary"  unless checkWordInDictionary(word)
 
+###
+  score: (players) ->
+    for id, player of players
+      #compile words
+    for id, player of players
+      #score
+      result = new Result(0, {})
+      player.addResult(result)
+###
 module.exports = Game
+
+#class Result
+#  constructor: (@score, @scoreDetail) ->
+
+
 
 populateLetters = ->
   letters = []
