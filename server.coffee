@@ -90,3 +90,8 @@ io.sockets.on 'connection', (socket) ->
   #socket.on('quit', game.quit)
 
   #socket.on('ping', game.ping)
+
+  socket.on 'disconnect', ->
+    console.log(socket.username + ' is leaving: ' + socket.room)
+    room = rooms[socket.room]
+    room.leave(socket.username) if room

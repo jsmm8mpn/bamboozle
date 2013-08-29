@@ -5,13 +5,13 @@
     roomId: hangoutId
     userId: userId
   , (data) ->
-    if result and result.start
-      setupGame result
+    if data
+      setupGame data
     else
 
     
     # startGameChecker();
-    callback result  if callback
+    #callback result  if callback
 
 @ready = ->
   clearResults()
@@ -48,6 +48,8 @@
 @setupGame = (game) ->
   startTimer game.timeLeft, game.timeLimit
   hide "startDiv"
+  if game.letters
+    onLetters(game.letters)
 
   ###
   setTimeout (->
@@ -88,7 +90,6 @@ populateBoard = (letters) ->
   board.innerHTML = table
 
 displayBoard = ->
-  hide "results"
   show "mainDiv"
   show "wordInput"
   document.getElementById("wordInput").focus()
@@ -99,6 +100,9 @@ clearResults = ->
   clear "wordResult"
   clear "results"
   clear "timer"
+
+  hide "results"
+  show "mainDiv"
 
 startTimer = (timeLeft, timeLimit) ->
   console.log(timeLeft + ', ' + timeLimit)

@@ -25,4 +25,8 @@ class Player
       @prevResults.push(@lastResult)
     @lastResult = result
 
+  reset: () ->
+    @ready = false
+    @words = []
+
 module.exports = Player

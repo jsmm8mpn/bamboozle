@@ -3,10 +3,10 @@ class Game
   constructor: (options) ->
     options = options || {}
     @started = new Date().getTime() + (options.startDelay || 5000)
-    letters = options.letters || populateLetters()
-    @getLetters = ->
-      letters if (new Date() > @started)
-    @timeLimit = options.timeLimit || 90
+    @letters = options.letters || populateLetters()
+    #@getLetters = ->
+    #  letters if (new Date() > @started)
+    @timeLimit = options.timeLimit || 10
     @minWordLength = options.minWordLength || 3
 
   serialize: ->
@@ -16,8 +16,8 @@ class Game
       timeLimit: @timeLimit
       timeLeft: @getTimeRemaining()
 
-  #getLetters: ->
-    #@letters
+  getLetters: ->
+    @letters
 
   getTimeRemaining: ->
     time = new Date().getTime() - @started
@@ -49,12 +49,15 @@ class Game
     words = {}
     for id, player of players
       for word in player.words
-        words[word] = true
+        if words[word]
+          words[word] += 1
+        else
+          words[word] = 1
     for id, player of players
       playerWords = {}
       score = 0
       for word in player.words
-        playerWords[word] = not words[word]
+        playerWords[word] = (words[word] == 1)
         score += @scoreWord(word)
       result = new Result(score, playerWords)
       results[id] = result

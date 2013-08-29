@@ -12,6 +12,9 @@ class Room
   register: (userId) ->
     @players[userId] = new Player(userId)
 
+  leave: (userId) ->
+    delete @players[userId]
+
   createGame: ->
     @currentGame = new Game()
 
@@ -37,6 +40,15 @@ class Room
     result
 
   populateResults: ->
-    @currentGame.score(@players)
+    playerResults = @currentGame.score(@players)
+    result = new Result(@currentGame, playerResults)
+    @results.push(result)
+    @currentGame = undefined
+    for id, player of @players
+      player.reset()
+    playerResults
 
 module.exports = Room
+
+class Result
+  constructor: (@game, @results) ->
