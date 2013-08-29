@@ -14,7 +14,11 @@ class Player
     @ready
 
   addWord: (word) ->
-    @words.push(word)
+    if word in @words
+      false
+    else
+      @words.push(word)
+      true
 
   addResult: (result) ->
     if @lastResult

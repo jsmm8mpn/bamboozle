@@ -6,7 +6,7 @@ class Game
     letters = options.letters || populateLetters()
     @getLetters = ->
       letters if (new Date() > @started)
-    @timeLimit = options.timeLimit || 5
+    @timeLimit = options.timeLimit || 90
     @minWordLength = options.minWordLength || 3
 
   serialize: ->

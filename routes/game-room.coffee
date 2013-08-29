@@ -30,7 +30,10 @@ class Room
 
   submitWord: (userId, word) ->
     result = @currentGame.checkWord(word) if @currentGame
-    @players[userId].addWord(word) if result.success
+    if result.success
+      unless @players[userId].addWord(word)
+        result.success = false
+        result.error = 'duplicate word'
     result
 
   populateResults: ->
