@@ -1,8 +1,13 @@
+@toggleSettings = ->
+  $ ->
+    $('#innerSettingsDiv').show()
+
 getParameterByName = (name) ->
   name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
   regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
   results = regex.exec(location.search)
   (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
+
 hangoutId = getParameterByName("hangoutId")
 @hangoutId = (if (hangoutId) then hangoutId else "h1")
 userId = getParameterByName("userId")
