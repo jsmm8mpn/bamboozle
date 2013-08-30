@@ -8,12 +8,15 @@ class Room
     @currentGame = undefined
     @players = {}
     @results = []
+    @numPlayers = 0
 
   register: (userId) ->
     @players[userId] = new Player(userId)
+    @numPlayers++
 
   leave: (userId) ->
     delete @players[userId]
+    @numPlayers--
 
   createGame: ->
     @currentGame = new Game()
@@ -23,9 +26,9 @@ class Room
 
   ready: (userId) ->
     @players[userId].setReady()
-    checkReady()
+    @checkReady()
 
-  checkReady = ->
+  checkReady: ->
     for id, player of @players
       if not player.isReady()
         return false
@@ -43,10 +46,32 @@ class Room
     playerResults = @currentGame.score(@players)
     result = new Result(@currentGame, playerResults)
     @results.push(result)
+    @resetGame()
+    playerResults
+
+  resetGame: ->
     @currentGame = undefined
     for id, player of @players
       player.reset()
-    playerResults
+
+  voteRestart: (userId) ->
+    @players[userId].voteRestart()
+    @checkRestart()
+
+  checkRestart: ->
+    console.log(@numPlayers)
+    neededVotes = @numPlayers / 2
+    numVotes = 0
+    for id, player of @players
+      if player.didVoteRestart()
+        numVotes++
+
+    console.log(neededVotes + '==' + numVotes)
+    if numVotes >= neededVotes
+      true
+    else
+      false
+
 
 module.exports = Room
 

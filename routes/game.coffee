@@ -2,7 +2,8 @@ class Game
 
   constructor: (options) ->
     options = options || {}
-    @started = new Date().getTime() + (options.startDelay || 5000)
+    @startDelay = options.startDelay || 1000
+    @started = new Date().getTime() + @startDelay
     @letters = options.letters || populateLetters()
     #@getLetters = ->
     #  letters if (new Date() > @started)

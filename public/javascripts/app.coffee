@@ -68,9 +68,7 @@
 
 @voteQuit = ->
   hide "quitDiv"
-  socket.emit "quit",
-    hangoutId: hangoutId
-    userId: userId
+  socket.emit "voteRestart"
 
 populateBoard = (letters) ->
   board = document.getElementById("board")
@@ -105,7 +103,7 @@ clearResults = ->
   show "mainDiv"
 
 startTimer = (timeLeft, timeLimit) ->
-  console.log(timeLeft + ', ' + timeLimit)
+  #console.log(timeLeft + ', ' + timeLimit)
   show "timer"
   @timerId = setInterval(->
     timeLeft = timeLeft - 1

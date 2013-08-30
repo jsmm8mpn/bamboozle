@@ -2,6 +2,7 @@ class Player
 
   constructor: (@name) ->
     @ready = false
+    @restart = false
     @score = 0
     @words = []
     @lastResult = undefined
@@ -10,8 +11,14 @@ class Player
   setReady: ->
     @ready = true
 
+  voteRestart: ->
+    @restart = true
+
   isReady: ->
     @ready
+
+  didVoteRestart: ->
+    @restart
 
   addWord: (word) ->
     if word in @words
@@ -27,6 +34,7 @@ class Player
 
   reset: () ->
     @ready = false
+    @restart = false
     @words = []
 
 module.exports = Player
