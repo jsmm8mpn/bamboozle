@@ -3,7 +3,7 @@ Player = require './player'
 
 class Room
 
-  constructor: (@roomId) ->
+  constructor: (@socket) ->
     @created = new Date()
     @currentGame = undefined
     @players = {}
@@ -13,13 +13,26 @@ class Room
   register: (userId) ->
     @players[userId] = new Player(userId)
     @numPlayers++
+    @socket.emit('game', @currentGame.serialize()) if @currentGame
 
   leave: (userId) ->
     delete @players[userId]
     @numPlayers--
 
   createGame: ->
+    @resetGame()
     @currentGame = new Game()
+    @socket.emit('game', @currentGame.serialize())
+    setTimeout( =>
+      @socket.emit('letters', @currentGame.getLetters())
+      timerId = setInterval( =>
+        if @currentGame.getTimeRemaining() > 0
+          @socket.emit('time', @currentGame.getTimeRemaining())
+        else
+          clearInterval(timerId)
+          @socket.emit('results', @populateResults())
+      , 1000)
+    , @currentGame.startDelay)
 
   getGame: ->
     @currentGame
@@ -31,8 +44,8 @@ class Room
   checkReady: ->
     for id, player of @players
       if not player.isReady()
-        return false
-    return true
+        return
+    @createGame()
 
   submitWord: (userId, word) ->
     result = @currentGame.checkWord(word) if @currentGame
@@ -68,9 +81,7 @@ class Room
 
     console.log(neededVotes + '==' + numVotes)
     if numVotes >= neededVotes
-      true
-    else
-      false
+      @createGame()
 
 
 module.exports = Room
