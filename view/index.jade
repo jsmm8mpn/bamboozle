@@ -23,10 +23,20 @@ html
       input(type='button', name='ready', value='Start', onclick='javascript:ready()')
     #quitDiv(style='display:none;')
       input(type='button', name='quit', value='Vote Quit', onclick='javascript:voteQuit()')
+
     #settingsDiv
       a(href='javascript:toggleSettings()') Settings
       #innerSettingsDiv(style='display:none')
-        input#timeLimit(type='text', name='timeLimit', size='3', value='90')
-        input(type='button', name='start', value='Change Settings', onclick='javascript:newGame()')
+        .setting(name='timeLimit') Time Limit
+          input(type='text', name='timeLimit', size='3', value='90')
+        .setting(name='minWordLength') Min Word Length
+          input(type='text', name='minWordLength', size='1', value='3')
+        .setting(name='allowPlural') Allow Plural
+          input(type='checkbox', name='allowPlural')
+        .setting(name='negativePoints') Negative Points
+          input(type='checkbox', name='negativePoints')
+        .setting(name='restartAllowed') Vote Restart Allowed
+          input(type='checkbox', name='restartAllowed')
+        input(type='button', name='start', value='Change Settings', onclick='javascript:changeSettings()')
         
     script(src='javascripts/index.js')

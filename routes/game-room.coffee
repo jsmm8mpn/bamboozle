@@ -10,6 +10,14 @@ class Room
     @results = []
     @numPlayers = 0
 
+    # TODO: Do we have default settings here?
+    @settings =
+      timeLimit: 90
+      minWordLength: 3
+      allowPlural: false
+      negativePoints: false
+      restartAllowed: true
+
   register: (userId) ->
     @players[userId] = new Player(userId)
     @numPlayers++
@@ -21,7 +29,7 @@ class Room
 
   createGame: ->
     @resetGame()
-    @currentGame = new Game()
+    @currentGame = new Game(@settings)
     @socket.emit('game', @currentGame.serialize())
     setTimeout( =>
       @socket.emit('letters', @currentGame.getLetters())
@@ -82,6 +90,11 @@ class Room
     console.log(neededVotes + '==' + numVotes)
     if numVotes >= neededVotes
       @createGame()
+
+  # Go through one by one in case not all settings were supplied
+  changeSettings: (settings) ->
+    for name,value of settings
+      @settings[name] = value
 
 
 module.exports = Room

@@ -7,11 +7,6 @@
   , (data) ->
     if data
       setupGame data
-    else
-
-    
-    # startGameChecker();
-    #callback result  if callback
 
 @ready = ->
   clearResults()
@@ -19,47 +14,22 @@
     roomId: hangoutId
     userId: userId
 
+@changeSettings = ->
+  values = {}
+  settings = document.getElementsByClassName 'setting'
+  for setting in settings
+    name = setting.getAttribute('name')
+    if (name)
+      settingValue = setting.getElementsByTagName('input')[0].value
+      values[name] = settingValue
 
-#startGameChecker();
-@newGame = ->
-  timeLimit = 90
-  timeLimitField = document.getElementById("timeLimit")
-  timeLimit = timeLimitField.value if timeLimitField
-  game =
-    hangoutId: hangoutId
-    userId: userId
-    timeLimit: timeLimit
-    minWordLength: 3
+  socket.emit 'settings', values
 
-  socket.emit "newGame", game
-
-#
-#function startGameChecker() {
-#    var startGameChecker = setInterval(function() {
-#        get('game?hangoutId='+hangoutId, function(result) {
-#            if (result && result.start) {
-#                clearInterval(startGameChecker);
-#                setupGame(result);
-#            }
-#        });
-#    }, 1000);
-#}
-#
 @setupGame = (game) ->
   startTimer game.timeLeft, game.timeLimit
   hide "startDiv"
   if game.letters
     onLetters(game.letters)
-
-  ###
-  setTimeout (->
-    get "letters?roomId=" + hangoutId, (letters) ->
-      populateBoard letters
-      displayBoard()
-      show "quitDiv"
-
-  ), (game.timeLeft - game.timeLimit) * 1000
-  ###
 
 @onLetters = (letters) ->
   populateBoard letters

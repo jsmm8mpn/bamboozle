@@ -55,6 +55,10 @@ io.sockets.on 'connection', (socket) ->
     room = rooms[socket.room]
     room.ready(socket.username)
 
+  socket.on 'settings', (settings) ->
+    room = rooms[socket.room]
+    room.changeSettings(settings)
+
   socket.on 'voteRestart', ->
     room = rooms[socket.room]
     room.voteRestart(socket.username)
