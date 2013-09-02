@@ -25,7 +25,7 @@ html
       input(type='button', name='quit', value='Vote Quit', onclick='javascript:voteQuit()')
 
     #settingsDiv
-      a(href='javascript:toggleSettings()') Settings
+      a(href='javascript:$("#innerSettingsDiv").toggle()') Settings
       #innerSettingsDiv(style='display:none')
         .setting(name='timeLimit') Time Limit
           input(type='text', name='timeLimit', size='3', value='90')

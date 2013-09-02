@@ -1,6 +1,6 @@
 @hide = (id) ->
-  document.getElementById(id).style.display = "none"
+  $('#'+id).hide()
 @show = (id) ->
-  document.getElementById(id).style.display = "block"
+  $('#'+id).show()
 @clear = (id) ->
-  document.getElementById(id).innerHTML = ""
+  $('#'+id).innerHTML = ""

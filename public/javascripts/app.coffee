@@ -1,6 +1,6 @@
 @timerId = undefined
 
-@register = (callback) ->
+@register = ->
   socket.emit "register",
     roomId: hangoutId
     userId: userId
@@ -16,11 +16,10 @@
 
 @changeSettings = ->
   values = {}
-  settings = document.getElementsByClassName 'setting'
-  for setting in settings
-    name = setting.getAttribute('name')
+  settings = $('.setting').each ->
+    name = $(this).attr('name')
     if (name)
-      settingValue = setting.getElementsByTagName('input')[0].value
+      settingValue = $(this).find('input')[0].value
       values[name] = settingValue
 
   socket.emit 'settings', values
@@ -41,7 +40,6 @@
   socket.emit "voteRestart"
 
 populateBoard = (letters) ->
-  board = document.getElementById("board")
   table = "<table>"
   y = 0
 
@@ -55,12 +53,12 @@ populateBoard = (letters) ->
     table += "</tr>"
     y++
   table += "</table>"
-  board.innerHTML = table
+  $('#board').html(table)
 
 displayBoard = ->
   show "mainDiv"
   show "wordInput"
-  document.getElementById("wordInput").focus()
+  $("#wordInput").focus()
 
 clearResults = ->
   clear "board"
@@ -80,8 +78,8 @@ startTimer = (timeLeft, timeLimit) ->
     secondsLeft = timeLeft
     if secondsLeft > timeLimit
       secondsLeft = secondsLeft - timeLimit
-    else document.getElementById("timer").className = "timer-warn"  if secondsLeft < 15
-    document.getElementById("timer").innerHTML = secondsLeft
+    else $("#timer").toggleClass("timer-warn")  if secondsLeft < 15
+    $("#timer").html(secondsLeft)
     timerExpired()  if secondsLeft is 0
   , 1000)
 
@@ -97,7 +95,7 @@ timerExpired = ->
 
 @submitWord = (e) ->
   if e and e.keyCode is 13
-    word = document.getElementById("wordInput").value
+    word = $("#wordInput").val()
     body =
       hangoutId: hangoutId
       userId: userId
@@ -105,12 +103,12 @@ timerExpired = ->
 
     socket.emit "word", body, (result) ->
       if result.success
-        document.getElementById("wordList").innerHTML += "<li>" + word + "</li>"
-        document.getElementById("wordResult").innerHTML = "word is valid"
+        $("#wordList").append("<li>" + word + "</li>")
+        $("#wordResult").html("word is valid")
       else
-        document.getElementById("wordResult").innerHTML = result.error
+        $("#wordResult").html(result.error)
 
-    document.getElementById("wordInput").value = ""
+    $("#wordInput").val("")
 
 @writeResults = (results) ->
   html = ""
@@ -127,7 +125,7 @@ timerExpired = ->
         html += "<li class=\"unscored\">" + word + "</li>"
     html += "<div class=\"score\">" + result.score + "</div>"
     html += "</div>"
-  document.getElementById("results").innerHTML = html
+  $("#results").html(html)
   hide "mainDiv"
   show "results"
   show "startDiv"

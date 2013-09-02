@@ -1,7 +1,3 @@
-@toggleSettings = ->
-  $ ->
-    $('#innerSettingsDiv').show()
-
 getParameterByName = (name) ->
   name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
   regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
@@ -25,4 +21,4 @@ socket.on "letters", onLetters
 socket.on 'time', updateTime
 socket.on 'results', writeResults
 register()
-document.getElementById("startDiv").style.display = "block"
+$("#startDiv").show()
