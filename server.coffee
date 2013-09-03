@@ -63,9 +63,9 @@ io.sockets.on 'connection', (socket) ->
     room = rooms[socket.room]
     room.voteRestart(socket.username)
 
-  socket.on 'word', (o, fn) ->
+  socket.on 'word', (word, fn) ->
     room = rooms[socket.room]
-    fn(room.submitWord(socket.username, o.word))
+    fn(room.submitWord(socket.username, word))
 
   socket.on 'disconnect', ->
     console.log(socket.username + ' is leaving: ' + socket.room)

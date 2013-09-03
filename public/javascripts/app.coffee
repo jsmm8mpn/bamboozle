@@ -1,18 +1,16 @@
 @timerId = undefined
 
 @register = ->
-  socket.emit "register",
-    roomId: hangoutId
-    userId: userId
+  @socket.emit "register",
+    roomId: @hangoutId
+    userId: @userId
   , (data) ->
     if data
       setupGame data
 
 @ready = ->
   clearResults()
-  socket.emit "ready",
-    roomId: hangoutId
-    userId: userId
+  @socket.emit "ready"
 
 @changeSettings = ->
   values = {}
@@ -22,7 +20,7 @@
       settingValue = $(this).find('input')[0].value
       values[name] = settingValue
 
-  socket.emit 'settings', values
+  @socket.emit 'settings', values
 
 @setupGame = (game) ->
   startTimer game.timeLeft, game.timeLimit
@@ -37,7 +35,7 @@
 
 @voteQuit = ->
   hide "quitDiv"
-  socket.emit "voteRestart"
+  @socket.emit "voteRestart"
 
 populateBoard = (letters) ->
   table = "<table>"
@@ -96,12 +94,8 @@ timerExpired = ->
 @submitWord = (e) ->
   if e and e.keyCode is 13
     word = $("#wordInput").val()
-    body =
-      hangoutId: hangoutId
-      userId: userId
-      word: word
 
-    socket.emit "word", body, (result) ->
+    @socket.emit "word", word, (result) ->
       if result.success
         $("#wordList").append("<li>" + word + "</li>")
         $("#wordResult").html("word is valid")
