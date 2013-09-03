@@ -4,6 +4,14 @@ getParameterByName = (name) ->
   results = regex.exec(location.search)
   (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
 
+$('.toggler').on('click', ->
+  $(this).parent().find('.toggled').slideToggle()
+)
+
+$('#settingsDiv').on('click', '.button', changeSettings)
+$('#startDiv').on('click', '.button', ready)
+$('#quitDiv').on('click', '.button', voteQuit)
+
 
 hangoutId = getParameterByName("hangoutId")
 @hangoutId = (if (hangoutId) then hangoutId else "h1")

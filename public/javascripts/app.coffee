@@ -1,26 +1,64 @@
+
 @timerId = undefined
 
-@register = ->
-  @socket.emit "register",
+$ ->
+
+  socket = io.connect("http://localhost:8080")
+  socket.on "game", setupGame
+  socket.on "letters", onLetters
+  socket.on 'time', updateTime
+  socket.on 'results', writeResults
+
+  $('.toggler').on('click', ->
+    $(this).parent().find('.toggled').slideToggle()
+  )
+
+  $('#settingsDiv').on('click', '.button', ->
+    values = {}
+    settings = $('.setting').each ->
+      name = $(this).attr('name')
+      if (name)
+        settingValue = $(this).find('input').value
+        values[name] = settingValue
+
+    socket.emit 'settings', values
+  )
+  $('#startDiv').on('click', '.button', ->
+    clearResults()
+    socket.emit "ready"
+  )
+  $('#quitDiv').on('click', '.button', ->
+    hide "quitDiv"
+    @socket.emit "voteRestart"
+  )
+  $('#wordInput').on('keypress', (e) ->
+    if e and e.keyCode is 13
+      word = $("#wordInput").val()
+
+      socket.emit "word", word, (result) ->
+        if result.success
+          $("#wordList").append("<li>" + word + "</li>")
+          $("#wordResult").html("word is valid")
+        else
+          $("#wordResult").html(result.error)
+
+      $("#wordInput").val("")
+  )
+
+  hangoutId = getParameterByName("hangoutId")
+  @hangoutId = (if (hangoutId) then hangoutId else "h1")
+  userId = getParameterByName("userId")
+  @userId = (if (userId) then userId else "u1")
+
+  socket.emit "register",
     roomId: @hangoutId
     userId: @userId
   , (data) ->
     if data
       setupGame data
+    else
 
-@ready = ->
-  clearResults()
-  @socket.emit "ready"
-
-@changeSettings = ->
-  values = {}
-  settings = $('.setting').each ->
-    name = $(this).attr('name')
-    if (name)
-      settingValue = $(this).find('input')[0].value
-      values[name] = settingValue
-
-  @socket.emit 'settings', values
+  $("#startDiv").show()
 
 @setupGame = (game) ->
   startTimer game.timeLeft, game.timeLimit
@@ -33,9 +71,6 @@
   displayBoard()
   show "quitDiv"
 
-@voteQuit = ->
-  hide "quitDiv"
-  @socket.emit "voteRestart"
 
 populateBoard = (letters) ->
   table = "<table>"
@@ -86,23 +121,10 @@ timerExpired = ->
   hide "wordInput"
   #hide "results"
   clearInterval @timerId
-  #getResults()
+#getResults()
 
 @updateTime = (time) ->
   console.log('time left: ' + time)
-
-@submitWord = (e) ->
-  if e and e.keyCode is 13
-    word = $("#wordInput").val()
-
-    @socket.emit "word", word, (result) ->
-      if result.success
-        $("#wordList").append("<li>" + word + "</li>")
-        $("#wordResult").html("word is valid")
-      else
-        $("#wordResult").html(result.error)
-
-    $("#wordInput").val("")
 
 @writeResults = (results) ->
   html = ""
@@ -123,3 +145,9 @@ timerExpired = ->
   hide "mainDiv"
   show "results"
   show "startDiv"
+
+getParameterByName = (name) ->
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
+  regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
+  results = regex.exec(location.search)
+  (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))

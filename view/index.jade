@@ -14,19 +14,19 @@ html
           td 
             #timer 
             #board
-            input#wordInput(type='text', style='display: none;', onkeypress='return submitWord(event)')
+            input#wordInput(type='text')
             #wordResult
           td
             #wordList
-    #results(style='display:none;')
-    #startDiv(style='display:none;')
-      input(type='button', name='ready', value='Start', onclick='javascript:ready()')
-    #quitDiv(style='display:none;')
-      input(type='button', name='quit', value='Vote Quit', onclick='javascript:voteQuit()')
+    #results
+    #startDiv
+      input.button(type='button', value='Ready')
+    #quitDiv
+      input.button(type='button', value='Vote Quit')
 
     #settingsDiv
-      a(href='javascript:$("#innerSettingsDiv").toggle()') Settings
-      #innerSettingsDiv(style='display:none')
+      a.toggler(href='#') Settings
+      .toggled
         .setting(name='timeLimit') Time Limit
           input(type='text', name='timeLimit', size='3', value='90')
         .setting(name='minWordLength') Min Word Length
@@ -37,6 +37,5 @@ html
           input(type='checkbox', name='negativePoints')
         .setting(name='restartAllowed') Vote Restart Allowed
           input(type='checkbox', name='restartAllowed')
-        input(type='button', name='start', value='Change Settings', onclick='javascript:changeSettings()')
+        input.button(type='button', value='Change Settings')
         
-    script(src='javascripts/index.js')
