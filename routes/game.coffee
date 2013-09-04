@@ -10,6 +10,10 @@ class Game
     @timeLimit = options.timeLimit || 10
     @minWordLength = options.minWordLength || 3
 
+  restart: (useSameLetters) ->
+    @started = new Date().getTime() + @startDelay
+    @letters = populateLetters() unless useSameLetters
+
   serialize: ->
     res =
       started: @started

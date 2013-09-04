@@ -9,6 +9,7 @@ class Room
     @players = {}
     @results = []
     @numPlayers = 0
+    @timerId = undefined
 
     # TODO: Do we have default settings here?
     @settings =
@@ -27,13 +28,21 @@ class Room
     delete @players[userId]
     @numPlayers--
 
-  createGame: ->
-    @resetGame()
-    @currentGame = new Game(@settings)
-    @socket.emit('game', @currentGame.serialize())
+  createGame: (isRestart)->
+    if isRestart
+      oldGame = @currentGame
+      @resetGame()
+      oldGame.restart()
+      @currentGame = oldGame
+      @socket.emit('restart', @currentGame.serialize())
+    else
+      @resetGame()
+      @currentGame = new Game(@settings)
+      @socket.emit('game', @currentGame.serialize())
+
     setTimeout( =>
       @socket.emit('letters', @currentGame.getLetters())
-      timerId = setInterval( =>
+      @timerId = setInterval( =>
         if @currentGame.getTimeRemaining() > 0
           @socket.emit('time', @currentGame.getTimeRemaining())
         else
@@ -71,6 +80,7 @@ class Room
     playerResults
 
   resetGame: ->
+    clearInterval(@timerId)
     @currentGame = undefined
     for id, player of @players
       player.reset()
@@ -89,7 +99,7 @@ class Room
 
     console.log(neededVotes + '==' + numVotes)
     if numVotes >= neededVotes
-      @createGame()
+      @createGame(true)
 
   # Go through one by one in case not all settings were supplied
   changeSettings: (settings) ->

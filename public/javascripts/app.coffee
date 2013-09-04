@@ -1,5 +1,5 @@
 
-@timerId = undefined
+timerId = undefined
 
 $ ->
 
@@ -8,6 +8,7 @@ $ ->
   socket.on "letters", onLetters
   socket.on 'time', updateTime
   socket.on 'results', writeResults
+  socket.on 'restart', restartGame
 
   $('.toggler').on('click', ->
     $(this).parent().find('.toggled').slideToggle()
@@ -31,7 +32,7 @@ $ ->
 
   $('#quitDiv').on('click', '.button', ->
     hide "quitDiv"
-    @socket.emit "voteRestart"
+    socket.emit "voteRestart"
   )
 
   $('#wordInput').on('keypress', (e) ->
@@ -57,6 +58,12 @@ $ ->
     else
 
   $("#startDiv").show()
+
+@restartGame = (game) ->
+  console.log('restarting game...')
+  clearInterval timerId
+  clearResults()
+  setupGame(game)
 
 @setupGame = (game) ->
   startTimer game.timeLeft, game.timeLimit
@@ -104,7 +111,7 @@ clearResults = ->
 startTimer = (timeLeft, timeLimit) ->
   #console.log(timeLeft + ', ' + timeLimit)
   show "timer"
-  @timerId = setInterval(->
+  timerId = setInterval(->
     timeLeft = timeLeft - 1
     secondsLeft = timeLeft
     if secondsLeft > timeLimit
