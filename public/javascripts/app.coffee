@@ -23,14 +23,17 @@ $ ->
 
     socket.emit 'settings', values
   )
+
   $('#startDiv').on('click', '.button', ->
     clearResults()
     socket.emit "ready"
   )
+
   $('#quitDiv').on('click', '.button', ->
     hide "quitDiv"
     @socket.emit "voteRestart"
   )
+
   $('#wordInput').on('keypress', (e) ->
     if e and e.keyCode is 13
       word = $("#wordInput").val()
@@ -45,14 +48,9 @@ $ ->
       $("#wordInput").val("")
   )
 
-  hangoutId = getParameterByName("hangoutId")
-  @hangoutId = (if (hangoutId) then hangoutId else "h1")
-  userId = getParameterByName("userId")
-  @userId = (if (userId) then userId else "u1")
-
   socket.emit "register",
-    roomId: @hangoutId
-    userId: @userId
+    roomId: hangoutId
+    userId: userId
   , (data) ->
     if data
       setupGame data
@@ -146,7 +144,7 @@ timerExpired = ->
   show "results"
   show "startDiv"
 
-getParameterByName = (name) ->
+@getParameterByName = (name) ->
   name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
   regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
   results = regex.exec(location.search)
