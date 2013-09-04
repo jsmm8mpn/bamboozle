@@ -10,6 +10,7 @@ class Room
     @results = []
     @numPlayers = 0
     @timerId = undefined
+    @master = undefined
 
     # TODO: Do we have default settings here?
     @settings =
@@ -21,25 +22,33 @@ class Room
 
   register: (userId) ->
     @players[userId] = new Player(userId)
+    if not @master
+      @master = userId
     @numPlayers++
     @socket.emit('game', @currentGame.serialize()) if @currentGame
 
   leave: (userId) ->
     delete @players[userId]
     @numPlayers--
+    if @master == userId and @numPlayers > 0
+      @master = Object.keys(@players)[0]
+      console.log('changing master to: ' + @master)
+
+  restart: ->
+    oldGame = @currentGame
+    @resetGame()
+    oldGame.restart()
+    @currentGame = oldGame
+    @socket.emit('restart', @currentGame.serialize())
+    @startGame()
 
   createGame: (isRestart)->
-    if isRestart
-      oldGame = @currentGame
-      @resetGame()
-      oldGame.restart()
-      @currentGame = oldGame
-      @socket.emit('restart', @currentGame.serialize())
-    else
-      @resetGame()
-      @currentGame = new Game(@settings)
-      @socket.emit('game', @currentGame.serialize())
+    @resetGame()
+    @currentGame = new Game(@settings)
+    @socket.emit('game', @currentGame.serialize())
+    @startGame()
 
+  startGame: ->
     setTimeout( =>
       @socket.emit('letters', @currentGame.getLetters())
       @timerId = setInterval( =>
@@ -99,12 +108,25 @@ class Room
 
     console.log(neededVotes + '==' + numVotes)
     if numVotes >= neededVotes
-      @createGame(true)
+      @restart()
 
   # Go through one by one in case not all settings were supplied
   changeSettings: (settings) ->
+    console.log('changing settings: ' + JSON.stringify(settings))
     for name,value of settings
       @settings[name] = value
+
+  changeMaster: (userId) ->
+    @master = userId
+
+  startNow: ->
+    @createGame()
+
+  endNow: ->
+    @resetGame()
+
+  kickOut: (userId) ->
+    leave(userId)
 
 
 module.exports = Room

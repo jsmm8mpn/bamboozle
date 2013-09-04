@@ -19,7 +19,7 @@ $ ->
     settings = $('.setting').each ->
       name = $(this).attr('name')
       if (name)
-        settingValue = $(this).find('input').value
+        settingValue = $(this).find('input')[0].value
         values[name] = settingValue
 
     socket.emit 'settings', values

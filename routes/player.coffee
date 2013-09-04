@@ -7,6 +7,7 @@ class Player
     @words = []
     @lastResult = undefined
     @prevResults = []
+    @master = false
 
   setReady: ->
     @ready = true

@@ -57,7 +57,8 @@ io.sockets.on 'connection', (socket) ->
 
   socket.on 'settings', (settings) ->
     room = rooms[socket.room]
-    room.changeSettings(settings)
+    if room.master == socket.username
+      room.changeSettings(settings)
 
   socket.on 'voteRestart', ->
     room = rooms[socket.room]
@@ -71,3 +72,30 @@ io.sockets.on 'connection', (socket) ->
     console.log(socket.username + ' is leaving: ' + socket.room)
     room = rooms[socket.room]
     room.leave(socket.username) if room
+
+  socket.on 'master', (userId) ->
+    room = rooms[socket.room]
+    if room.master == socket.username
+      room.changeMaster(userId)
+
+  socket.on 'start', ->
+    room = rooms[socket.room]
+    if room.master == socket.username
+      room.startNow()
+
+  socket.on 'end', ->
+    room = rooms[socket.room]
+    if room.master == socket.username
+      room.endNow()
+
+  socket.on 'restart', ->
+    room = rooms[socket.room]
+    if room.master == socket.username
+      room.restart()
+
+  # TODO: Test
+  socket.on 'kick', (userId) ->
+    room = rooms[socket.room]
+    if room.master == socket.username
+      room.kickOut(userId)
+      room.leave(userId)
