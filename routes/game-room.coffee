@@ -26,6 +26,7 @@ class Room
       @master = userId
     @numPlayers++
     @socket.emit('game', @currentGame.serialize()) if @currentGame
+    @sendPlayerUpdate()
 
   leave: (userId) ->
     delete @players[userId]
@@ -33,6 +34,7 @@ class Room
     if @master == userId and @numPlayers > 0
       @master = Object.keys(@players)[0]
       console.log('changing master to: ' + @master)
+    @sendPlayerUpdate()
 
   restart: ->
     oldGame = @currentGame
@@ -118,6 +120,7 @@ class Room
 
   changeMaster: (userId) ->
     @master = userId
+    @sendPlayerUpdate()
 
   startNow: ->
     @createGame()
@@ -127,6 +130,9 @@ class Room
 
   kickOut: (userId) ->
     leave(userId)
+
+  sendPlayerUpdate: ->
+    @socket.emit('players', @players)
 
 
 module.exports = Room

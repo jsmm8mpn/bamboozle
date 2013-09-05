@@ -9,6 +9,7 @@ $ ->
   socket.on 'time', updateTime
   socket.on 'results', writeResults
   socket.on 'restart', restartGame
+  socket.on 'players', updatePlayers
 
   $('.toggler').on('click', ->
     $(this).parent().find('.toggled').slideToggle()
@@ -76,6 +77,8 @@ $ ->
   displayBoard()
   show "quitDiv"
 
+@updatePlayers = (players) ->
+  console.log('received player update: ' + JSON.stringify(players))
 
 populateBoard = (letters) ->
   table = "<table>"
