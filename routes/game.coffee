@@ -41,7 +41,7 @@ class Game
   testWord: (word) ->
     return "game has not started yet"  if @getTimeRemaining() > @timeLimit
     return "time has expired"  if not @isActive()
-    return "word too short"  if word.length < 3
+    return "word too short"  if word.length < @minWordLength
     #return "duplicate"  unless checkDuplicate(word, game, player)
     return "word not on board"  unless checkWordInBoard(word, @getLetters())
     "word not in dictionary"  unless checkWordInDictionary(word)
