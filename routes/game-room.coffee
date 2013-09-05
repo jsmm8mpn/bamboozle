@@ -132,7 +132,12 @@ class Room
     leave(userId)
 
   sendPlayerUpdate: ->
-    @socket.emit('players', @players)
+    players = []
+    for id,player of @players
+      p = player.serialize()
+      p.master = (id == @master)
+      players.push p
+    @socket.emit('players', players)
 
 
 module.exports = Room
