@@ -117,6 +117,7 @@ class Room
     console.log('changing settings: ' + JSON.stringify(settings))
     for name,value of settings
       @settings[name] = value
+    @socket.emit('settings', settings)
 
   changeMaster: (userId) ->
     @master = userId

@@ -11,6 +11,8 @@ $ ->
   socket.on 'restart', restartGame
   socket.on 'players', updatePlayers
 
+  #$('#settingsDiv input').prop('disabled', true)
+
   $('.toggler').on('click', ->
     $(this).parent().find('.toggled').slideToggle()
   )
