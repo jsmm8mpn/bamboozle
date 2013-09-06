@@ -2,8 +2,16 @@ assert = require('chai').assert
 Game = require '../routes/game'
 
 describe 'Regular Game', ->
-  game = new Game(99, 100, [['A','B','C','D'],['E','F','G','H'],['I','J','K','L'],['N','M','O','P']])
-  game2 = new Game(101, 5000)
+
+  options =
+    timeLimit: 99
+    startDelay: 100
+    letters: [['A','B','C','D'],['E','F','G','H'],['I','J','K','L'],['N','M','O','P']]
+
+  game = new Game(options)
+  game2 = new Game(
+    timeLimit: 101
+  )
   it 'should have a time limit of 99', ->
     assert.equal(game.timeLimit, 99)
   it 'should not have letters yet', ->
