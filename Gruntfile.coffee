@@ -14,12 +14,6 @@ module.exports = (grunt) ->
         files: ["view/*.*"]
         tasks: "default"
 
-      ###
-      stylesheets:
-        files: "client/stylesheets/*.*"
-        tasks: "stylesheets"
-      ###
-
       javascript:
         files: ["client/coffee/*.coffee", "tests/*.t.coffee"]
         tasks: "coffeescript"
@@ -28,6 +22,11 @@ module.exports = (grunt) ->
       compile:
         files:
           "public/javascripts/client.js": ["client/coffee/app.coffee", "client/coffee/helper.coffee", "client/coffee/index.coffee"]
+
+    less:
+      development:
+        files:
+          "public/stylesheets/client.css": "client/stylesheets/*.less"
 
     uglify:
       prod:
@@ -42,17 +41,6 @@ module.exports = (grunt) ->
         ui: "tdd"
       all: ["tests/*.t.coffee"]
 
-    ###
-    copy:
-      coffee:
-        files: [
-          expand: true
-          cwd: "src/client"
-          src: ["coffee/*.*"]
-          dest: "public"
-        ]
-    ###
-
     clean:
       stylesheets: "public/javascripts/*"
       javascript: "public/stylesheets/*"
@@ -60,7 +48,7 @@ module.exports = (grunt) ->
 
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-contrib-coffee"
-  #grunt.loadNpmTasks "grunt-contrib-compass"
+  grunt.loadNpmTasks "grunt-contrib-less"
   grunt.loadNpmTasks "grunt-contrib-clean"
   #grunt.loadNpmTasks "grunt-contrib-concat"
   grunt.loadNpmTasks "grunt-contrib-uglify"
@@ -68,23 +56,20 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-mocha-cli"
   #grunt.loadNpmTasks "grunt-plato"
 
-  # Clean, compile and concatenate JS
+
   grunt.registerTask "coffeescript", [ "coffee", "mochacli" ]
   grunt.registerTask 'test', ['mochacli']
-
-  # Clean and compile stylesheets
-  #grunt.registerTask "stylesheets", [  ]
-
-  # Production build
-  #grunt.registerTask "production", [ "default", "clean:sourcemaps" ]
-
-  # Default task
-  grunt.registerTask "default", [ "coffeescript"]
+  grunt.registerTask "default", [ "coffeescript", 'less']
   grunt.registerTask "prod", ["default", "uglify"]
 
-  grunt.registerTask 'start', ['server', 'watch']
-
   grunt.registerTask "server", ->
-    require('./server')
+    server = require('./server')
+    done = this.async();
+    server.on('end', ->
+      done()
+    )
 
-  #grunt.registerTask "heroku", [ "default" ]
+  grunt.registerTask 'serverDev', ['start', 'watch']
+
+  grunt.registerTask 'start', ->
+    require('./server')

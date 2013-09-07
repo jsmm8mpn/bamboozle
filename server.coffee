@@ -14,6 +14,8 @@ port    = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080
 
 http.listen(port, ipaddr)
 
+module.exports = http
+
 coffeeDir = path.join(__dirname, 'coffee')
 jsDir = path.join(__dirname, 'public/javascripts')
 
