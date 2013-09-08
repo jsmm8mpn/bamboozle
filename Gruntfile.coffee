@@ -6,17 +6,12 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON("package.json")
 
     watch:
-      grunt:
-        files: ["Gruntfile.coffee", "package.json"]
-        tasks: "default"
-
-      view:
-        files: ["view/*.*"]
-        tasks: "default"
-
       javascript:
         files: ["client/coffee/*.coffee", "tests/*.t.coffee"]
-        tasks: "coffeescript"
+        tasks: "coffee"
+      less:
+        files: ['client/stylesheets/*.less']
+        tasks: "less"
 
     coffee:
       compile:
@@ -57,9 +52,8 @@ module.exports = (grunt) ->
   #grunt.loadNpmTasks "grunt-plato"
 
 
-  grunt.registerTask "coffeescript", [ "coffee", "mochacli" ]
   grunt.registerTask 'test', ['mochacli']
-  grunt.registerTask "default", [ "coffeescript", 'less']
+  grunt.registerTask "default", [ 'test', "coffee", 'less']
   grunt.registerTask "prod", ["default", "uglify"]
 
   grunt.registerTask "server", ->
@@ -69,7 +63,7 @@ module.exports = (grunt) ->
       done()
     )
 
-  grunt.registerTask 'serverDev', ['start', 'watch']
+  grunt.registerTask 'serverDev', ['default', 'start', 'watch']
 
   grunt.registerTask 'start', ->
     require('./server')
