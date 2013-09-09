@@ -44,11 +44,11 @@ class Game
     return "time has expired"  if not @isActive()
     return "word too short"  if word.length < @minWordLength
     #return "duplicate"  unless checkDuplicate(word, game, player)
-    return "word not on board"  unless checkWordInBoard(word, @getLetters())
+    return "word not on board"  unless checkWordInBoard(word, @letters)
     "word not in dictionary"  unless checkWordInDictionary(word, @allowPlural)
 
   scoreWord: (word) ->
-    word.length - 2
+    word.length - @minWordLength + 1
 
   score: (players) ->
     results = {}
@@ -64,7 +64,8 @@ class Game
       score = 0
       for word in player.words
         playerWords[word] = (words[word] == 1)
-        score += @scoreWord(word)
+        if playerWords[word]
+          score += @scoreWord(word)
       result = new Result(score, playerWords)
       results[id] = result
       player.addResult(result)

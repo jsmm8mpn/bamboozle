@@ -53,8 +53,8 @@ module.exports = (grunt) ->
 
 
   grunt.registerTask 'test', ['mochacli']
-  grunt.registerTask "default", [ 'test', "coffee", 'less']
-  grunt.registerTask "prod", ["default", "uglify"]
+  grunt.registerTask "compile", ["coffee", 'less']
+  grunt.registerTask "prod", ['test', "compile", "uglify"]
 
   grunt.registerTask "server", ->
     server = require('./server')
@@ -63,7 +63,9 @@ module.exports = (grunt) ->
       done()
     )
 
-  grunt.registerTask 'serverDev', ['default', 'start', 'watch']
+  grunt.registerTask 'serverDev', ['compile', 'start', 'watch']
 
   grunt.registerTask 'start', ->
     require('./server')
+
+  grunt.registerTask 'default', ['serverDev']
