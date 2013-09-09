@@ -44,7 +44,7 @@ class Room
     @socket.emit('restart', @currentGame.serialize())
     @startGame()
 
-  createGame: (isRestart)->
+  createGame: ->
     @resetGame()
     @currentGame = new Game(@settings)
     @socket.emit('game', @currentGame.serialize())
@@ -101,14 +101,12 @@ class Room
     @checkRestart()
 
   checkRestart: ->
-    console.log(@numPlayers)
     neededVotes = @numPlayers / 2
     numVotes = 0
     for id, player of @players
       if player.didVoteRestart()
         numVotes++
 
-    console.log(neededVotes + '==' + numVotes)
     if numVotes >= neededVotes
       @restart()
 
