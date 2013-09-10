@@ -57,9 +57,9 @@ class Room
         if @currentGame.getTimeRemaining() > 0
           @socket.emit('time', @currentGame.getTimeRemaining())
         else
-          clearInterval(timerId)
+          clearInterval(@timerId)
           @socket.emit('results', @populateResults())
-      , 1000)
+      , 5000)
     , @currentGame.startDelay)
 
   getGame: ->

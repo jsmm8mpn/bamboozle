@@ -7,7 +7,7 @@ module.exports = (grunt) ->
 
     watch:
       javascript:
-        files: ["client/coffee/*.coffee", "tests/*.t.coffee"]
+        files: ["client/coffee/*.coffee"]
         tasks: "coffee"
       less:
         files: ['client/stylesheets/*.less']

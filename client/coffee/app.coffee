@@ -1,5 +1,6 @@
 
 timerId = undefined
+timeLeft = undefined
 
 $ ->
 
@@ -113,7 +114,8 @@ clearResults = ->
   hide "results"
   show "mainDiv"
 
-startTimer = (timeLeft, timeLimit) ->
+startTimer = (serverTimeLeft, timeLimit) ->
+  timeLeft = serverTimeLeft
   #console.log(timeLeft + ', ' + timeLimit)
   show "timer"
   timerId = setInterval(->
@@ -134,7 +136,8 @@ timerExpired = ->
 #getResults()
 
 @updateTime = (time) ->
-  console.log('time left: ' + time)
+  #console.log('time left: ' + time)
+  timeLeft = time
 
 @writeResults = (results) ->
   html = ""
