@@ -36,7 +36,7 @@ app.set('view engine', 'jade')
 rooms = {}
 
 app.get '/', (req, res) ->
-  res.render(__dirname+'/view/index.jade')
+  res.render(__dirname+'/view/register.jade')
 
 app.get '/h', (req, res) ->
   res.render(__dirname+'/view/hindex.jade')
