@@ -25,6 +25,8 @@ class Room
     if not @master
       @master = userId
     @numPlayers++
+
+    #FIXME: This wont' work because it will emit to everyone
     @socket.emit('game', @currentGame.serialize()) if @currentGame
     @sendPlayerUpdate()
 

@@ -14,6 +14,28 @@ $ ->
 
   #$('#settingsDiv input').prop('disabled', true)
 
+  $('#registration').on('click', '.button', ->
+    room = $('#registration input[name="room"]').val()
+    username = $('#registration input[name="username"]').val()
+    console.log('trying to register ' + username + ' in ' + room)
+
+    socket.emit "register",
+      roomId: room
+      userId: username
+    , (data) ->
+      if !data.success
+        console.log('could not register: ' + data.error)
+        if data.error is 'roomDoesNotExist'
+          if confirm('Room does not exist. Do you want to create it?')
+            socket.emit 'createRoom',
+              roomId: room
+            , ->
+              socket.emit 'register',
+                roomId: room
+                userId: username
+
+  )
+
   $('.toggler').on('click', ->
     $(this).parent().find('.toggled').slideToggle()
   )
@@ -53,13 +75,7 @@ $ ->
       $("#wordInput").val("")
   )
 
-  socket.emit "register",
-    roomId: hangoutId
-    userId: userId
-  , (data) ->
-    if data
-      setupGame data
-    else
+
 
   $("#startDiv").show()
 

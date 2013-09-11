@@ -36,22 +36,41 @@ app.set('view engine', 'jade')
 rooms = {}
 
 app.get '/', (req, res) ->
-  res.render(__dirname+'/view/register.jade')
+  res.render(__dirname+'/view/index.jade')
 
 app.get '/h', (req, res) ->
   res.render(__dirname+'/view/hindex.jade')
 
 io.sockets.on 'connection', (socket) ->
-  socket.on 'register', (o) ->
-    socket.username = o.userId
-    socket.room = o.roomId
-    socket.join o.roomId
-    room = rooms[socket.room]
-    if !room
-      room = new Room(io.sockets.in(socket.room))
-      rooms[socket.room] = room
-    console.log socket.username + " has registered in " + socket.room
-    room.register(socket.username)
+  socket.on 'register', (o, fn) ->
+    room = rooms[o.roomId]
+    if room
+      socket.username = o.userId
+      socket.room = o.roomId
+      socket.join o.roomId
+      console.log socket.username + " has registered in " + socket.room
+      room.register(socket.username)
+      fn(
+        success: true
+      )
+    else
+      fn(
+        success: false
+        error: 'roomDoesNotExist'
+      )
+
+  socket.on 'createRoom', (o, fn) ->
+    room = rooms[o.roomId]
+    if room
+      fn(
+        success: false
+      )
+    else
+      room = new Room(io.sockets.in(o.roomId))
+      rooms[o.roomId] = room
+      fn(
+        success: true
+      )
 
   socket.on 'ready', ->
     room = rooms[socket.room]
