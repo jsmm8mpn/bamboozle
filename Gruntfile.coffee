@@ -6,12 +6,16 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON("package.json")
 
     watch:
+      options:
+        livereload: true
       javascript:
         files: ["client/coffee/*.coffee"]
         tasks: "coffee"
       less:
         files: ['client/stylesheets/*.less']
         tasks: "less"
+      server:
+        files: ['routes/*.coffee', 'server.coffee']
 
     coffee:
       compile:
