@@ -14,6 +14,8 @@ $ ->
 
   #$('#settingsDiv input').prop('disabled', true)
 
+  $('#registration input[name="room"]').prop('disabled', true)
+
   $('#registration').on('click', '.button', ->
     room = $('#registration input[name="room"]').val()
     username = $('#registration input[name="username"]').val()
@@ -23,7 +25,10 @@ $ ->
       roomId: room
       userId: username
     , (data) ->
-      if !data.success
+      if data.success
+        hide 'registration'
+        show 'game'
+      else
         console.log('could not register: ' + data.error)
         if data.error is 'roomDoesNotExist'
           if confirm('Room does not exist. Do you want to create it?')
@@ -33,6 +38,10 @@ $ ->
               socket.emit 'register',
                 roomId: room
                 userId: username
+              , (result) ->
+                if result.success
+                  hide 'registration'
+                  show 'game'
 
   )
 
@@ -75,7 +84,8 @@ $ ->
       $("#wordInput").val("")
   )
 
-
+  socket.emit 'join',
+    roomId: $('#registration input[name="room"]').val()
 
   $("#startDiv").show()
 

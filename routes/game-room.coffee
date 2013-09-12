@@ -21,6 +21,8 @@ class Room
       restartAllowed: true
 
   register: (userId) ->
+    if @players[userId]
+      throw new Error 'username is already taken'
     @players[userId] = new Player(userId)
     if not @master
       @master = userId
@@ -109,7 +111,7 @@ class Room
       if player.didVoteRestart()
         numVotes++
 
-    if numVotes >= neededVotes
+    if numVotes > neededVotes
       @restart()
 
   # Go through one by one in case not all settings were supplied

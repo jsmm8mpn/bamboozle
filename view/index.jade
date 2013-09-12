@@ -7,10 +7,10 @@ html
     script(src="javascripts/client.js")
   body
     #registration
-      .field
+      #roomField.field
         label(for='room') Room:
-        input(type='text', name='room')
-      .field
+        input(type='text', name='room', value='#{roomId}')
+      #usernameField.field
         label(for='username') Username:
         input(type='input' , name='username')
       input.button(type='button', value='Enter')
