@@ -52,6 +52,9 @@ io.sockets.on 'connection', (socket) ->
     if room
       socket.join o.roomId
       socket.room = o.roomId
+      fn(
+        success: true
+      )
     else
       fn(
         success: false
@@ -61,6 +64,7 @@ io.sockets.on 'connection', (socket) ->
   socket.on 'register', (o, fn) ->
 
     try
+      room = rooms[socket.room]
       room.register o.userId
       socket.username = o.userId
       console.log socket.username + " has registered in " + socket.room

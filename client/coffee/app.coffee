@@ -16,32 +16,20 @@ $ ->
 
   $('#registration input[name="room"]').prop('disabled', true)
 
-  $('#registration').on('click', '.button', ->
-    room = $('#registration input[name="room"]').val()
-    username = $('#registration input[name="username"]').val()
-    console.log('trying to register ' + username + ' in ' + room)
+  roomId = $('#registration input[name="room"]').val()
 
-    socket.emit "register",
-      roomId: room
+  $('#registration').on('click', '.button', ->
+    username = $('#registration input[name="username"]').val()
+    console.log('trying to register ' + username + ' in ' + roomId)
+
+    socket.emit 'register',
+      roomId: roomId
       userId: username
-    , (data) ->
-      if data.success
+    , (result) ->
+      if result.success
         hide 'registration'
         show 'game'
-      else
-        console.log('could not register: ' + data.error)
-        if data.error is 'roomDoesNotExist'
-          if confirm('Room does not exist. Do you want to create it?')
-            socket.emit 'createRoom',
-              roomId: room
-            , ->
-              socket.emit 'register',
-                roomId: room
-                userId: username
-              , (result) ->
-                if result.success
-                  hide 'registration'
-                  show 'game'
+
 
   )
 
@@ -85,7 +73,23 @@ $ ->
   )
 
   socket.emit 'join',
-    roomId: $('#registration input[name="room"]').val()
+    roomId: roomId
+  , (data) ->
+    if data.success
+      show 'registration'
+    else
+      console.log('could not register: ' + data.error)
+      if data.error is 'roomDoesNotExist'
+        if confirm('Room does not exist. Do you want to create it?')
+          socket.emit 'createRoom',
+            roomId: roomId
+          , (data) ->
+            if data.success
+              socket.emit 'join',
+                roomId: roomId
+              , (data) ->
+                if data.success
+                  show 'registration'
 
   $("#startDiv").show()
 
