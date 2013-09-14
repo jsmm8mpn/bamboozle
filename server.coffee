@@ -7,7 +7,27 @@ io = require('socket.io').listen(http)
 path = require 'path'
 coffee = require 'coffee-middleware'
 fs = require 'fs'
-less = require 'less-middleware'
+less = require 'less-middleware',
+passport = require 'passport',
+GoogleStrategy = require('passport-google').Strategy
+
+passport.serializeUser( (user, done) ->
+  done(null, user)
+)
+
+passport.deserializeUser( (obj, done) ->
+  done(null, obj)
+)
+
+myStrategy = new GoogleStrategy(
+  returnURL: 'http://localhost:8080/auth/google/return',
+  realm: 'http://localhost:8080'
+, (identifier, profile, done) ->
+  profile.identifier = identifier
+  console.log('user logged in: ' + JSON.stringify(profile))
+  done(null,profile)
+)
+passport.use(myStrategy)
 
 ipaddr  = process.env.OPENSHIFT_NODEJS_IP || process.env.IP || "127.0.0.1"
 port    = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080
@@ -28,17 +48,48 @@ app.use(coffee(
   src: path.join(__dirname, 'public/javascripts')
   prefix: '/javascripts'
 ))
+app.use(express.cookieParser())
+app.use(express.session(
+  secret: 'keyboard cat'
+))
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 
 rooms = {}
+players = {}
 
 #app.get '/', (req, res) ->
 #  res.render(__dirname+'/view/index.jade', req.query)
 
-app.get '/:room', (req, res) ->
+app.get('/auth/google', passport.authenticate('google'))
+
+app.get('/auth/google/return', passport.authenticate('google',
+  failureRedirect: '/horrible'
+), (req, res) ->
+  #console.log('logged in successfully')
+  if req.session.redirect_to
+    res.redirect(req.session.redirect_to);
+  else
+    res.redirect('selectRoom')
+)
+
+ensureAuthenticated = (req, res, next) ->
+  if req.isAuthenticated()
+    next()
+  else
+    req.session.redirect_to = '/room/' + req.params.room
+    res.redirect('/auth/google')
+
+app.get('/logout', (req, res) ->
+  req.logout()
+  res.redirect('done')
+)
+
+app.get '/room/:room', ensureAuthenticated, (req, res) ->
   res.render(__dirname+'/view/index.jade',
     roomId: req.params.room
   )
