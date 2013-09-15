@@ -1,6 +1,7 @@
 express = require 'express'
 app = express()
 Room = require './routes/game-room'
+Player = require './routes/player'
 rest = require('./routes/simple-rest').init(app)
 http = require('http').createServer(app)
 io = require('socket.io').listen(http)
@@ -24,9 +25,12 @@ myStrategy = new GoogleStrategy(
   returnURL: 'http://localhost:8080/auth/google/return',
   realm: 'http://localhost:8080'
 , (identifier, profile, done) ->
-  profile.identifier = identifier
-  console.log('user logged in: ' + JSON.stringify(profile))
-  done(null,profile)
+  user =
+    userId: identifier
+    displayName: profile.displayName
+  #profile.identifier = identifier
+  console.log('user logged in: ' + JSON.stringify(user))
+  done(null,user)
 )
 passport.use(myStrategy)
 
@@ -128,6 +132,11 @@ io.sockets.on 'connection', (socket) ->
     if room
       socket.join o.roomId
       socket.room = o.roomId
+      user = socket.handshake.user
+      player = new Player(user.userId, user.displayName)
+      room.register player
+      socket.username = user.userId
+      console.log socket.username + " has registered in " + socket.room
       fn(
         success: true
       )
@@ -137,6 +146,7 @@ io.sockets.on 'connection', (socket) ->
         error: 'roomDoesNotExist'
       )
 
+      ###
   socket.on 'register', (o, fn) ->
 
     try
@@ -152,6 +162,8 @@ io.sockets.on 'connection', (socket) ->
         success: false
         error: e.message
       )
+
+###
 
   socket.on 'createRoom', (o, fn) ->
     room = rooms[o.roomId]

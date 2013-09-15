@@ -1,6 +1,6 @@
 class Player
 
-  constructor: (@name) ->
+  constructor: (@name, @displayName) ->
     @ready = false
     @restart = false
     @score = 0
@@ -10,7 +10,7 @@ class Player
 
   serialize: ->
     res =
-      name: @name
+      name: @displayName
       ready: @ready
       restart: @restart
       score: @score

@@ -20,10 +20,11 @@ class Room
       negativePoints: false
       restartAllowed: true
 
-  register: (userId) ->
-    if @players[userId]
-      throw new Error 'username is already taken'
-    @players[userId] = new Player(userId)
+  register: (player) ->
+    #if @players[userId]
+    #  throw new Error 'username is already taken'
+    userId = player.name
+    @players[userId] = player #new Player(userId)
     if not @master
       @master = userId
     @numPlayers++

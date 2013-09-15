@@ -89,7 +89,7 @@ $ ->
                 roomId: roomId
               , (data) ->
                 if data.success
-                  show 'registration'
+                  show 'game'
 
   $("#startDiv").show()
 
