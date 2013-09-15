@@ -10,6 +10,7 @@ fs = require 'fs'
 less = require 'less-middleware',
 passport = require 'passport',
 GoogleStrategy = require('passport-google').Strategy
+passportSocketIo = require "passport.socketio"
 
 passport.serializeUser( (user, done) ->
   done(null, user)
@@ -49,8 +50,13 @@ app.use(coffee(
   prefix: '/javascripts'
 ))
 app.use(express.cookieParser())
+
+MemoryStore = express.session.MemoryStore
+sessionStore = new MemoryStore
 app.use(express.session(
-  secret: 'keyboard cat'
+  store: sessionStore
+  secret: 'secret'
+  key:'express.sid'
 ))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -97,7 +103,26 @@ app.get '/room/:room', ensureAuthenticated, (req, res) ->
 app.get '/h', (req, res) ->
   res.render(__dirname+'/view/hindex.jade')
 
+io.configure( ->
+  io.set("authorization", passportSocketIo.authorize(
+    cookieParser: express.cookieParser
+    key:    'express.sid' #the cookie where express (or connect) stores its session id.
+    secret: 'secret' #the session secret to parse the cookie
+    store:   sessionStore     #the session store that express uses
+    fail: (data, accept) ->
+      #console.log("failed")
+      #console.log(data);// *optional* callbacks on success or fail
+      accept(null, false) #second param takes boolean on whether or not to allow handshake
+    success: (data, accept) ->
+      #console.log("success socket.io auth");
+      #console.log(data);
+      accept(null, true)
+  ))
+)
+
 io.sockets.on 'connection', (socket) ->
+  console.log('socket user: ' + JSON.stringify(socket.handshake.user))
+
   socket.on 'join', (o, fn) ->
     room = rooms[o.roomId]
     if room
