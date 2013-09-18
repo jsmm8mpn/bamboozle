@@ -3,7 +3,7 @@ Player = require './player'
 
 class Room
 
-  constructor: (@name, @socket, @public) ->
+  constructor: (@name, @socket) ->
     @created = new Date()
     @currentGame = undefined
     @players = {}
@@ -11,9 +11,7 @@ class Room
     @numPlayers = 0
     @timerId = undefined
     @master = undefined
-
-    if !@public
-      @public = false
+    @public = false
 
     # TODO: Do we have default settings here?
     @settings =

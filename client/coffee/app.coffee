@@ -33,6 +33,10 @@ $ ->
 
   )
 
+  $('#publicField').on('click', 'input', ->
+    alert('toggled')
+  )
+
   $('.toggler').on('click', ->
     $(this).parent().find('.toggled').slideToggle()
   )
