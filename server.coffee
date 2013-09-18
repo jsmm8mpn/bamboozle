@@ -104,6 +104,15 @@ app.get '/room/:room', ensureAuthenticated, (req, res) ->
     roomId: req.params.room
   )
 
+app.get '/selectRoom', ensureAuthenticated, (req, res) ->
+  roomList = []
+  for id,room of rooms
+    #if room.public
+    roomList.push room
+  res.render(__dirname+'/view/selectRoom.jade',
+    rooms: roomList #TODO: filter to only public rooms
+  )
+
 app.get '/h', (req, res) ->
   res.render(__dirname+'/view/hindex.jade')
 
@@ -172,7 +181,7 @@ io.sockets.on 'connection', (socket) ->
         success: false
       )
     else
-      room = new Room(io.sockets.in(o.roomId))
+      room = new Room(o.roomId, io.sockets.in(o.roomId), o.public)
       rooms[o.roomId] = room
       fn(
         success: true
