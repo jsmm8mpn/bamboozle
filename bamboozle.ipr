@@ -23,6 +23,24 @@
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="InspectionProjectProfileManager">
+    <profiles>
+      <profile version="1.0" is_locked="false">
+        <option name="myName" value="Project Default" />
+        <option name="myLocal" value="false" />
+        <inspection_tool class="TaskInspection" enabled="true" level="INFO" enabled_by_default="true">
+          <option name="suppressedTasks">
+            <set>
+              <option value="CoffeeScript" />
+            </set>
+          </option>
+        </inspection_tool>
+      </profile>
+    </profiles>
+    <option name="PROJECT_PROFILE" value="Project Default" />
+    <option name="USE_PROJECT_PROFILE" value="true" />
+    <version value="1.0" />
+  </component>
   <component name="JavaScriptLibraryMappings">
     <file url="PROJECT" libraries="{Node.js v0.10.17 Core Modules}" />
     <includedPredefinedLibrary name="Node.js Globals" />

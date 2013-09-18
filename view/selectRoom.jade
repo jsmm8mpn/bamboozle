@@ -1,8 +1,10 @@
 !!! 5
 html
   head
+    link(type='text/css', rel='stylesheet', href='../stylesheets/client.css')
 
   body
+    h1 Select a Room
     each item in rooms
       li
         a(href="room/#{item.name}")= item.name

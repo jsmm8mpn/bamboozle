@@ -88,16 +88,16 @@ $ ->
     else
       console.log('could not register: ' + data.error)
       if data.error is 'roomDoesNotExist'
-        if confirm('Room does not exist. Do you want to create it?')
-          socket.emit 'createRoom',
-            roomId: roomId
-          , (data) ->
-            if data.success
-              socket.emit 'join',
-                roomId: roomId
-              , (data) ->
-                if data.success
-                  show 'game'
+        #if confirm('Room does not exist. Do you want to create it?')
+        socket.emit 'createRoom',
+          roomId: roomId
+        , (data) ->
+          if data.success
+            socket.emit 'join',
+              roomId: roomId
+            , (data) ->
+              if data.success
+                show 'game'
 
   $("#startDiv").show()
 

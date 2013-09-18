@@ -39,7 +39,8 @@
     "grunt-contrib-less": "*",
     "grunt-contrib-clean": "*",
     "grunt-contrib-uglify": "*",
-    "grunt-mocha-cli": "*"
+    "grunt-mocha-cli": "*",
+    "grunt-nodemon": "*"
   },
   "bundleDependencies": [],
   "private": true,

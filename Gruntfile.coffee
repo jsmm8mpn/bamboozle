@@ -5,6 +5,17 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
 
+    nodemon:
+      dev:
+        options:
+          file: 'server.coffee'
+          #args: ['production']
+          nodeArgs: ['--debug']
+          #ignoredFiles: ['README.md', 'node_modules/**']
+          watchedExtensions: ['coffee']
+          watchedFolders: ['routes']
+          #cwd: __dirname
+
     watch:
       options:
         livereload: true
@@ -54,6 +65,7 @@ module.exports = (grunt) ->
   #grunt.loadNpmTasks "grunt-contrib-copy"
   grunt.loadNpmTasks "grunt-mocha-cli"
   #grunt.loadNpmTasks "grunt-plato"
+  grunt.loadNpmTasks 'grunt-nodemon'
 
 
   grunt.registerTask 'test', ['mochacli']
@@ -67,7 +79,7 @@ module.exports = (grunt) ->
       done()
     )
 
-  grunt.registerTask 'serverDev', ['compile', 'start', 'watch']
+  grunt.registerTask 'serverDev', ['compile', 'nodemon', 'watch']
 
   grunt.registerTask 'start', ->
     require('./server')
