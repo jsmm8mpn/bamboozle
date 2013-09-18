@@ -84,7 +84,7 @@ $ ->
     roomId: roomId
   , (data) ->
     if data.success
-      show 'registration'
+      show 'game'
     else
       console.log('could not register: ' + data.error)
       if data.error is 'roomDoesNotExist'

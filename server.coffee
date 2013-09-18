@@ -84,14 +84,14 @@ app.get('/auth/google/return', passport.authenticate('google',
   if req.session.redirect_to
     res.redirect(req.session.redirect_to);
   else
-    res.redirect('selectRoom')
+    res.redirect('/')
 )
 
 ensureAuthenticated = (req, res, next) ->
   if req.isAuthenticated()
     next()
   else
-    req.session.redirect_to = '/room/' + req.params.room
+    req.session.redirect_to = req.originalUrl #'/room/' + req.params.room
     res.redirect('/auth/google')
 
 app.get('/logout', (req, res) ->
@@ -104,7 +104,7 @@ app.get '/room/:room', ensureAuthenticated, (req, res) ->
     roomId: req.params.room
   )
 
-app.get '/selectRoom', ensureAuthenticated, (req, res) ->
+app.get '/', ensureAuthenticated, (req, res) ->
   roomList = []
   for id,room of rooms
     if room.public
