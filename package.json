@@ -27,10 +27,19 @@
     "socket.io": "*",
     "coffee-script": "*",
     "coffee-middleware": "*",
-    "less-middleware": "*"
+    "less-middleware": "*",
+    "passport": "*",
+    "passport-google": "*",
+    "passport.socketio": "*"
   },
   "devDependencies": {
-    "grunt": "*"
+    "grunt": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-coffee": "*",
+    "grunt-contrib-less": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-mocha-cli": "*"
   },
   "bundleDependencies": [],
   "private": true,

@@ -14,10 +14,11 @@ $ ->
 
   #$('#settingsDiv input').prop('disabled', true)
 
-  $('#registration input[name="room"]').prop('disabled', true)
+  #$('#registration input[name="room"]').prop('disabled', true)
 
-  roomId = $('#registration input[name="room"]').val()
+  #roomId = $('#registration input[name="room"]').val()
 
+  ###
   $('#registration').on('click', '.button', ->
     username = $('#registration input[name="username"]').val()
     console.log('trying to register ' + username + ' in ' + roomId)
@@ -32,6 +33,7 @@ $ ->
 
 
   )
+  ###
 
   $('#publicField').on('click', 'input', ->
     alert('toggled')
@@ -75,6 +77,8 @@ $ ->
 
       $("#wordInput").val("")
   )
+
+  console.log('the room: ' + roomId)
 
   socket.emit 'join',
     roomId: roomId
