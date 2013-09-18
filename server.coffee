@@ -107,8 +107,8 @@ app.get '/room/:room', ensureAuthenticated, (req, res) ->
 app.get '/selectRoom', ensureAuthenticated, (req, res) ->
   roomList = []
   for id,room of rooms
-    #if room.public
-    roomList.push room
+    if room.public
+      roomList.push room
   res.render(__dirname+'/view/selectRoom.jade',
     rooms: roomList #TODO: filter to only public rooms
   )
@@ -195,6 +195,11 @@ io.sockets.on 'connection', (socket) ->
     room = rooms[socket.room]
     if room.master == socket.username
       room.changeSettings(settings)
+
+  socket.on 'public', (value) ->
+    room = rooms[socket.room]
+    if room.master == socket.username
+      room.public = value
 
   socket.on 'voteRestart', ->
     room = rooms[socket.room]

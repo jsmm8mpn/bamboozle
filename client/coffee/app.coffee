@@ -36,7 +36,7 @@ $ ->
   ###
 
   $('#publicField').on('click', 'input', ->
-    alert('toggled')
+    socket.emit 'public', $(this).prop('checked')
   )
 
   $('.toggler').on('click', ->

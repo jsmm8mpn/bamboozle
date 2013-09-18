@@ -144,7 +144,6 @@ class Room
       players.push p
     @socket.emit('players', players)
 
-
 module.exports = Room
 
 class Result
