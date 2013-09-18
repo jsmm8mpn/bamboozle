@@ -118,8 +118,8 @@ io.configure( ->
       #console.log(data);// *optional* callbacks on success or fail
       accept(null, false) #second param takes boolean on whether or not to allow handshake
     success: (data, accept) ->
-      #console.log("success socket.io auth");
-      #console.log(data);
+      console.log("success socket.io auth");
+      console.log(JSON.stringify(data));
       accept(null, true)
   ))
 )
