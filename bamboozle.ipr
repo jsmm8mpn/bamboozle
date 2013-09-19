@@ -63,14 +63,62 @@
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="bamboozle" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="/usr/local/bin/node" path-to-js-file="server.coffee" working-dir="$PROJECT_DIR$" coffeescript-path="/usr/local/lib/node_modules/coffee-script/bin/coffee" coffeescript-run="true">
+    <configuration default="false" name="bamboozle" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="/usr/local/bin/node" path-to-js-file="server.js" working-dir="$PROJECT_DIR$" coffeescript-path="/usr/local/lib/node_modules/coffee-script/bin/coffee" coffeescript-params="--debug">
+      <RunnerSettings RunnerId="NodeJS.debug" />
       <RunnerSettings RunnerId="NodeJS.run" />
+      <ConfigurationWrapper RunnerId="NodeJS.debug" />
       <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
     </configuration>
   </component>
+  <component name="ProjectTasksOptions">
+    <TaskOptions isEnabled="true">
+      <option name="arguments" value="--compile --map $FileName$" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" value="Compiles .coffee files into .js files" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="coffee" />
+      <option name="immediateSync" value="true" />
+      <option name="name" value="CoffeeScript" />
+      <option name="output" value="$FileNameWithoutExtension$.js:$FileNameWithoutExtension$.map" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="false" />
+      <option name="passParentEnvs" value="true" />
+      <option name="program" value="/usr/local/bin/coffee" />
+      <option name="scopeName" value="Project Files" />
+      <option name="trackOnlyRoot" value="true" />
+      <option name="workingDir" value="$FileDir$" />
+      <envs />
+    </TaskOptions>
+  </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+  </component>
+  <component name="libraryTable">
+    <library name="Generated files" type="javaScript">
+      <properties>
+        <sourceFilesUrls>
+          <item url="file://$PROJECT_DIR$/routes/player.js" />
+          <item url="file://$PROJECT_DIR$/routes/simple-rest.js" />
+          <item url="file://$PROJECT_DIR$/routes/game.js" />
+          <item url="file://$PROJECT_DIR$/Gruntfile.js" />
+          <item url="file://$PROJECT_DIR$/routes/game-room.js" />
+          <item url="file://$PROJECT_DIR$/server.js" />
+        </sourceFilesUrls>
+      </properties>
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/routes/player.js" />
+        <root url="file://$PROJECT_DIR$/routes/simple-rest.js" />
+        <root url="file://$PROJECT_DIR$/routes/game.js" />
+        <root url="file://$PROJECT_DIR$/Gruntfile.js" />
+        <root url="file://$PROJECT_DIR$/routes/game-room.js" />
+        <root url="file://$PROJECT_DIR$/server.js" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
   </component>
   <component name="masterDetails">
     <states>

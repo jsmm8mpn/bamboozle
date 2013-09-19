@@ -9,24 +9,27 @@ module.exports = (grunt) ->
       dev:
         options:
           file: 'server.coffee'
-          #args: ['production']
-          nodeArgs: ['--debug']
-          #ignoredFiles: ['README.md', 'node_modules/**']
+          nodeArgs: []
           watchedExtensions: ['coffee']
           watchedFolders: ['routes']
-          #cwd: __dirname
+      debug:
+        options:
+          file: 'server.coffee'
+          nodeArgs: ['--debug-brk']
+          watchedExtensions: ['coffee']
+          watchedFolders: ['routes']
 
     watch:
       options:
         livereload: true
+      server:
+        files: ["server.coffee", "routes/*.coffee"]
       javascript:
         files: ["client/coffee/*.coffee"]
         tasks: "coffee"
       less:
         files: ['client/stylesheets/*.less']
         tasks: "less"
-      server:
-        files: ['routes/*.coffee', 'server.coffee']
 
     coffee:
       compile:
@@ -79,9 +82,11 @@ module.exports = (grunt) ->
       done()
     )
 
-  grunt.registerTask 'serverDev', ['compile', 'nodemon', 'watch']
+  grunt.registerTask 'serverDev', ['compile', 'nodemon:dev', 'watch']
 
   grunt.registerTask 'start', ->
     require('./server')
 
   grunt.registerTask 'default', ['serverDev']
+
+  grunt.registerTask 'debug', ['compile', 'nodemon:debug', 'watch']
