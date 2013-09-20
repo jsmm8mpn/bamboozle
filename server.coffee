@@ -12,24 +12,26 @@ less = require 'less-middleware',
 passport = require 'passport',
 GoogleStrategy = require('passport-google').Strategy
 
-passport.serializeUser( (user, done) ->
+passport.serializeUser( (player, done) ->
+  user =
+    userId: player.name
+    displayName: player.displayName
   done(null, user)
 )
 
-passport.deserializeUser( (obj, done) ->
-  done(null, obj)
-)
+deserializeUser = (user, done) ->
+  player = new Player(user.userId, user.displayName)
+  done(null, player)
+
+passport.deserializeUser(deserializeUser)
 
 myStrategy = new GoogleStrategy(
   returnURL: 'http://localhost:8080/auth/google/return',
   realm: 'http://localhost:8080'
 , (identifier, profile, done) ->
-  user =
-    userId: identifier
-    displayName: profile.displayName
-  #profile.identifier = identifier
-  console.log('user logged in: ' + JSON.stringify(user))
-  done(null,user)
+  player = new Player(identifier, profile.displayName)
+  console.log('user logged in: ' + JSON.stringify(player))
+  done(null,player)
 )
 passport.use(myStrategy)
 
@@ -123,25 +125,30 @@ io.configure( ->
         cookie: data.headers.cookie
     myCookieParser(res, null, (err) ->
       sessionStore.get(res.signedCookies['express.sid'], (err, session) ->
-        data.user = session.passport.user;
-        accept(null, true)
+        deserializeUser(session.passport.user, (err, player) ->
+          data.player = player
+          accept(null, true)
+        )
       )
     )
   )
 )
 
 io.sockets.on 'connection', (socket) ->
-  console.log('socket user: ' + JSON.stringify(socket.handshake.user))
+  console.log('socket user: ' + JSON.stringify(socket.handshake.player))
+
+  player = socket.handshake.player
+  player.socket = socket
 
   socket.on 'join', (o, fn) ->
     room = rooms[o.roomId]
     if room
       socket.join o.roomId
       socket.room = o.roomId
-      user = socket.handshake.user
-      player = new Player(user.userId, user.displayName)
+      #user = socket.handshake.user
+      #player = new Player(user.userId, user.displayName)
       room.register player
-      socket.username = user.userId
+      socket.username = player.name
       console.log socket.username + " has registered in " + socket.room
       fn(
         success: true
@@ -151,25 +158,6 @@ io.sockets.on 'connection', (socket) ->
         success: false
         error: 'roomDoesNotExist'
       )
-
-      ###
-  socket.on 'register', (o, fn) ->
-
-    try
-      room = rooms[socket.room]
-      room.register o.userId
-      socket.username = o.userId
-      console.log socket.username + " has registered in " + socket.room
-      fn(
-        success: true
-      )
-    catch e
-      fn(
-        success: false
-        error: e.message
-      )
-
-###
 
   socket.on 'createRoom', (o, fn) ->
     room = rooms[o.roomId]
