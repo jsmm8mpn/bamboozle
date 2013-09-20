@@ -5,13 +5,19 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
 
+    concurrent:
+      dev:
+        tasks: ['nodemon:dev', 'watch']
+        options:
+          logConcurrentOutput: true
+
     nodemon:
       dev:
         options:
           file: 'server.coffee'
           nodeArgs: []
           watchedExtensions: ['coffee']
-          watchedFolders: ['routes']
+          watchedFolders: ['routes', './']
       debug:
         options:
           file: 'server.coffee'
@@ -22,8 +28,8 @@ module.exports = (grunt) ->
     watch:
       options:
         livereload: true
-      server:
-        files: ["server.coffee", "routes/*.coffee"]
+      #server:
+      #  files: ["server.coffee", "routes/*.coffee"]
       javascript:
         files: ["client/coffee/*.coffee"]
         tasks: "coffee"
@@ -69,6 +75,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-mocha-cli"
   #grunt.loadNpmTasks "grunt-plato"
   grunt.loadNpmTasks 'grunt-nodemon'
+  grunt.loadNpmTasks 'grunt-concurrent'
 
 
   grunt.registerTask 'test', ['mochacli']
@@ -82,7 +89,7 @@ module.exports = (grunt) ->
       done()
     )
 
-  grunt.registerTask 'serverDev', ['compile', 'nodemon:dev', 'watch']
+  grunt.registerTask 'serverDev', ['compile', 'concurrent:dev']
 
   grunt.registerTask 'start', ->
     require('./server')
