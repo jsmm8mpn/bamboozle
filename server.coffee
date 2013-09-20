@@ -11,7 +11,6 @@ fs = require 'fs'
 less = require 'less-middleware',
 passport = require 'passport',
 GoogleStrategy = require('passport-google').Strategy
-passportSocketIo = require "passport.socketio"
 
 passport.serializeUser( (user, done) ->
   done(null, user)
@@ -117,20 +116,18 @@ app.get '/h', (req, res) ->
   res.render(__dirname+'/view/hindex.jade')
 
 io.configure( ->
-  io.set("authorization", passportSocketIo.authorize(
-    cookieParser: express.cookieParser
-    key:    'express.sid' #the cookie where express (or connect) stores its session id.
-    secret: 'secret' #the session secret to parse the cookie
-    store:   sessionStore     #the session store that express uses
-    fail: (data, accept) ->
-      #console.log("failed")
-      #console.log(data);// *optional* callbacks on success or fail
-      accept(null, false) #second param takes boolean on whether or not to allow handshake
-    success: (data, accept) ->
-      console.log("success socket.io auth");
-      console.log(JSON.stringify(data));
-      accept(null, true)
-  ))
+  io.set("authorization", (data, accept) ->
+    myCookieParser = express.cookieParser('secret')
+    res =
+      headers:
+        cookie: data.headers.cookie
+    myCookieParser(res, null, (err) ->
+      sessionStore.get(res.signedCookies['express.sid'], (err, session) ->
+        data.user = session.passport.user;
+        accept(null, true)
+      )
+    )
+  )
 )
 
 io.sockets.on 'connection', (socket) ->

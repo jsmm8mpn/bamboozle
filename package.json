@@ -29,8 +29,7 @@
     "coffee-middleware": "*",
     "less-middleware": "*",
     "passport": "*",
-    "passport-google": "*",
-    "passport.socketio": "*"
+    "passport-google": "*"
   },
   "devDependencies": {
     "grunt": "*",
