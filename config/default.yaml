@@ -1,0 +1,9 @@
+server: 
+  host: 'localhost'
+  port: '8080'
+socket:
+  host: 'localhost'
+  port: '8080'
+auth:
+  enabled: true
+  realm: 'http://localhost:8080'
