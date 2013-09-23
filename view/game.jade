@@ -1,0 +1,35 @@
+#game
+  #mainDiv
+    table
+      tr
+        td
+          #timer
+          #board
+          input#wordInput(type='text')
+          #wordResult
+        td
+          #wordList
+  #results
+  #startDiv
+    input.button(type='button', value='Ready')
+  #quitDiv
+    input.button(type='button', value='Vote Quit')
+
+  #publicField.field
+    label(for='public') Public Room:
+    input(type='checkbox', name='public')
+  #settingsDiv
+    a.toggler(href='#') Settings
+    .toggled
+      .setting(name='timeLimit') Time Limit
+        input(type='text', name='timeLimit', size='3', value='90')
+      .setting(name='minWordLength') Min Word Length
+        input(type='text', name='minWordLength', size='1', value='3')
+      .setting(name='allowPlural') Allow Plural
+        input(type='checkbox', name='allowPlural')
+      .setting(name='negativePoints') Negative Points
+        input(type='checkbox', name='negativePoints')
+      .setting(name='restartAllowed') Vote Restart Allowed
+        input(type='checkbox', name='restartAllowed')
+      input.button(type='button', value='Change Settings')
+

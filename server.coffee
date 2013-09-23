@@ -117,11 +117,11 @@ app.get '/', ensureAuthenticated, (req, res) ->
 app.get '/h', (req, res) ->
   res.render(__dirname+'/view/hindex.jade')
 
-app.get '/a', (req, res) ->
+app.get '/a', ensureAuthenticated, (req, res) ->
   res.render(__dirname+'/view/aindex.jade')
 
-app.get '/rooms', (req, res) ->
-  res.render(__dirname+'/view/rooms.jade')
+app.get '/view/:name', (req, res) ->
+  res.render(__dirname+'/view/' + req.params.name + '.jade')
 
 io.configure( ->
   io.set("authorization", (data, accept) ->
@@ -131,10 +131,13 @@ io.configure( ->
         cookie: data.headers.cookie
     myCookieParser(res, null, (err) ->
       sessionStore.get(res.signedCookies['express.sid'], (err, session) ->
-        deserializeUser(session.passport.user, (err, player) ->
-          data.player = player
-          accept(null, true)
-        )
+        if (session)
+          deserializeUser(session.passport.user, (err, player) ->
+            data.player = player
+            accept(null, true)
+          )
+        else
+          accept('session cannot be found', false)
       )
     )
   )

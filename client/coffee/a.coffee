@@ -1,8 +1,10 @@
 angular.module('bamboozle', []).config(['$routeProvider', ($routeProvider) ->
   $routeProvider.when('/rooms',
-    templateUrl: 'rooms'
-    controller: ($scope) ->
-      $scope.rooms = [{name: 'r1'}]
+    templateUrl: 'view/rooms'
+    controller: RoomListCtrl
+  ).when('/room/:roomId',
+    templateUrl: 'view/game'
+    controller: RoomCtrl
   ).otherwise(
     redirectTo: '/rooms'
   )
