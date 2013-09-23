@@ -117,6 +117,12 @@ app.get '/', ensureAuthenticated, (req, res) ->
 app.get '/h', (req, res) ->
   res.render(__dirname+'/view/hindex.jade')
 
+app.get '/a', (req, res) ->
+  res.render(__dirname+'/view/aindex.jade')
+
+app.get '/rooms', (req, res) ->
+  res.render(__dirname+'/view/rooms.jade')
+
 io.configure( ->
   io.set("authorization", (data, accept) ->
     myCookieParser = express.cookieParser('secret')
