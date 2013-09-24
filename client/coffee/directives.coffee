@@ -14,6 +14,6 @@ myDir.directive('roomList', ->
     restrict: 'A'
     templateUrl: 'view/roomList'
     link: (scope, elem, attrs) ->
-      scope.rooms = [{name: 'r1'}, {name: 'r2'}]
+      #scope.rooms = [{name: 'r1'}, {name: 'r2'}]
   }
 )

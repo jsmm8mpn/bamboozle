@@ -1,88 +1,18 @@
+socket = io.connect("http://localhost:8080")
+
 @RoomListCtrl = ($scope) ->
-  $scope.rooms = [{name: 'r1'}, {name: 'r2'}]
+
+  socket.on 'rooms', (rooms) ->
+    console.log('setting rooms: ' + rooms.length)
+    $scope.$apply( ->
+      $scope.rooms = rooms
+    )
+
 
 @RoomCtrl = ($scope, $routeParams) ->
   timerId = undefined
   timeLeft = undefined
   roomId = $routeParams.roomId
-
-  $ ->
-    socket = io.connect("http://localhost:8080")
-    socket.on "game", setupGame
-    socket.on "letters", onLetters
-    socket.on 'time', updateTime
-    socket.on 'results', writeResults
-    socket.on 'restart', restartGame
-    socket.on 'players', updatePlayers
-
-    # TODO: disable settings for non-master
-    #$('#settingsDiv input').prop('disabled', true)
-
-    $('#publicField').on('click', 'input', ->
-      socket.emit 'public', $(this).prop('checked')
-    )
-
-    $('.toggler').on('click', ->
-      $(this).parent().find('.toggled').slideToggle()
-    )
-
-    $('#settingsDiv').on('click', '.button', ->
-      values = {}
-      settings = $('.setting').each ->
-        name = $(this).attr('name')
-        if (name)
-          settingValue = $(this).find('input')[0].value
-          values[name] = settingValue
-
-      socket.emit 'settings', values
-    )
-
-    $('#startDiv').on('click', '.button', ->
-      clearResults()
-      socket.emit "ready"
-    )
-
-    $('#quitDiv').on('click', '.button', ->
-      hide "quitDiv"
-      socket.emit "voteRestart"
-    )
-
-    $('#wordInput').on('keypress', (e) ->
-      if e and e.keyCode is 13
-        word = $("#wordInput").val()
-
-        socket.emit "word", word, (result) ->
-          if result.success
-            $("#wordList").append("<li>" + word + "</li>")
-            $("#wordResult").html("word is valid")
-          else
-            $("#wordResult").html(result.error)
-
-        $("#wordInput").val("")
-    )
-
-    console.log('the room: ' + roomId)
-
-    socket.emit 'join',
-      roomId: roomId
-    , (data) ->
-      if data.success
-        show 'game'
-      else
-        console.log('could not register: ' + data.error)
-        if data.error is 'roomDoesNotExist'
-          #if confirm('Room does not exist. Do you want to create it?')
-          socket.emit 'createRoom',
-            roomId: roomId
-          , (data) ->
-            if data.success
-              socket.emit 'join',
-                roomId: roomId
-              , (data) ->
-                if data.success
-                  show 'game'
-
-    $("#startDiv").show()
 
   restartGame = (game) ->
     console.log('restarting game...')
@@ -91,6 +21,7 @@
     setupGame(game)
 
   setupGame = (game) ->
+    console.log('setting up game')
     startTimer game.timeLeft, game.timeLimit
     hide "startDiv"
     if game.letters
@@ -185,3 +116,81 @@
     regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
     results = regex.exec(location.search)
     (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
+
+  $ ->
+    #socket = io.connect("http://localhost:8080")
+    socket.on "game", setupGame
+    socket.on "letters", onLetters
+    socket.on 'time', updateTime
+    socket.on 'results', writeResults
+    socket.on 'restart', restartGame
+    socket.on 'players', updatePlayers
+
+    # TODO: disable settings for non-master
+    #$('#settingsDiv input').prop('disabled', true)
+
+    $('#publicField').on('click', 'input', ->
+      socket.emit 'public', $(this).prop('checked')
+    )
+
+    $('.toggler').on('click', ->
+      $(this).parent().find('.toggled').slideToggle()
+    )
+
+    $('#settingsDiv').on('click', '.button', ->
+      values = {}
+      settings = $('.setting').each ->
+        name = $(this).attr('name')
+        if (name)
+          settingValue = $(this).find('input')[0].value
+          values[name] = settingValue
+
+      socket.emit 'settings', values
+    )
+
+    $('#startDiv').on('click', '.button', ->
+      clearResults()
+      socket.emit "ready"
+    )
+
+    $('#quitDiv').on('click', '.button', ->
+      hide "quitDiv"
+      socket.emit "voteRestart"
+    )
+
+    $('#wordInput').on('keypress', (e) ->
+      if e and e.keyCode is 13
+        word = $("#wordInput").val()
+
+        socket.emit "word", word, (result) ->
+          if result.success
+            $("#wordList").append("<li>" + word + "</li>")
+            $("#wordResult").html("word is valid")
+          else
+            $("#wordResult").html(result.error)
+
+        $("#wordInput").val("")
+    )
+
+    socket.emit 'join',
+      roomId: roomId
+    , (data) ->
+      if data.success
+        show 'game'
+      else
+        console.log('could not register: ' + data.error)
+        if data.error is 'roomDoesNotExist'
+          #if confirm('Room does not exist. Do you want to create it?')
+          socket.emit 'createRoom',
+            roomId: roomId
+          , (data) ->
+            if data.success
+              socket.emit 'join',
+                roomId: roomId
+              , (data) ->
+                if data.success
+                  show 'game'
+
+    $("#startDiv").show()
+
+

@@ -21,6 +21,14 @@ class Room
       negativePoints: false
       restartAllowed: true
 
+  serialize: ->
+    return {
+      name: @name
+      settings: @settings
+      numPlayers: @numPlayers
+      active: (@currentGame != undefined)
+    }
+
   register: (player) ->
     #if @players[userId]
     #  throw new Error 'username is already taken'

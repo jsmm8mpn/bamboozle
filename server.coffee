@@ -143,11 +143,20 @@ io.configure( ->
   )
 )
 
+getRooms = ->
+  roomList = [{name: 'room1'},{name: 'crazy'}]
+  for id,room of rooms
+    if room.public
+      roomList.push room.serialize()
+  return roomList
+
 io.sockets.on 'connection', (socket) ->
   console.log('socket user: ' + JSON.stringify(socket.handshake.player))
 
   player = socket.handshake.player
   player.socket = socket
+
+  socket.emit 'rooms', getRooms()
 
   socket.on 'join', (o, fn) ->
     room = rooms[o.roomId]
@@ -180,6 +189,7 @@ io.sockets.on 'connection', (socket) ->
       fn(
         success: true
       )
+      socket.broadcast.emit 'rooms', getRooms()
 
   socket.on 'ready', ->
     room = rooms[socket.room]
@@ -194,6 +204,7 @@ io.sockets.on 'connection', (socket) ->
     room = rooms[socket.room]
     if room.master == socket.username
       room.public = value
+      socket.broadcast.emit 'rooms', getRooms()
 
   socket.on 'voteRestart', ->
     room = rooms[socket.room]
