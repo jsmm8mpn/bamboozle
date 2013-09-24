@@ -1,4 +1,4 @@
-angular.module('bamboozle', []).config(['$routeProvider', ($routeProvider) ->
+angular.module('bamboozle', ['myDir']).config(['$routeProvider', ($routeProvider) ->
   $routeProvider.when('/rooms',
     templateUrl: 'view/rooms'
     controller: RoomListCtrl
