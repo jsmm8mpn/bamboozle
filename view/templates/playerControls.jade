@@ -7,7 +7,7 @@
   label(for='public') Public Room:
   input(type='checkbox', name='public', ng-model='public', ng-change='changePublic()')
 #settingsDiv
-  a.toggler(href='#') Settings
+  a.toggler(href='', ng-click='toggleSettings()') Settings
   .toggled
     .setting(name='timeLimit') Time Limit
       input(type='text', name='timeLimit', size='3', value='90')
