@@ -48,6 +48,14 @@ module.exports = (grunt) ->
         files:
           "public/stylesheets/client.css": "client/stylesheets/*.less"
 
+    jade:
+      dev:
+        options:
+          data:
+            debug: true
+        files:
+          "public/html/templates.html": "view/*.jade"
+
     uglify:
       prod:
         files:
@@ -69,6 +77,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-less"
+  grunt.loadNpmTasks "grunt-contrib-jade"
   grunt.loadNpmTasks "grunt-contrib-clean"
   #grunt.loadNpmTasks "grunt-contrib-concat"
   grunt.loadNpmTasks "grunt-contrib-uglify"

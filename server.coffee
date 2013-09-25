@@ -66,6 +66,7 @@ app.use(express.session(
 app.use(passport.initialize())
 app.use(passport.session())
 
+#app.use('/view', express.static(__dirname + '/view'));
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
@@ -120,8 +121,9 @@ app.get '/h', (req, res) ->
 app.get '/a', ensureAuthenticated, (req, res) ->
   res.render(__dirname+'/view/aindex.jade')
 
-app.get '/view/:name', (req, res) ->
-  res.render(__dirname+'/view/' + req.params.name + '.jade')
+app.get '/view/*', (req, res) ->
+  console.log(JSON.stringify(req.params))
+  res.render(__dirname+'/view/' + req.params[0] + '.jade')
 
 io.configure( ->
   io.set("authorization", (data, accept) ->
