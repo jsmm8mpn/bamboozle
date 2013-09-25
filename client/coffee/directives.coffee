@@ -3,7 +3,7 @@ myDir = angular.module('myDir', [])
 myDir.directive('playerList', ->
   return {
     restrict: 'A'
-    templateUrl: 'view/playerList'
+    templateUrl: 'view/templates/playerList'
     link: (scope, elem, attrs) ->
 
   }
@@ -12,7 +12,7 @@ myDir.directive('playerList', ->
 myDir.directive('roomList', ->
   return {
     restrict: 'A'
-    templateUrl: 'view/roomList'
+    templateUrl: 'view/templates/roomList'
     link: (scope, elem, attrs) ->
 
   }
@@ -25,7 +25,7 @@ myDir.directive('board', ->
 
 myDir.directive('timer', ->
   return {
-    templateUrl: 'view/timer'
+    templateUrl: 'view/templates/timer'
     link: (scope, elem, attrs) ->
 
   }
@@ -33,6 +33,31 @@ myDir.directive('timer', ->
 
 myDir.directive('wordInput', ->
   return {
-    templateUrl: 'view/wordInput'
+    templateUrl: 'view/templates/wordInput'
+  }
+)
+
+myDir.directive('wordList', ->
+  return {
+    templateUrl: 'view/templates/wordList'
+  }
+)
+
+myDir.directive('results', ->
+  return {
+    templateUrl: 'view/templates/results'
+  }
+)
+
+myDir.directive('playerResult', ->
+  return {
+    templateUrl: 'view/templates/playerResult'
+  }
+)
+
+myDir.directive('playerControls', ->
+  return {
+    restrict: 'A'
+    templateUrl: 'view/templates/playerControls'
   }
 )

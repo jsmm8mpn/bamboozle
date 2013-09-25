@@ -10,6 +10,19 @@ socket = io.connect("http://localhost:8080")
 
 
 @RoomCtrl = ($scope, $routeParams) ->
+
+  $scope.ready = ->
+    console.log('i ready')
+    clearResults()
+    socket.emit "ready"
+
+  $scope.quit = ->
+    hide "quitDiv"
+    socket.emit "voteRestart"
+
+  $scope.changePublic = ->
+    socket.emit 'public', $(this).prop('checked')
+
   timerId = undefined
   timeLeft = undefined
   roomId = $routeParams.roomId
@@ -129,10 +142,6 @@ socket = io.connect("http://localhost:8080")
     # TODO: disable settings for non-master
     #$('#settingsDiv input').prop('disabled', true)
 
-    $('#publicField').on('click', 'input', ->
-      socket.emit 'public', $(this).prop('checked')
-    )
-
     $('.toggler').on('click', ->
       $(this).parent().find('.toggled').slideToggle()
     )
@@ -148,19 +157,10 @@ socket = io.connect("http://localhost:8080")
       socket.emit 'settings', values
     )
 
-    $('#startDiv').on('click', '.button', ->
-      clearResults()
-      socket.emit "ready"
-    )
-
-    $('#quitDiv').on('click', '.button', ->
-      hide "quitDiv"
-      socket.emit "voteRestart"
-    )
-
     $('#wordInput').on('keypress', (e) ->
       if e and e.keyCode is 13
         word = $("#wordInput").val()
+        console.log('word submitted: ' + word)
 
         socket.emit "word", word, (result) ->
           if result.success
@@ -190,7 +190,5 @@ socket = io.connect("http://localhost:8080")
               , (data) ->
                 if data.success
                   show 'game'
-
-    $("#startDiv").show()
 
 
