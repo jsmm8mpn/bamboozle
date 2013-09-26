@@ -79,7 +79,7 @@
       <option name="description" value="Compiles .coffee files into .js files" />
       <option name="exitCodeBehavior" value="ERROR" />
       <option name="fileExtension" value="coffee" />
-      <option name="immediateSync" value="true" />
+      <option name="immediateSync" value="false" />
       <option name="name" value="CoffeeScript" />
       <option name="output" value="$FileNameWithoutExtension$.js:$FileNameWithoutExtension$.map" />
       <option name="outputFilters">
@@ -101,11 +101,12 @@
     <library name="Generated files" type="javaScript">
       <properties>
         <sourceFilesUrls>
-          <item url="file://$PROJECT_DIR$/client/coffee/controllers.js" />
           <item url="file://$PROJECT_DIR$/routes/player.js" />
+          <item url="file://$PROJECT_DIR$/client/coffee/controllers.js" />
           <item url="file://$PROJECT_DIR$/routes/simple-rest.js" />
           <item url="file://$PROJECT_DIR$/routes/game.js" />
           <item url="file://$PROJECT_DIR$/Gruntfile.js" />
+          <item url="file://$PROJECT_DIR$/client/coffee/services.js" />
           <item url="file://$PROJECT_DIR$/routes/game-room.js" />
           <item url="file://$PROJECT_DIR$/client/coffee/directives.js" />
           <item url="file://$PROJECT_DIR$/server.js" />
@@ -113,11 +114,12 @@
         </sourceFilesUrls>
       </properties>
       <CLASSES>
-        <root url="file://$PROJECT_DIR$/routes/player.js" />
         <root url="file://$PROJECT_DIR$/client/coffee/controllers.js" />
+        <root url="file://$PROJECT_DIR$/routes/player.js" />
         <root url="file://$PROJECT_DIR$/routes/simple-rest.js" />
         <root url="file://$PROJECT_DIR$/routes/game.js" />
         <root url="file://$PROJECT_DIR$/Gruntfile.js" />
+        <root url="file://$PROJECT_DIR$/client/coffee/services.js" />
         <root url="file://$PROJECT_DIR$/routes/game-room.js" />
         <root url="file://$PROJECT_DIR$/server.js" />
         <root url="file://$PROJECT_DIR$/client/coffee/directives.js" />

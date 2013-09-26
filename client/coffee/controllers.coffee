@@ -11,6 +11,11 @@ socket = io.connect("http://localhost:8080")
 
 @RoomCtrl = ($scope, $routeParams) ->
 
+  $scope.wordList = []
+  #$scope.$watchCollection('wordList', (newValue, oldValue) ->
+  #  console.log('blah')
+  #)
+
   $scope.ready = ->
     console.log('i ready')
     clearResults()
@@ -37,7 +42,8 @@ socket = io.connect("http://localhost:8080")
     word = $scope.word
     socket.emit "word", word, (result) ->
       if result.success
-        $("#wordList").append("<li>" + word + "</li>")
+        #$("#wordList").append("<li>" + word + "</li>")
+        $scope.addWord(word)
         $("#wordResult").html("word is valid")
       else
         $("#wordResult").html(result.error)
@@ -58,7 +64,7 @@ socket = io.connect("http://localhost:8080")
 
   setupGame = (game) ->
     console.log('setting up game')
-    startTimer game.timeLeft, game.timeLimit
+    $scope.startTimer game.timeLeft, game.timeLimit
     hide "startDiv"
     if game.letters
       onLetters(game.letters)
@@ -102,6 +108,7 @@ socket = io.connect("http://localhost:8080")
     hide "results"
     show "mainDiv"
 
+    ###
   startTimer = (serverTimeLeft, timeLimit) ->
     timeLeft = serverTimeLeft
     #console.log(timeLeft + ', ' + timeLimit)
@@ -112,9 +119,11 @@ socket = io.connect("http://localhost:8080")
       if secondsLeft > timeLimit
         secondsLeft = secondsLeft - timeLimit
       else $("#timer").toggleClass("timer-warn")  if secondsLeft < 15
-      $("#timer").html(secondsLeft)
+      #$("#timer").html(secondsLeft)
+      $scope.updateTime(secondsLeft)
       timerExpired()  if secondsLeft is 0
     , 1000)
+
 
   timerExpired = ->
     hide "quitDiv"
@@ -123,9 +132,11 @@ socket = io.connect("http://localhost:8080")
     clearInterval @timerId
   #getResults()
 
+###
+
   updateTime = (time) ->
     #console.log('time left: ' + time)
-    timeLeft = time
+    $scope.updateTime(time)
 
   writeResults = (results) ->
     html = ""

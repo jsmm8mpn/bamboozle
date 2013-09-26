@@ -27,7 +27,27 @@ myDir.directive('timer', ->
   return {
     templateUrl: 'view/templates/timer'
     link: (scope, elem, attrs) ->
+      scope.updateTime = (timeLeft) ->
+        scope.timer = timeLeft
+        scope.$apply()
 
+      scope.startTimer = (serverTimeLeft, timeLimit) ->
+        scope.timer = serverTimeLeft
+        show "timer"
+        timerId = setInterval(->
+          scope.timer = scope.timer - 1
+          secondsLeft = scope.timer
+          if secondsLeft > timeLimit
+            secondsLeft = secondsLeft - timeLimit
+          else $("#timer").toggleClass("timer-warn")  if secondsLeft < 15
+          #$("#timer").html(secondsLeft)
+          scope.timeLeft = secondsLeft
+          scope.$apply()
+          if secondsLeft is 0
+            hide "quitDiv"
+            hide "wordInput"
+            clearInterval timerId
+        , 1000)
   }
 )
 
@@ -40,6 +60,10 @@ myDir.directive('wordInput', ->
 myDir.directive('wordList', ->
   return {
     templateUrl: 'view/templates/wordList'
+    link: (scope, elem, attrs) ->
+      scope.addWord = (word) ->
+        scope.wordList.push(word)
+        scope.$apply()
   }
 )
 
