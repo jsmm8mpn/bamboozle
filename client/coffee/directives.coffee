@@ -20,6 +20,8 @@ myDir.directive('roomList', ->
 
 myDir.directive('board', ->
   return  (scope, elem, attrs) ->
+    scope.showBoard = false
+
     scope.$on('letters', (event, letters) ->
       table = "<table>"
       y = 0
@@ -35,6 +37,12 @@ myDir.directive('board', ->
         y++
       table += "</table>"
       elem.html(table)
+
+      scope.showBoard = true
+    )
+
+    scope.$on('results', ->
+      scope.showBoard = false
     )
 )
 
@@ -67,6 +75,19 @@ myDir.directive('timer', ->
 myDir.directive('wordInput', ->
   return {
     templateUrl: 'view/templates/wordInput'
+    link: (scope, elem, attrs) ->
+      scope.$on('wordValid', (event, word) ->
+        scope.wordResult = 'word is valid'
+      )
+      scope.$on('wordError', (event, word, result) ->
+        scope.wordResult = result.error
+      )
+      scope.$on('results', ->
+        scope.wordResult = ''
+      )
+      scope.$on('game', ->
+        scope.wordResult = ''
+      )
   }
 )
 
@@ -74,9 +95,13 @@ myDir.directive('wordList', ->
   return {
     templateUrl: 'view/templates/wordList'
     link: (scope, elem, attrs) ->
-      scope.addWord = (word) ->
+      scope.wordList = []
+      scope.$on('wordValid', (event, word) ->
         scope.wordList.push(word)
-        #scope.$apply()
+      )
+      scope.$on('game', ->
+        scope.wordList = []
+      )
   }
 )
 
@@ -84,21 +109,23 @@ myDir.directive('results', ->
   return {
     templateUrl: 'view/templates/results'
     link: (scope, elem, attrs) ->
-      html = ""
-      for userId,result of results
-        playerWords = result.words
-        #playerWords.sort()
-        html += "<div class=\"playerResult\">"
-        html += "<h1>" + userId + "</h1>"
+      scope.$on('results', (event, results) ->
+        html = ""
+        for userId,result of results
+          playerWords = result.words
+          #playerWords.sort()
+          html += "<div class=\"playerResult\">"
+          html += "<h1>" + userId + "</h1>"
 
-        for word,scored of playerWords
-          if scored
-            html += "<li class=\"scored\">" + word + "</li>"
-          else
-            html += "<li class=\"unscored\">" + word + "</li>"
-        html += "<div class=\"score\">" + result.score + "</div>"
-        html += "</div>"
-      elem.html(html)
+          for word,scored of playerWords
+            if scored
+              html += "<li class=\"scored\">" + word + "</li>"
+            else
+              html += "<li class=\"unscored\">" + word + "</li>"
+          html += "<div class=\"score\">" + result.score + "</div>"
+          html += "</div>"
+        elem.html(html)
+      )
   }
 )
 

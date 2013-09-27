@@ -11,8 +11,6 @@
 
 @RoomCtrl = ($scope, $routeParams, socket) ->
 
-  $scope.wordList = []
-
   $scope.ready = ->
     console.log('i ready')
     clearResults()
@@ -29,7 +27,6 @@
       if (name)
         settingValue = $(this).find('input')[0].value
         values[name] = settingValue
-
     socket.emit 'settings', values
 
   $scope.changePublic = ->
@@ -39,42 +36,36 @@
     word = $scope.word
     socket.emit "word", word, (result) ->
       if result.success
-        #$("#wordList").append("<li>" + word + "</li>")
-        $scope.addWord(word)
-        $("#wordResult").html("word is valid")
+        $scope.$broadcast('wordValid', word, result)
       else
-        $("#wordResult").html(result.error)
+        $scope.$broadcast('wordError', word, result)
     $scope.word = ''
 
   $scope.toggleSettings = ->
     $('.toggled').slideToggle()
 
-  timerId = undefined
-  timeLeft = undefined
   roomId = $routeParams.roomId
 
   restartGame = (game) ->
     console.log('restarting game...')
-    clearInterval timerId
+    $scope.$broadcast('restart')
     clearResults()
     setupGame(game)
 
   setupGame = (game) ->
     console.log('setting up game')
-    #$scope.startTimer game.timeLeft, game.timeLimit
     $scope.$broadcast 'game', game
     hide "startDiv"
     if game.letters
       onLetters(game.letters)
 
   onLetters = (letters) ->
-    #populateBoard letters
     $scope.$broadcast('letters', letters)
     displayBoard()
     show "quitDiv"
 
   updatePlayers = (players) ->
-    console.log('received player update: ' + JSON.stringify(players))
+    $scope.$broadcast('players', players)
 
   displayBoard = ->
     show "mainDiv"
@@ -82,11 +73,11 @@
     $("#wordInput").focus()
 
   clearResults = ->
-    clear "board"
-    clear "wordList"
-    clear "wordResult"
+    #clear "board"
+    #clear "wordList"
+    #clear "wordResult"
     clear "results"
-    clear "timer"
+    #clear "timer"
 
     hide "results"
     show "mainDiv"
@@ -104,12 +95,6 @@
     hide "mainDiv"
     show "results"
     show "startDiv"
-
-  getParameterByName = (name) ->
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
-    regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
-    results = regex.exec(location.search)
-    (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
 
   socket.on "game", setupGame
   socket.on "letters", onLetters
