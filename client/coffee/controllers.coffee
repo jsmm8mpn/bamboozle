@@ -1,4 +1,4 @@
-socket = io.connect("http://localhost:8080")
+#socket = io.connect("http://localhost:8080")
 
 @RoomListCtrl = ($scope) ->
 
@@ -9,12 +9,9 @@ socket = io.connect("http://localhost:8080")
     )
 
 
-@RoomCtrl = ($scope, $routeParams) ->
+@RoomCtrl = ($scope, $routeParams, socket) ->
 
   $scope.wordList = []
-  #$scope.$watchCollection('wordList', (newValue, oldValue) ->
-  #  console.log('blah')
-  #)
 
   $scope.ready = ->
     console.log('i ready')
@@ -64,34 +61,20 @@ socket = io.connect("http://localhost:8080")
 
   setupGame = (game) ->
     console.log('setting up game')
-    $scope.startTimer game.timeLeft, game.timeLimit
+    #$scope.startTimer game.timeLeft, game.timeLimit
+    $scope.$broadcast 'game', game
     hide "startDiv"
     if game.letters
       onLetters(game.letters)
 
   onLetters = (letters) ->
-    populateBoard letters
+    #populateBoard letters
+    $scope.$broadcast('letters', letters)
     displayBoard()
     show "quitDiv"
 
   updatePlayers = (players) ->
     console.log('received player update: ' + JSON.stringify(players))
-
-  populateBoard = (letters) ->
-    table = "<table>"
-    y = 0
-
-    while y < letters.length
-      table += "<tr>"
-      x = 0
-
-      while x < letters[y].length
-        table += "<td>" + letters[y][x] + "</td>"
-        x++
-      table += "</tr>"
-      y++
-    table += "</table>"
-    $('#board').html(table)
 
   displayBoard = ->
     show "mainDiv"
@@ -108,52 +91,16 @@ socket = io.connect("http://localhost:8080")
     hide "results"
     show "mainDiv"
 
-    ###
-  startTimer = (serverTimeLeft, timeLimit) ->
-    timeLeft = serverTimeLeft
-    #console.log(timeLeft + ', ' + timeLimit)
-    show "timer"
-    timerId = setInterval(->
-      timeLeft = timeLeft - 1
-      secondsLeft = timeLeft
-      if secondsLeft > timeLimit
-        secondsLeft = secondsLeft - timeLimit
-      else $("#timer").toggleClass("timer-warn")  if secondsLeft < 15
-      #$("#timer").html(secondsLeft)
-      $scope.updateTime(secondsLeft)
-      timerExpired()  if secondsLeft is 0
-    , 1000)
-
-
-  timerExpired = ->
+  $scope.$on('timerExpired', (event, timerExpired)->
     hide "quitDiv"
     hide "wordInput"
-    #hide "results"
-    clearInterval @timerId
-  #getResults()
-
-###
+  )
 
   updateTime = (time) ->
-    #console.log('time left: ' + time)
-    $scope.updateTime(time)
+    $scope.$broadcast('updateTime', time)
 
   writeResults = (results) ->
-    html = ""
-    for userId,result of results
-      playerWords = result.words
-      #playerWords.sort()
-      html += "<div class=\"playerResult\">"
-      html += "<h1>" + userId + "</h1>"
-
-      for word,scored of playerWords
-        if scored
-          html += "<li class=\"scored\">" + word + "</li>"
-        else
-          html += "<li class=\"unscored\">" + word + "</li>"
-      html += "<div class=\"score\">" + result.score + "</div>"
-      html += "</div>"
-    $("#results").html(html)
+    $scope.$broadcast('results', results)
     hide "mainDiv"
     show "results"
     show "startDiv"
