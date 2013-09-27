@@ -1,14 +1,17 @@
-#playerList(player-list)
-
-#game
-  #mainDiv
-    table
-      tr
-        td
-          #timer(timer)
-          #board(board ng-show='showBoard')
-          #wordInput(word-input)
-        td
-          #wordList(word-list)
-  #results(results)
-  #playerControls(player-controls)
+table
+ tr
+  td
+    #playerList(player-list)
+  td
+    #game
+      #mainDiv
+        table
+          tr
+            td
+              #timer(timer)
+              #board(board ng-show='showBoard')
+              #wordInput(word-input)
+            td
+              #wordList(word-list)
+      #results(results)
+      #playerControls(player-controls)

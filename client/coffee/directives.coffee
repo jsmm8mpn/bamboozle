@@ -5,6 +5,9 @@ myDir.directive('playerList', ->
     restrict: 'A'
     templateUrl: 'view/templates/playerList'
     link: (scope, elem, attrs) ->
+      scope.$on('players', (event, players) ->
+        scope.players = players
+      )
 
   }
 )
