@@ -1,53 +1,12 @@
 !!! 5
 html
   head
-    link(type='text/css', rel='stylesheet', href='../stylesheets/client.css')
-    script(src="http://code.jquery.com/jquery-1.10.2.min.js")
-    script(src="../socket.io/socket.io.js")
-    script(src="../javascripts/client.js")
-    script
-      var roomId = '#{roomId}';
-  body
-    //#registration
-      #roomField.field
-        label(for='room') Room:
-        input(type='text', name='room', value='#{roomId}')
-      #usernameField.field
-        label(for='username') Username:
-        input(type='input' , name='username')
-      input.button(type='button', value='Enter')
-    #game
-      #mainDiv
-        table
-          tr
-            td
-              #timer
-              #board
-              input#wordInput(type='text')
-              #wordResult
-            td
-              #wordList
-      #results
-      #startDiv
-        input.button(type='button', value='Ready')
-      #quitDiv
-        input.button(type='button', value='Vote Quit')
+    link(type='text/css', rel='stylesheet', href='stylesheets/client.css')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
 
-      #publicField.field
-        label(for='public') Public Room:
-        input(type='checkbox', name='public')
-      #settingsDiv
-        a.toggler(href='#') Settings
-        .toggled
-          .setting(name='timeLimit') Time Limit
-            input(type='text', name='timeLimit', size='3', value='90')
-          .setting(name='minWordLength') Min Word Length
-            input(type='text', name='minWordLength', size='1', value='3')
-          .setting(name='allowPlural') Allow Plural
-            input(type='checkbox', name='allowPlural')
-          .setting(name='negativePoints') Negative Points
-            input(type='checkbox', name='negativePoints')
-          .setting(name='restartAllowed') Vote Restart Allowed
-            input(type='checkbox', name='restartAllowed')
-          input.button(type='button', value='Change Settings')
-        
+    script(src="http://code.jquery.com/jquery-1.10.2.min.js")
+    script(src="socket.io/socket.io.js")
+    script(src="javascripts/client.js")
+  body(ng-app='bamboozle')
+    div(ng-view)

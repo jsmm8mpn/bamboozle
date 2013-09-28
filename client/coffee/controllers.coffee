@@ -1,13 +1,10 @@
 #socket = io.connect("http://localhost:8080")
 
-@RoomListCtrl = ($scope) ->
+@RoomListCtrl = ($scope, $routeParams, socket) ->
 
   socket.on 'rooms', (rooms) ->
     console.log('setting rooms: ' + rooms.length)
-    $scope.$apply( ->
-      $scope.rooms = rooms
-    )
-
+    $scope.rooms = rooms
 
 @RoomCtrl = ($scope, $routeParams, socket) ->
 

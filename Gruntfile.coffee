@@ -40,8 +40,7 @@ module.exports = (grunt) ->
     coffee:
       compile:
         files:
-          "public/javascripts/client.js": ["client/coffee/helper.coffee"]
-          "public/javascripts/client2.js": ["client/coffee/a.coffee", "client/coffee/controllers.coffee", "client/coffee/directives.coffee", "client/coffee/services.coffee"]
+          "public/javascripts/client.js": ["client/coffee/app.coffee", "client/coffee/controllers.coffee", "client/coffee/directives.coffee", "client/coffee/services.coffee", "client/coffee/helper.coffee"]
 
     less:
       development:

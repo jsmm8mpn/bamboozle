@@ -101,25 +101,11 @@ app.get('/logout', (req, res) ->
   res.redirect('done')
 )
 
-app.get '/room/:room', ensureAuthenticated, (req, res) ->
-  res.render(__dirname+'/view/index.jade',
-    roomId: req.params.room
-  )
-
-app.get '/', ensureAuthenticated, (req, res) ->
-  roomList = []
-  for id,room of rooms
-    if room.public
-      roomList.push room
-  res.render(__dirname+'/view/selectRoom.jade',
-    rooms: roomList #TODO: filter to only public rooms
-  )
-
 app.get '/h', (req, res) ->
   res.render(__dirname+'/view/hindex.jade')
 
-app.get '/a', ensureAuthenticated, (req, res) ->
-  res.render(__dirname+'/view/aindex.jade')
+app.get '/', ensureAuthenticated, (req, res) ->
+  res.render(__dirname+'/view/index.jade')
 
 app.get '/view/*', (req, res) ->
   console.log(JSON.stringify(req.params))
