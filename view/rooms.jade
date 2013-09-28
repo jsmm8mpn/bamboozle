@@ -1,2 +1,5 @@
-h1 Game Rooms
+h2 Create New Room
+form(ng-submit='createRoom()')
+  input#roomInput(type='text', ng-model='newRoom')
+h2 Public Rooms
 div(room-list)
