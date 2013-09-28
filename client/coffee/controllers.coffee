@@ -70,7 +70,7 @@
     show "quitDiv"
 
   updatePlayers = (players) ->
-    $scope.$broadcast('players', players)
+    $scope.players = players
 
   displayBoard = ->
     show "mainDiv"

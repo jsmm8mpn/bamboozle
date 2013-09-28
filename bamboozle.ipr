@@ -103,6 +103,7 @@
         <sourceFilesUrls>
           <item url="file://$PROJECT_DIR$/routes/player.js" />
           <item url="file://$PROJECT_DIR$/client/coffee/controllers.js" />
+          <item url="file://$PROJECT_DIR$/client/coffee/app.js" />
           <item url="file://$PROJECT_DIR$/routes/simple-rest.js" />
           <item url="file://$PROJECT_DIR$/routes/game.js" />
           <item url="file://$PROJECT_DIR$/Gruntfile.js" />
@@ -114,8 +115,10 @@
         </sourceFilesUrls>
       </properties>
       <CLASSES>
+        <root url="file://$PROJECT_DIR$/client/coffee/a.js" />
         <root url="file://$PROJECT_DIR$/client/coffee/controllers.js" />
         <root url="file://$PROJECT_DIR$/routes/player.js" />
+        <root url="file://$PROJECT_DIR$/client/coffee/app.js" />
         <root url="file://$PROJECT_DIR$/routes/simple-rest.js" />
         <root url="file://$PROJECT_DIR$/routes/game.js" />
         <root url="file://$PROJECT_DIR$/Gruntfile.js" />
