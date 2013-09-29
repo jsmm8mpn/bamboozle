@@ -10,6 +10,7 @@ class Player
 
   serialize: ->
     res =
+      id: @name
       name: @displayName
       ready: @ready
       restart: @restart

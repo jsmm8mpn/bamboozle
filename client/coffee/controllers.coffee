@@ -70,7 +70,10 @@
     show "quitDiv"
 
   updatePlayers = (players) ->
-    $scope.players = players
+    playerObj = {}
+    for player in players
+      playerObj[player.id] = player
+    $scope.players = playerObj
 
   displayBoard = ->
     show "mainDiv"
@@ -96,7 +99,8 @@
     $scope.$broadcast('updateTime', time)
 
   writeResults = (results) ->
-    $scope.$broadcast('results', results)
+    $scope.results = results
+    #$scope.$broadcast('results', results)
     hide "mainDiv"
     show "results"
     show "startDiv"

@@ -107,25 +107,10 @@ myDir.directive('wordList', ->
 
 myDir.directive('results', ->
   return {
+    restrict: 'A'
     templateUrl: 'view/templates/results'
     link: (scope, elem, attrs) ->
-      scope.$on('results', (event, results) ->
-        html = ""
-        for userId,result of results
-          playerWords = result.words
-          #playerWords.sort()
-          html += "<div class=\"playerResult\">"
-          html += "<h1>" + userId + "</h1>"
 
-          for word,scored of playerWords
-            if scored
-              html += "<li class=\"scored\">" + word + "</li>"
-            else
-              html += "<li class=\"unscored\">" + word + "</li>"
-          html += "<div class=\"score\">" + result.score + "</div>"
-          html += "</div>"
-        elem.html(html)
-      )
   }
 )
 
