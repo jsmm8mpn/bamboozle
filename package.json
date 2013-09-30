@@ -36,6 +36,7 @@
     "grunt-contrib-watch": "*",
     "grunt-contrib-coffee": "*",
     "grunt-contrib-less": "*",
+    "grunt-contrib-copy": "*",
     "grunt-contrib-jade": "*",
     "grunt-contrib-clean": "*",
     "grunt-contrib-uglify": "*",

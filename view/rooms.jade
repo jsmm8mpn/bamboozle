@@ -1,5 +1,7 @@
 h2 Create New Room
 form(ng-submit='createRoom()')
-  input#roomInput(type='text', ng-model='newRoom')
+  fieldset
+    label New Room
+    input#roomInput(type='text', ng-model='newRoom', placeholder="Type something…")
 h2 Public Rooms
 div(room-list)

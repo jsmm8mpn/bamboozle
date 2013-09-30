@@ -5,6 +5,13 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
 
+    copy:
+      main:
+        expand: true
+        cwd: 'bower_components/bootstrap-css/'
+        src: ['**/*.js', '**/*.css', 'img/*']
+        dest: 'public/ext/bootstrap/'
+
     concurrent:
       dev:
         tasks: ['nodemon:dev', 'watch']
@@ -80,7 +87,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-clean"
   #grunt.loadNpmTasks "grunt-contrib-concat"
   grunt.loadNpmTasks "grunt-contrib-uglify"
-  #grunt.loadNpmTasks "grunt-contrib-copy"
+  grunt.loadNpmTasks "grunt-contrib-copy"
   grunt.loadNpmTasks "grunt-mocha-cli"
   #grunt.loadNpmTasks "grunt-plato"
   grunt.loadNpmTasks 'grunt-nodemon'
@@ -98,7 +105,7 @@ module.exports = (grunt) ->
       done()
     )
 
-  grunt.registerTask 'serverDev', ['compile', 'concurrent:dev']
+  grunt.registerTask 'serverDev', ['compile', 'copy', 'concurrent:dev']
 
   grunt.registerTask 'start', ->
     require('./server')
