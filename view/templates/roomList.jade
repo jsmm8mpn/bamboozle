@@ -1,2 +1,8 @@
-li(ng-repeat='room in rooms')
-  a(href="#/room/{{room.name}}") {{room.name}}
+table(class='table')
+  tr
+    th Name
+    th # Players
+  tr(ng-repeat='room in rooms')
+    td
+      a(href="#/room/{{room.name}}") {{room.name}}
+    td {{room.numPlayers}}

@@ -132,7 +132,7 @@ io.configure( ->
 )
 
 getRooms = ->
-  roomList = [{name: 'room1'},{name: 'crazy'}]
+  roomList = [{name: 'room1', numPlayers: 2},{name: 'crazy', numPlayers: 3}] #FIXME: Remove
   for id,room of rooms
     if room.public
       roomList.push room.serialize()

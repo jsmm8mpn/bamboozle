@@ -1,7 +1,8 @@
-h2 Create New Room
-form(ng-submit='createRoom()')
-  fieldset
-    label New Room
-    input#roomInput(type='text', ng-model='newRoom', placeholder="Type something…")
-h2 Public Rooms
-div(room-list)
+#roomCreation.centered
+  h3 Create New Room
+  form(ng-submit='createRoom()')
+    input#roomInput(class='form-control' type='text', ng-model='newRoom', placeholder="Create a new room...")
+    button(class='btn btn-primary btn-sm' type='button') Create Room
+#publicRoomList.centered
+  h3 Public Rooms
+  div(room-list)

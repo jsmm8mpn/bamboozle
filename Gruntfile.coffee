@@ -43,6 +43,8 @@ module.exports = (grunt) ->
       less:
         files: ['client/stylesheets/*.less']
         tasks: "less"
+      jade:
+        files: ['view/*.jade', 'view/templates/*.jade']
 
     coffee:
       compile:
