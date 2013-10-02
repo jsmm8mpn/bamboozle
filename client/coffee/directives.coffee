@@ -15,7 +15,6 @@ myDir.directive('createNewRoom', ['$timeout', 'socket', ($timeout, socket) ->
     templateUrl: 'view/templates/createNewRoom'
     link: (scope, elem, attrs) ->
 
-      ###
       scope.newRoomSubmitDisabled = true
 
       setRoomStatus = (error) ->
@@ -40,6 +39,8 @@ myDir.directive('createNewRoom', ['$timeout', 'socket', ($timeout, socket) ->
           if room and room.length > 0
             if room.length < 3
               setRoomStatus('Room name must be at least 3 characters')
+            else if not /^[a-z][a-z0-9]+$/.test(room)
+              setRoomStatus('Room name can only contain letters and numbers')
             else
               if timer
                 $timeout.cancel(timer)
@@ -52,8 +53,6 @@ myDir.directive('createNewRoom', ['$timeout', 'socket', ($timeout, socket) ->
                 )
               , 500)
       )
-
-###
   }
 ])
 

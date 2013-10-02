@@ -1,8 +1,12 @@
-form#roomCreationForm(ng-submit='createRoom()', name='roomCreationForm', novalidate, ng-class='newRoomStatus', ng-class="{'has-error': roomCreationForm.newRoom.$invalid, 'has-success': !roomCreationForm.newRoom.$invalid}")
-  //label(class='control-label', for='roomInput') Room Name
-  input#roomInput(class='form-control', type='text', name='newRoom', ng-model='newRoom', placeholder="Create a new room...", ng-required='true', ng-minlength='3', ng-maxlength='20', ng-pattern='/^[a-z0-9]*$/')
-  //span(class='help-block', ng-show='form.email.$error.required')
+form#roomCreationForm(ng-submit='createRoom()', ng-class='newRoomStatus')
+  input#roomInput(class='form-control', type='text', ng-model='newRoom', placeholder="Create a new room...")
+  span(class='help-block') {{newRoomError}}
+  button(class='btn btn-primary btn-sm', type='submit', ng-disabled='newRoomSubmitDisabled') Create Room
+
+//form#roomCreationForm(ng-submit='createRoom()', name='roomCreationForm', novalidate, ng-class='newRoomStatus', ng-class="{'has-error': roomCreationForm.$invalid, 'has-success': !roomCreationForm.$invalid}")
+  input#roomInput(class='form-control', type='text', name='newRoom', ng-model='newRoom', placeholder="Create a new room...", ng-minlength='3', ng-maxlength='20', ng-pattern='/^[a-z0-9]*$/')
   span(class='help-block', ng-show='roomCreationForm.newRoom.$error.minlength') Must be at least 3 characters
   span(class='help-block', ng-show='roomCreationForm.newRoom.$error.maxlength') Max length is 20 characters
   span(class='help-block', ng-show='roomCreationForm.newRoom.$error.pattern') May only contain lower case letters and numbers
-  button(class='btn btn-primary btn-sm', type='submit', ng-disabled='!roomCreationForm.$valid') Create Room
+  span(class='help-block', ng-show='roomCreationForm.newRoom.$error.taken') Room name is already taken
+  button(class='btn btn-primary btn-sm', type='submit', ng-disabled='!roomCreationForm.$valid || !newRoom.length') Create Room
