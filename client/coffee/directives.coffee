@@ -9,6 +9,54 @@ myDir.directive('playerList', ->
   }
 )
 
+myDir.directive('createNewRoom', ['$timeout', 'socket', ($timeout, socket) ->
+  return {
+    restrict: 'A'
+    templateUrl: 'view/templates/createNewRoom'
+    link: (scope, elem, attrs) ->
+
+      ###
+      scope.newRoomSubmitDisabled = true
+
+      setRoomStatus = (error) ->
+        if error
+          scope.newRoomStatus = 'has-error'
+          scope.newRoomError = error
+          scope.newRoomSubmitDisabled = true
+        else
+          scope.newRoomStatus = 'has-success'
+          scope.newRoomError = ''
+          scope.newRoomSubmitDisabled = false
+
+      clearRoomStatus = ->
+        scope.newRoomStatus = ''
+        scope.newRoomError = ''
+        scope.newRoomSubmitDisabled = true
+
+      timer = false
+      scope.$watch('newRoom', (room) ->
+        if room
+          clearRoomStatus()
+          if room and room.length > 0
+            if room.length < 3
+              setRoomStatus('Room name must be at least 3 characters')
+            else
+              if timer
+                $timeout.cancel(timer)
+              timer = $timeout( ->
+                socket.emit('checkRoomName', room, (valid) ->
+                  if valid == true
+                    setRoomStatus()
+                  else
+                    setRoomStatus('Room name is already taken')
+                )
+              , 500)
+      )
+
+###
+  }
+])
+
 myDir.directive('roomList', ->
   return {
     restrict: 'A'

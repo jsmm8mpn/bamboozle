@@ -166,9 +166,11 @@ io.sockets.on 'connection', (socket) ->
       )
 
   socket.on 'checkRoomName', (o, fn) ->
-    fn((rooms[o.roomId] == undefined))
+    fn((rooms[o] == undefined))
 
   socket.on 'createRoom', (o, fn) ->
+
+
     room = rooms[o.roomId]
     if room
       fn(

@@ -111,10 +111,11 @@
           <item url="file://$PROJECT_DIR$/routes/game-room.js" />
           <item url="file://$PROJECT_DIR$/client/coffee/directives.js" />
           <item url="file://$PROJECT_DIR$/server.js" />
-          <item url="file://$PROJECT_DIR$/client/coffee/a.js" />
+          <item url="file://$PROJECT_DIR$/client/coffee/validation.js" />
         </sourceFilesUrls>
       </properties>
       <CLASSES>
+        <root url="file://$PROJECT_DIR$/client/coffee/a.js" />
         <root url="file://$PROJECT_DIR$/client/coffee/a.js" />
         <root url="file://$PROJECT_DIR$/client/coffee/controllers.js" />
         <root url="file://$PROJECT_DIR$/routes/player.js" />
@@ -126,7 +127,7 @@
         <root url="file://$PROJECT_DIR$/routes/game-room.js" />
         <root url="file://$PROJECT_DIR$/server.js" />
         <root url="file://$PROJECT_DIR$/client/coffee/directives.js" />
-        <root url="file://$PROJECT_DIR$/client/coffee/a.js" />
+        <root url="file://$PROJECT_DIR$/client/coffee/validation.js" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
