@@ -1,8 +1,10 @@
 #roomCreation.centered
   h3 Create New Room
-  form(ng-submit='createRoom()')
-    input#roomInput(class='form-control' type='text', ng-model='newRoom', placeholder="Create a new room...")
-    button(class='btn btn-primary btn-sm' type='button') Create Room
+  form#roomCreationForm(ng-submit='createRoom()', ng-class='newRoomStatus')
+    //label(class='control-label', for='roomInput') Room Name
+    input#roomInput(class='form-control', type='text', ng-model='newRoom', placeholder="Create a new room...", ng-change='checkRoomName()')
+    span(class='help-block') {{newRoomError}}
+    button(class='btn btn-primary btn-sm', type='button', ng-disabled='newRoomSubmitDisabled') Create Room
 #publicRoomList.centered
   h3 Public Rooms
   div(room-list)

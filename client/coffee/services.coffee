@@ -14,3 +14,6 @@ myServices.factory "socket", ($rootScope) ->
       $rootScope.$apply ->
         callback.apply socket, args  if callback
 
+
+myServices.factory 'validationService', () ->
+  validateNewRoomName: (roomName) ->

@@ -2,7 +2,43 @@
 
 @RoomListCtrl = ($scope, $routeParams, $location, socket) ->
 
+  $scope.newRoomSubmitDisabled = true
+
+  setRoomStatus = (error) ->
+    if error
+      $scope.newRoomStatus = 'has-error'
+      $scope.newRoomError = error
+      $scope.newRoomSubmitDisabled = true
+    else
+      $scope.newRoomStatus = 'has-success'
+      $scope.newRoomError = ''
+      $scope.newRoomSubmitDisabled = false
+
+  clearRoomStatus = ->
+    $scope.newRoomStatus = ''
+    $scope.newRoomError = ''
+    $scope.newRoomSubmitDisabled = true
+
+  $scope.checkRoomName = ->
+    room = $scope.newRoom
+    if !room or room.length == 0
+      clearRoomStatus()
+    else if room.length < 3
+      setRoomStatus('Room name must be at least 3 characters')
+    else if not /^[a-z][a-z0-9]+$/.test(room)
+      setRoomStatus('Room name can only contain letters and numbers')
+    else
+      socket.emit('checkRoomName', room, (valid) ->
+        if valid
+          setRoomStatus()
+        else
+          setRoomStatus('Room name is already taken')
+      )
+
   $scope.createRoom = ->
+    if $scope.newRoomSubmitDisabled
+      return
+
     room = $scope.newRoom
     socket.emit 'createRoom',
       roomId: room
