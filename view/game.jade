@@ -1,4 +1,4 @@
-table
+table#mainTable.centered
  tr
   td
     #playerList(player-list)
@@ -14,4 +14,7 @@ table
             td
               #wordList(word-list)
       #results(results)
-      #playerControls(player-controls)
+      #gameControls(game-controls)
+  tr
+    td(colspan=2)
+      #playerControls.centered(player-controls)

@@ -14,13 +14,11 @@
         $location.path(/room/+room)
 
   socket.on 'rooms', (rooms) ->
-    console.log('setting rooms: ' + rooms.length)
     $scope.rooms = rooms
 
 @RoomCtrl = ($scope, $routeParams, socket) ->
 
   $scope.ready = ->
-    console.log('i ready')
     clearResults()
     socket.emit "ready"
 
@@ -73,10 +71,7 @@
     show "quitDiv"
 
   updatePlayers = (players) ->
-    playerObj = {}
-    for player in players
-      playerObj[player.id] = player
-    $scope.players = playerObj
+    $scope.players = players
 
   displayBoard = ->
     show "mainDiv"
@@ -126,6 +121,7 @@
     roomId: roomId
   , (data) ->
     if data.success
+      $scope.player = data.player
       show 'game'
     else
       console.log('could not register: ' + data.error)
@@ -139,6 +135,7 @@
               roomId: roomId
             , (data) ->
               if data.success
+                $scope.player = data.player
                 show 'game'
 
 

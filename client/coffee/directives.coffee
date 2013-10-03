@@ -34,24 +34,23 @@ myDir.directive('createNewRoom', ['$timeout', 'socket', ($timeout, socket) ->
 
       timer = false
       scope.$watch('newRoom', (room) ->
-        if room
-          clearRoomStatus()
-          if room and room.length > 0
-            if room.length < 3
-              setRoomStatus('Room name must be at least 3 characters')
-            else if not /^[a-z][a-z0-9]+$/.test(room)
-              setRoomStatus('Room name can only contain letters and numbers')
-            else
-              if timer
-                $timeout.cancel(timer)
-              timer = $timeout( ->
-                socket.emit('checkRoomName', room, (valid) ->
-                  if valid == true
-                    setRoomStatus()
-                  else
-                    setRoomStatus('Room name is already taken')
-                )
-              , 500)
+        clearRoomStatus()
+        if room and room.length > 0
+          if room.length < 3
+            setRoomStatus('Room name must be at least 3 characters')
+          else if not /^[a-z][a-z0-9]+$/.test(room)
+            setRoomStatus('Room name can only contain letters and numbers')
+          else
+            if timer
+              $timeout.cancel(timer)
+            timer = $timeout( ->
+              socket.emit('checkRoomName', room, (valid) ->
+                if valid == true
+                  setRoomStatus()
+                else
+                  setRoomStatus('Room name is already taken')
+              )
+            , 250)
       )
   }
 ])
@@ -67,7 +66,9 @@ myDir.directive('roomList', ->
 
 myDir.directive('board', ->
   return  (scope, elem, attrs) ->
-    scope.showBoard = false
+    scope.showBoard = true
+
+    elem.text('Waiting for players');
 
     scope.$on('letters', (event, letters) ->
       table = "<table>"
@@ -85,11 +86,11 @@ myDir.directive('board', ->
       table += "</table>"
       elem.html(table)
 
-      scope.showBoard = true
+      #scope.showBoard = true
     )
 
     scope.$on('results', ->
-      scope.showBoard = false
+      #scope.showBoard = false
     )
 )
 
@@ -164,6 +165,13 @@ myDir.directive('results', ->
 myDir.directive('playerResult', ->
   return {
     templateUrl: 'view/templates/playerResult'
+  }
+)
+
+myDir.directive('gameControls', ->
+  return {
+    restrict: 'A'
+    templateUrl: 'view/templates/gameControls'
   }
 )
 

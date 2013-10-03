@@ -7,6 +7,7 @@ class Player
     @words = []
     @lastResult = undefined
     @prevResults = []
+    @master = false
 
   serialize: ->
     res =
@@ -15,6 +16,7 @@ class Player
       ready: @ready
       restart: @restart
       score: @score
+      master: @master
 
   setReady: ->
     @ready = true

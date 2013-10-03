@@ -158,6 +158,7 @@ io.sockets.on 'connection', (socket) ->
       console.log socket.username + " has registered in " + socket.room
       fn(
         success: true
+        player: player.serialize()
       )
     else
       fn(

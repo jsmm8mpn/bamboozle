@@ -35,19 +35,27 @@ class Room
     userId = player.name
     @players[userId] = player #new Player(userId)
     if not @master
-      @master = userId
+      @setMaster(userId)
     @numPlayers++
 
     #FIXME: This wont' work because it will emit to everyone
     @socket.emit('game', @currentGame.serialize()) if @currentGame
     @sendPlayerUpdate()
 
+  setMaster: (userId) ->
+    console.log('changing master to: ' + userId)
+    if @master
+      @players[@master].master = false
+    @master = userId
+    @players[userId].master = true
+
   leave: (userId) ->
     delete @players[userId]
     @numPlayers--
     if @master == userId and @numPlayers > 0
-      @master = Object.keys(@players)[0]
-      console.log('changing master to: ' + @master)
+      @setMaster(Object.keys(@players)[0])
+    else
+      @master = undefined
     @sendPlayerUpdate()
 
   restart: ->
@@ -132,7 +140,7 @@ class Room
     @socket.emit('settings', settings)
 
   changeMaster: (userId) ->
-    @master = userId
+    @setMaster(userId)
     @sendPlayerUpdate()
 
   startNow: ->
@@ -145,11 +153,9 @@ class Room
     leave(userId)
 
   sendPlayerUpdate: ->
-    players = []
-    for id,player of @players
-      p = player.serialize()
-      p.master = (id == @master)
-      players.push p
+    players = {}
+    for id, player of @players
+      players[id] = player.serialize()
     @socket.emit('players', players)
 
 module.exports = Room
