@@ -92,6 +92,8 @@ myDir.directive('board', ->
         table += "</table>"
         elem.html(table)
 
+        $('#wordInputField').focus()
+
         #scope.showBoard = true
       )
 
