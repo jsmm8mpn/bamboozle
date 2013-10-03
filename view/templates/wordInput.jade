@@ -1,3 +1,9 @@
-form(ng-submit='submitWord()')
-  input#wordInput(type='text', ng-model='word')
-#wordResult {{wordResult}}
+table
+  tr
+    td
+      form(ng-submit='submitWord()', name='wordForm', ng-class='wordStatus', class='form-horizontal')
+        //label Type a word & hit enter
+        input#wordInput(type='text', ng-model='word', name='wordInput', class='form-control', ng-required='true', ng-pattern='/^[a-z]+$/')
+        span(class='help-block') {{wordResult}}
+    td
+      button(ng-click='submitWord()', class='btn btn-primary', ng-disabled='wordForm.$invalid') Submit Word

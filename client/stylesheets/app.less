@@ -3,10 +3,20 @@ body {
   //background-repeat:repeat;
 }
 
-.delete-img {
-  background-image: url('../images/delete.png');
+.invalid-img {
+  background-image: url('../images/cross.png');
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.valid-img {
+  background-image: url('../images/check.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.delete-img {
+
 }
 
 .centered {
@@ -38,24 +48,51 @@ body {
 #board {
   height: 300px;
   width: 300px;
-  border: 1px solid;
-  vertical-align: middle;
-  text-align: center;
+  display: table;
+
+  div {
+    border: 1px solid;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+  }
 
   table {
     height: 100%;
     width: 100%;
     table-layout: fixed;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    border-spacing: 0px;
+    border-collapse: collapse;
     tr {
       line-height: 25%;
     }
     td {
       width: 25%;
+      border-width: 1px;
+      border-style: solid;
+      border-color: black;
+      padding: 10px;
+      font-size: 35px;
+      text-align: center;
+      vertical-align: middle;
     }
   }
 }
-
 // ------------------------------
+
+#wordInput {
+  table {
+    width: 100%;
+    td {
+      padding: 1px;
+    }
+  }
+}
 
 .toggled {
   display: none;
@@ -72,29 +109,7 @@ body {
   }
 }
 
-#board {
 
-  table {
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-    border-spacing: 0px;
-    border-collapse: collapse;
-  }
-
-  td {
-    width: 50px;
-    height: 50px;
-
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-    padding: 10px;
-
-    font-size: 35px;
-    text-align: center;
-  }
-}
 
 #timer {
   width: 100%;
@@ -168,5 +183,5 @@ body {
 }
 
 #mainDiv {
-  //display:none;
+  text-align: center;
 }

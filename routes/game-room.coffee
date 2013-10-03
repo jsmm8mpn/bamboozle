@@ -89,6 +89,7 @@ class Room
 
   ready: (userId) ->
     @players[userId].setReady()
+    @sendPlayerUpdate()
     @checkReady()
 
   checkReady: ->

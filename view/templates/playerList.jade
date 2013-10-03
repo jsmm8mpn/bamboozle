@@ -9,5 +9,5 @@ table(class='table')
     td {{player.name}}
     td {{player.score}}
     td(class='valid-img', ng-show='player.ready')
-    td(class='delete-img', ng-show='!player.ready')
+    td(class='invalid-img', ng-show='!player.ready')
     td(ng-show='player.master', class='delete-img')

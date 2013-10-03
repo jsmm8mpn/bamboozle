@@ -65,33 +65,40 @@ myDir.directive('roomList', ->
 )
 
 myDir.directive('board', ->
-  return  (scope, elem, attrs) ->
-    scope.showBoard = true
+  return  {
+    templateUrl: 'view/templates/board'
+    link: (scope, elem, attrs) ->
+      scope.showBoard = true
 
-    elem.text('Waiting for players');
+      #elem.html("<div><button ng-click='ready()' class='btn btn-success'>Ready</button></div>");
 
-    scope.$on('letters', (event, letters) ->
-      table = "<table>"
-      y = 0
+      scope.$on('ready', (event) ->
+        elem.html('<div>Waiting for other players</div>')
+      )
 
-      while y < letters.length
-        table += "<tr>"
-        x = 0
+      scope.$on('letters', (event, letters) ->
+        table = "<table>"
+        y = 0
 
-        while x < letters[y].length
-          table += "<td>" + letters[y][x] + "</td>"
-          x++
-        table += "</tr>"
-        y++
-      table += "</table>"
-      elem.html(table)
+        while y < letters.length
+          table += "<tr>"
+          x = 0
 
-      #scope.showBoard = true
-    )
+          while x < letters[y].length
+            table += "<td>" + letters[y][x] + "</td>"
+            x++
+          table += "</tr>"
+          y++
+        table += "</table>"
+        elem.html(table)
 
-    scope.$on('results', ->
-      #scope.showBoard = false
-    )
+        #scope.showBoard = true
+      )
+
+      scope.$on('results', ->
+        #scope.showBoard = false
+      )
+  }
 )
 
 myDir.directive('timer', ->
@@ -120,24 +127,35 @@ myDir.directive('timer', ->
     )
 )
 
-myDir.directive('wordInput', ->
+myDir.directive('wordInput', ['socket', (socket) ->
   return {
     templateUrl: 'view/templates/wordInput'
     link: (scope, elem, attrs) ->
-      scope.$on('wordValid', (event, word) ->
-        scope.wordResult = 'word is valid'
-      )
-      scope.$on('wordError', (event, word, result) ->
-        scope.wordResult = result.error
-      )
+
+      scope.submitWord = ->
+        if (scope.wordForm.$invalid)
+          return
+
+        word = scope.word
+        socket.emit "word", word, (result) ->
+          if result.success
+            scope.wordResult = 'word is valid'
+            scope.wordStatus = 'has-success'
+          else
+            scope.wordResult = result.error
+            scope.wordStatus = 'has-error'
+        scope.word = ''
+
       scope.$on('results', ->
         scope.wordResult = ''
+        scope.wordStatus = ''
       )
       scope.$on('game', ->
         scope.wordResult = ''
+        scope.wordStatus = ''
       )
   }
-)
+])
 
 myDir.directive('wordList', ->
   return {

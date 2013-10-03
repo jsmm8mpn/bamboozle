@@ -21,6 +21,7 @@
   $scope.ready = ->
     clearResults()
     socket.emit "ready"
+    $scope.$broadcast('ready')
 
   $scope.quit = ->
     hide "quitDiv"
@@ -38,6 +39,7 @@
   $scope.changePublic = ->
     socket.emit 'public', $(this).prop('checked')
 
+    ###
   $scope.submitWord = ->
     word = $scope.word
     socket.emit "word", word, (result) ->
@@ -46,6 +48,9 @@
       else
         $scope.$broadcast('wordError', word, result)
     $scope.word = ''
+
+
+###
 
   $scope.toggleSettings = ->
     $('.toggled').slideToggle()
