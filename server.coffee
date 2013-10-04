@@ -22,6 +22,10 @@ passport.serializeUser( (player, done) ->
 )
 
 deserializeUser = (user, done) ->
+  if process.env.AUTH_DISABLED
+    user =
+      userId: 'blah'
+      displayName: 'blah blah'
   player = new Player(user.userId, user.displayName)
   done(null, player)
 

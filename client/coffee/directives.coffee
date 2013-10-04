@@ -77,7 +77,17 @@ myDir.directive('board', ->
       #)
 
       scope.$on('game', (event, game) ->
-        # keep track of pre-game timer?
+        scope.preStartTimeLeft = game.timeLeft - game.timeLimit
+        timerId = setInterval(->
+          scope.$apply(->
+
+            scope.preStartTimeLeft = scope.preStartTimeLeft - 1
+          )
+
+          if scope.preStartTimeLeft <= 0
+            clearInterval timerId
+        , 1000
+        )
       )
 
       scope.$on('letters', (event, letters) ->

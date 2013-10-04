@@ -81,7 +81,8 @@
 
   updatePlayers = (players) ->
     $scope.players = players
-    $scope.player = players[$scope.player.id]
+    if $scope.player
+      $scope.player = players[$scope.player.id]
 
   displayBoard = ->
     show "mainDiv"

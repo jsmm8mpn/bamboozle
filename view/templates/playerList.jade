@@ -10,11 +10,11 @@ table(class='table')
     td {{player.score}}
 
     // Ready Group
-    td(class='valid-img', ng-show='!game & player.ready')
-    td(class='invalid-img', ng-show='!game & !player.ready')
+    td(class='valid-img', ng-show='!game && player.ready')
+    td(class='invalid-img', ng-show='!game && !player.ready')
 
     // Restart Group
-    td(class='restart-img', ng-show='game & player.restart')
-    td(ng-show='game & !player.restart')
+    td(class='restart-img', ng-show='game && player.restart')
+    td(ng-show='game && !player.restart')
 
     td(ng-show='player.master', class='delete-img')

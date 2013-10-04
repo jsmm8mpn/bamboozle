@@ -7,15 +7,15 @@ form#invites(ng-submit='invite()', name='inviteForm', class='form-horizontal')
   button(type='submit', class='btn btn-default') Invite
 #settingsDiv
   a.toggler(href='', ng-click='toggleSettings()') Settings
-  form.toggled(name='roomSettingsForm', ng-submit='changeSettings()', class='form-control')
+  form.toggled(name='roomSettingsForm', ng-submit='changeSettings()')
     label(for='timeLimit') Time Limit
-      input(type='text', name='timeLimit', size='3', value='90')
+    input(type='text', name='timeLimit', size='3', value='90', class='form-control'))
     label(for='minWordLength') Min Word Length
-      input(type='text', name='minWordLength', size='1', value='3')
+    input(type='text', name='minWordLength', size='1', value='3', class='form-control'))
     label(for='allowPlural') Allow Plural
-      input(type='checkbox', name='allowPlural')
+    input(type='checkbox', name='allowPlural', class='form-control'))
     label(for='negativePoints') Negative Points
-      input(type='checkbox', name='negativePoints')
+    input(type='checkbox', name='negativePoints', class='form-control'))
     label(for='restartAllowed') Vote Restart Allowed
-      input(type='checkbox', name='restartAllowed')
+    input(type='checkbox', name='restartAllowed', class='form-control')
     button(type='submit', class='btn btn-primary') Change Settings

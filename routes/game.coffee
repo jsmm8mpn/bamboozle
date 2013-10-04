@@ -2,7 +2,7 @@ class Game
 
   constructor: (options) ->
     options = options || {}
-    @startDelay = options.startDelay || 1000
+    @startDelay = options.startDelay || 5000
     @started = new Date().getTime() + @startDelay
     @letters = options.letters || populateLetters()
     #@getLetters = ->
