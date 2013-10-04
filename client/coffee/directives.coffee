@@ -72,8 +72,12 @@ myDir.directive('board', ->
 
       #elem.html("<div><button ng-click='ready()' class='btn btn-success'>Ready</button></div>");
 
-      scope.$on('ready', (event) ->
-        elem.html('<div>Waiting for other players</div>')
+      #scope.$on('ready', (event) ->
+        #elem.html('<div>Waiting for other players</div>')
+      #)
+
+      scope.$on('game', (event, game) ->
+        # keep track of pre-game timer?
       )
 
       scope.$on('letters', (event, letters) ->
@@ -111,6 +115,7 @@ myDir.directive('timer', ->
     )
 
     scope.$on('game', (event, game) ->
+      $("#timer").removeClass("timer-warn")
       serverTimeLeft = game.timeLeft
       timeLimit = game.timeLimit
       scope.timer = serverTimeLeft
@@ -120,12 +125,16 @@ myDir.directive('timer', ->
         secondsLeft = scope.timer
         if secondsLeft > timeLimit
           secondsLeft = secondsLeft - timeLimit
-        else $("#timer").toggleClass("timer-warn")  if secondsLeft < 15
-        elem.html(secondsLeft)
-        if secondsLeft <= 0
-          clearInterval timerId
-          scope.$emit('timerExpired')
-      , 1000)
+          scope.preStartTimeLeft = secondsLeft
+        else
+          $("#timer").addClass("timer-warn")  if secondsLeft < 15
+          elem.html(secondsLeft)
+          if secondsLeft <= 0
+            clearInterval timerId
+            scope.$emit('timerExpired')
+      , 1000
+      )
+
     )
 )
 
@@ -195,9 +204,9 @@ myDir.directive('gameControls', ->
   }
 )
 
-myDir.directive('playerControls', ->
+myDir.directive('roomSettings', ->
   return {
     restrict: 'A'
-    templateUrl: 'view/templates/playerControls'
+    templateUrl: 'view/templates/roomSettings'
   }
 )

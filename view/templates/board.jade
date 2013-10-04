@@ -1,2 +1,6 @@
-div
+div(ng-show='!player.ready')
   button(ng-click='ready()', class='btn btn-success') Ready
+div(ng-show='player.ready & !game') Waiting for other players...
+  button(ng-click='startNow()', class='btn btn-success', ng-show='player.master')
+div(ng-show='game') The game will start in
+  div#preStartTimer {{preStartTimeLeft}}

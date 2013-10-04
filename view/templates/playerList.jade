@@ -3,11 +3,18 @@ table(class='table')
   tr
     th Name
     th Score
-    th Ready
+    th Status
     th(ng-show='player.master') Kick
   tr(ng-repeat='(id,player) in players')
     td {{player.name}}
     td {{player.score}}
-    td(class='valid-img', ng-show='player.ready')
-    td(class='invalid-img', ng-show='!player.ready')
+
+    // Ready Group
+    td(class='valid-img', ng-show='!game & player.ready')
+    td(class='invalid-img', ng-show='!game & !player.ready')
+
+    // Restart Group
+    td(class='restart-img', ng-show='game & player.restart')
+    td(ng-show='game & !player.restart')
+
     td(ng-show='player.master', class='delete-img')

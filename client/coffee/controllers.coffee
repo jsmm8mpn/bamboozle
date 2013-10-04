@@ -21,7 +21,10 @@
   $scope.ready = ->
     clearResults()
     socket.emit "ready"
-    $scope.$broadcast('ready')
+    #$scope.$broadcast('ready')
+
+  $scope.startNow = ->
+    socket.emit 'start'
 
   $scope.quit = ->
     hide "quitDiv"
@@ -65,6 +68,7 @@
 
   setupGame = (game) ->
     console.log('setting up game')
+    $scope.game = game
     $scope.$broadcast 'game', game
     hide "startDiv"
     if game.letters
@@ -77,6 +81,7 @@
 
   updatePlayers = (players) ->
     $scope.players = players
+    $scope.player = players[$scope.player.id]
 
   displayBoard = ->
     show "mainDiv"

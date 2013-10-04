@@ -121,6 +121,7 @@ class Room
 
   voteRestart: (userId) ->
     @players[userId].voteRestart()
+    @sendPlayerUpdate()
     @checkRestart()
 
   checkRestart: ->
