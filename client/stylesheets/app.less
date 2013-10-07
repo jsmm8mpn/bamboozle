@@ -42,7 +42,7 @@ body {
 }
 
 #roomSettings {
-  //width: 100px;
+  width: 300px;
 }
 
 #board {
@@ -132,7 +132,7 @@ body {
   color: green;
 }
 
-#wordList {
+#words {
   background-color: #ccffcc;
   h2 {
     margin: 0px;
@@ -212,23 +212,31 @@ body {
 }
 */
 
+
+.view {
+  text-align: center;
+}
+
+#topPanes {
+  display: inline-block;
+}
+
 .center-panel {
+  margin: 10px;
   float: left;
-  width: 320px;
+  width: 300px;
 }
 
 .left-panel {
-  min-width: 300px;
+  width: 300px;
   float:left;
-  width: 33%;
-  #playerList {
-    width: 300px;
-    float: right;
-  }
 }
 
 .right-panel {
-  min-width: 300px;
-  width: 33%;
+  width: 300px;
   float: left;
+}
+
+.right-panel:after {
+  clear: both;
 }

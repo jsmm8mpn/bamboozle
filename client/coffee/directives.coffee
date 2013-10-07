@@ -153,6 +153,8 @@ myDir.directive('wordInput', ['socket', (socket) ->
     templateUrl: 'view/templates/wordInput'
     link: (scope, elem, attrs) ->
 
+      scope.wordList = []
+
       scope.submitWord = ->
         if (scope.wordForm.$invalid)
           return
@@ -162,6 +164,7 @@ myDir.directive('wordInput', ['socket', (socket) ->
           if result.success
             scope.wordResult = 'word is valid'
             scope.wordStatus = 'has-success'
+            scope.wordList.push(word)
           else
             scope.wordResult = result.error
             scope.wordStatus = 'has-error'

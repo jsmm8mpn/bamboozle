@@ -1,18 +1,18 @@
-.left-panel
-  #playerList(player-list)
-.center-panel
-  #game
-      #mainDiv
-        table
-          tr
-            td
-              #timer(timer)
-              #board(board ng-show='showBoard')
-              #wordInput(word-input)
-            td
-              #wordList(word-list)
-      #results(results)
-      #gameControls(game-controls)
+#room
+  #topPanes
+    .left-panel
+      #playerList(player-list)
+    .center-panel
+      #game
+          #mainDiv
+            #timer(timer)
+            #board(board ng-show='showBoard')
+            #wordInput(word-input)
 
-.right-panel
+
+          #results(results)
+          #gameControls(game-controls)
+
+    .right-panel
+      #wordList(word-list)
   #roomSettings.centered(room-settings, ng-show='player.master')
