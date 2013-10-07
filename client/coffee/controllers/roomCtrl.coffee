@@ -1,27 +1,9 @@
-#socket = io.connect("http://localhost:8080")
-
-@RoomListCtrl = ($scope, $routeParams, $location, socket) ->
-
-  $scope.createRoom = ->
-    if $scope.newRoomSubmitDisabled
-      return
-
-    room = $scope.newRoom
-    socket.emit 'createRoom',
-      roomId: room
-    , (data) ->
-      if data.success
-        $location.path(/room/+room)
-
-  socket.on 'rooms', (rooms) ->
-    $scope.rooms = rooms
-
 @RoomCtrl = ($scope, $routeParams, socket) ->
 
   $scope.ready = ->
     clearResults()
     socket.emit "ready"
-    #$scope.$broadcast('ready')
+  #$scope.$broadcast('ready')
 
   $scope.startNow = ->
     socket.emit 'start'
@@ -42,15 +24,15 @@
   $scope.changePublic = ->
     socket.emit 'public', $(this).prop('checked')
 
-    ###
-  $scope.submitWord = ->
-    word = $scope.word
-    socket.emit "word", word, (result) ->
-      if result.success
-        $scope.$broadcast('wordValid', word, result)
-      else
-        $scope.$broadcast('wordError', word, result)
-    $scope.word = ''
+  ###
+$scope.submitWord = ->
+  word = $scope.word
+  socket.emit "word", word, (result) ->
+    if result.success
+      $scope.$broadcast('wordValid', word, result)
+    else
+      $scope.$broadcast('wordError', word, result)
+  $scope.word = ''
 
 
 ###
@@ -148,5 +130,3 @@
               if data.success
                 $scope.player = data.player
                 show 'game'
-
-

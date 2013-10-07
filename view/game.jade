@@ -1,9 +1,7 @@
-table#mainTable.centered
- tr
-  td
-    #playerList(player-list)
-  td
-    #game
+.left-panel
+  #playerList(player-list)
+.center-panel
+  #game
       #mainDiv
         table
           tr
@@ -15,6 +13,6 @@ table#mainTable.centered
               #wordList(word-list)
       #results(results)
       #gameControls(game-controls)
-  tr
-    td(colspan=2)
-      #roomSettings.centered(room-settings, ng-show='player.master')
+
+.right-panel
+  #roomSettings.centered(room-settings, ng-show='player.master')

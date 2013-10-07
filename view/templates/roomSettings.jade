@@ -1,10 +1,12 @@
-#publicField
-  input(type='checkbox', name='public', ng-model='public', ng-change='changePublic()')
-  label(for='public') Public Room
-form#invites(ng-submit='invite()', name='inviteForm', class='form-horizontal')
-  label(for='invite') Invite
-  input(type='text', name='invite', ng-model='invite', class='form-control')
-  button(type='submit', class='btn btn-default') Invite
+#managerPlayers
+  h4 Manage Players
+  #publicField
+    input(type='checkbox', name='public', ng-model='public', ng-change='changePublic()')
+    label(for='public') Public Room
+  form#invites(ng-submit='invite()', name='inviteForm', class='form-horizontal')
+    label(for='invite') Invite
+    input(type='text', name='invite', ng-model='invite', class='form-control')
+    button(type='submit', class='btn btn-default') Invite
 #settingsDiv
   a.toggler(href='', ng-click='toggleSettings()') Settings
   form.toggled(name='roomSettingsForm', ng-submit='changeSettings()')
