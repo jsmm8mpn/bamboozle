@@ -1,0 +1,44 @@
+.large-checkbox-label {
+  display:inline-block;
+  user-select:none;
+  position:relative;
+  width:40px;
+  height:40px;
+  border:.25rem solid gray;
+  border-radius:1rem;
+  transition:.25s;
+  cursor:pointer;
+  overflow:hidden;
+  color:rgba(0,0,0,.1);
+  //font:normal 4rem/5.25rem "icon";
+  text-align:center;
+  //margin:2rem;
+  background:url('http://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/checkmark-24-512.png');
+  background-size: 33px 33px;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.3
+
+}
+
+.large-checkbox-label:active {
+  transition:0;
+  -webkit-filter:brightness(.8);
+}
+.large-checkbox:checked + .large-checkbox-label {
+  color:limegreen;
+  background:url('http://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/checkmark-24-512.png');
+  background-size: 33px 33px;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 1;
+  border-color:limegreen;
+  box-shadow:0 0 0 0 limegreen;
+}
+
+.large-checkbox { display:none; }
+
+.large-checkbox-text {
+  margin-left: 10px;
+  vertical-align: top;
+}

@@ -1,30 +1,31 @@
 h3 Players
-table(class='table')
-  tr
-    th Name
-    th Score
-    th Status
-    th(ng-show='player.master') Kick
-  tr(ng-repeat='(id,player) in players')
-    td {{player.name}}
-    td {{player.score}}
+#playerList
+  table(class='table')
+    tr
+      th Name
+      th Score
+      th Status
+      th(ng-show='player.master') Kick
+    tr(ng-repeat='(id,player) in players')
+      td {{player.name}}
+      td.right {{player.score}}
 
-    // Ready Group
-    td(class='valid-img', ng-show='!game && player.ready')
-    td(class='invalid-img', ng-show='!game && !player.ready')
+      // Ready Group
+      td(class='valid-img', ng-show='!game && player.ready')
+      td(class='invalid-img', ng-show='!game && !player.ready')
 
-    // Restart Group
-    td(class='restart-img', ng-show='game && player.restart')
-    td(ng-show='game && !player.restart')
+      // Restart Group
+      td(class='restart-img', ng-show='game && player.restart')
+      td(ng-show='game && !player.restart')
 
-    td(ng-show='player.master', class='delete-img')
-form#invites(ng-submit='invite()', name='inviteForm', class='form-horizontal', ng-class='{"has-error": inviteForm.$invalid}')
+      td(ng-show='player.master', class='delete-img')
+form#invites(ng-submit='invite()', name='inviteForm', class='form-horizontal', ng-class='{"has-error": inviteForm.$dirty && inviteForm.$invalid}')
   label(for='invite') Invite a person
   table
     tr
       td
         input(type='email', name='invite', ng-model='invite', class='form-control', placeholder='Enter an email...')
       td
-        button(type='submit', class='btn btn-primary') Invite
-  span(class="help-block", ng-show="inviteForm.invite.$error.email") Not valid email
-  span {{inviteStatus}}
+        button(type='submit', class='btn btn-primary', ng-disabled='inviteForm.$invalid') Invite
+  span(class="help-block", ng-show="inviteForm.invite.$dirty && inviteForm.invite.$error.email") Not valid email
+  span(class="help-block") {{inviteStatus}}

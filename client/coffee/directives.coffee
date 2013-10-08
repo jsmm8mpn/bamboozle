@@ -7,15 +7,16 @@ myDir.directive('playerList', ['$timeout', 'socket', ($timeout, socket) ->
     link: (scope, elem, attrs) ->
       scope.invite = ->
         email = scope.invite
-        socket.emit 'invite', email, (result) ->
-          if result.success
-            scope.invite = ''
-            scope.inviteStatus = 'Invite sent to: ' + email
-            $timeout(->
-              scope.inviteStatus = ''
-            , 3000)
-          else
-            scope.inviteStatus = result.error
+        if email.length > 0
+          socket.emit 'invite', email, (result) ->
+            if result.success
+              scope.invite = ''
+              scope.inviteStatus = 'Invite sent to: ' + email
+              $timeout(->
+                scope.inviteStatus = ''
+              , 3000)
+            else
+              scope.inviteStatus = result.error
   }
 ])
 
@@ -48,6 +49,8 @@ myDir.directive('createNewRoom', ['$timeout', 'socket', ($timeout, socket) ->
         if room and room.length > 0
           if room.length < 3
             setRoomStatus('Room name must be at least 3 characters')
+          else if room.length > 16
+            setRoomStatus('Room name must be no more than 16 characters')
           else if not /^[a-z][a-z0-9]+$/.test(room)
             setRoomStatus('Room name can only contain letters and numbers')
           else
@@ -231,5 +234,17 @@ myDir.directive('roomSettings', ->
   return {
     restrict: 'A'
     templateUrl: 'view/templates/roomSettings'
+  }
+)
+
+myDir.directive('largeCheckbox', ->
+  return {
+    restrict: 'A'
+    scope:
+      label: '@label'
+    templateUrl: 'view/templates/checkbox'
+    link: (scope, elem, attrs) ->
+
+
   }
 )

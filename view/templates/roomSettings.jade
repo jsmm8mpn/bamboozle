@@ -1,8 +1,9 @@
 h3 Settings
 
 #settingsDiv
-  input(type='checkbox', name='public', ng-model='public', ng-change='changePublic()')
-  label(for='public') Public Room
+  div(large-checkbox, label='Public Room')
+  //input(type='checkbox', name='public', ng-model='public', ng-change='changePublic()')
+  //label(for='public') Public Room
   //a.toggler(href='', ng-click='toggleSettings()') Settings
   form(name='roomSettingsForm', ng-submit='changeSettings()')
     label(for='timeLimit') Time Limit

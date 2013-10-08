@@ -1,11 +1,18 @@
-
-
-
-
-
-
-#playerList {
+#players {
   text-align: center;
+
+  td {
+    text-align: left;
+  }
+
+  #playerList {
+    min-height: 200px;
+  }
+
+
+  #invites {
+    text-align: left;
+  }
 }
 
 #roomSettings {
@@ -57,6 +64,7 @@
     width: 100%;
     td {
       padding: 1px;
+      vertical-align: top;
     }
   }
 }
@@ -145,6 +153,7 @@
 
 #quitDiv {
   display:none;
+  text-align: center;
 }
 
 #mainDiv {
@@ -157,15 +166,9 @@
 
 
 #topPanes {
-  display: inline-block;
+  width: 960px;
 }
 
 
 
 
-
-#invites {
-  td {
-    vertical-align: bottom
-  };
-}

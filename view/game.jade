@@ -1,8 +1,8 @@
 #room
-  #topPanes
-    .left-panel
-      #playerList(player-list)
-    .center-panel
+  #topPanes.centered
+    .game-panel
+      #players(player-list)
+    .game-panel
       #game
           #mainDiv
             #timer(timer)
@@ -12,7 +12,8 @@
 
           #results(results)
           #gameControls(game-controls)
-
-    .right-panel
+    .game-panel
       #wordList(word-list)
+  hr
+
   #roomSettings.centered(room-settings, ng-show='player.master')
