@@ -1,13 +1,23 @@
 myDir = angular.module('myDir', [])
 
-myDir.directive('playerList', ->
+myDir.directive('playerList', ['$timeout', 'socket', ($timeout, socket) ->
   return {
     restrict: 'A'
     templateUrl: 'view/templates/playerList'
     link: (scope, elem, attrs) ->
-
+      scope.invite = ->
+        email = scope.invite
+        socket.emit 'invite', email, (result) ->
+          if result.success
+            scope.invite = ''
+            scope.inviteStatus = 'Invite sent to: ' + email
+            $timeout(->
+              scope.inviteStatus = ''
+            , 3000)
+          else
+            scope.inviteStatus = result.error
   }
-)
+])
 
 myDir.directive('createNewRoom', ['$timeout', 'socket', ($timeout, socket) ->
   return {

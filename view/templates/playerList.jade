@@ -18,3 +18,13 @@ table(class='table')
     td(ng-show='game && !player.restart')
 
     td(ng-show='player.master', class='delete-img')
+form#invites(ng-submit='invite()', name='inviteForm', class='form-horizontal', ng-class='{"has-error": inviteForm.$invalid}')
+  label(for='invite') Invite a person
+  table
+    tr
+      td
+        input(type='email', name='invite', ng-model='invite', class='form-control', placeholder='Enter an email...')
+      td
+        button(type='submit', class='btn btn-primary') Invite
+  span(class="help-block", ng-show="inviteForm.invite.$error.email") Not valid email
+  span {{inviteStatus}}

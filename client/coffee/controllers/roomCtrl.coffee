@@ -24,6 +24,7 @@
   $scope.changePublic = ->
     socket.emit 'public', $(this).prop('checked')
 
+
   ###
 $scope.submitWord = ->
   word = $scope.word

@@ -1,15 +1,10 @@
-#managerPlayers
-  h4 Manage Players
-  #publicField
-    input(type='checkbox', name='public', ng-model='public', ng-change='changePublic()')
-    label(for='public') Public Room
-  form#invites(ng-submit='invite()', name='inviteForm', class='form-horizontal')
-    label(for='invite') Invite
-    input(type='text', name='invite', ng-model='invite', class='form-control')
-    button(type='submit', class='btn btn-default') Invite
+h3 Settings
+
 #settingsDiv
-  a.toggler(href='', ng-click='toggleSettings()') Settings
-  form.toggled(name='roomSettingsForm', ng-submit='changeSettings()')
+  input(type='checkbox', name='public', ng-model='public', ng-change='changePublic()')
+  label(for='public') Public Room
+  //a.toggler(href='', ng-click='toggleSettings()') Settings
+  form(name='roomSettingsForm', ng-submit='changeSettings()')
     label(for='timeLimit') Time Limit
     input(type='text', name='timeLimit', size='3', value='90', class='form-control'))
     label(for='minWordLength') Min Word Length
