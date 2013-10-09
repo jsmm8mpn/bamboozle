@@ -1,19 +1,41 @@
 h3 Settings
 
 #settingsDiv
-  div(large-checkbox, label='Public Room')
+  //div(large-checkbox, label='Public Room')
   //input(type='checkbox', name='public', ng-model='public', ng-change='changePublic()')
   //label(for='public') Public Room
   //a.toggler(href='', ng-click='toggleSettings()') Settings
+
+  .setting-b
+    .true(ng-show='settings.public', ng-click='settings.public = false')
+      div(class='unlock-img').centered
+      div Public Room
+    .false(ng-show='!settings.public', ng-click='settings.public = true')
+      div(class='lock-img').centered
+      div Private Room
+
+  .setting-b
+    .true(ng-show='settings.plural', ng-click='settings.plural = false')
+      div(class='addfile-img').centered
+      div Allow Plural
+    .false(ng-show='!settings.plural', ng-click='settings.plural = true')
+      div(class='file-img').centered
+      div Deny Plural
+
   form(name='roomSettingsForm', ng-submit='changeSettings()')
-    label(for='timeLimit') Time Limit
-    input(type='text', name='timeLimit', size='3', value='90', class='form-control'))
-    label(for='minWordLength') Min Word Length
-    input(type='text', name='minWordLength', size='1', value='3', class='form-control'))
-    label(for='allowPlural') Allow Plural
-    input(type='checkbox', name='allowPlural', class='form-control'))
-    label(for='negativePoints') Negative Points
-    input(type='checkbox', name='negativePoints', class='form-control'))
-    label(for='restartAllowed') Vote Restart Allowed
-    input(type='checkbox', name='restartAllowed', class='form-control')
-    button(type='submit', class='btn btn-primary') Change Settings
+    .setting
+      label(for='timeLimit') Time Limit
+      input(type='text', name='timeLimit', size='3', value='90', class='form-control'))
+    .setting
+      label(for='minWordLength') Min Word Length
+      input(type='text', name='minWordLength', size='1', value='3', class='form-control'))
+    .setting
+      label(for='allowPlural') Allow Plural
+      input(type='checkbox', name='allowPlural', class='form-control'))
+    .setting
+      label(for='negativePoints') Negative Points
+      input(type='checkbox', name='negativePoints', class='form-control'))
+    .setting
+      label(for='restartAllowed') Vote Restart Allowed
+      input(type='checkbox', name='restartAllowed', class='form-control')
+    //button(type='submit', class='btn btn-primary') Change Settings

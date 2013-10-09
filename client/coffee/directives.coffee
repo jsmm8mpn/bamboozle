@@ -234,6 +234,11 @@ myDir.directive('roomSettings', ->
   return {
     restrict: 'A'
     templateUrl: 'view/templates/roomSettings'
+    link: (scope, elem, attrs) ->
+      scope.$watchCollection('settings', (settings) ->
+        # if settings
+          # TODO: Save settings
+      )
   }
 )
 

@@ -16,7 +16,31 @@
 }
 
 #roomSettings {
-  width: 300px;
+  width: 1000px;
+}
+
+.setting {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.setting-b {
+  width: 100px;
+  margin: 10px;
+  text-align: center;
+  display: inline-block;
+  .true {
+    padding: 3px;
+    border: .25rem solid green;
+    transition:.25s;
+    border-radius:1rem;
+  }
+  .false {
+    padding: 3px;
+    border: .25rem solid red;
+    transition:.25s;
+    border-radius:1rem;
+  }
 }
 
 #board {
