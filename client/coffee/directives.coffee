@@ -230,17 +230,32 @@ myDir.directive('gameControls', ->
   }
 )
 
-myDir.directive('roomSettings', ->
+myDir.directive('roomSettings', ['$timeout', 'socket', ($timeout, socket) ->
   return {
     restrict: 'A'
     templateUrl: 'view/templates/roomSettings'
     link: (scope, elem, attrs) ->
+      settings =
+        allowPlural: false
+        negativePoints: false
+        restartAllowed: true
+        minWordLength: 3
+        timeLimit: 90
+
+      settings['public'] = false
+
+      scope.settings = settings
+      initialSettings = true
+
       scope.$watchCollection('settings', (settings) ->
-        # if settings
-          # TODO: Save settings
+        if initialSettings
+          initialSettings = false
+        else
+          socket.emit('settings', settings)
+
       )
   }
-)
+])
 
 myDir.directive('largeCheckbox', ->
   return {
