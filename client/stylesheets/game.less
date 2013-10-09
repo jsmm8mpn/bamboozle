@@ -15,15 +15,23 @@
   }
 }
 
+#room {
+  text-align: center;
+}
+
 #roomSettings {
-  width: 1000px;
+  //width: 1000px;
+  display: inline-block;
+  text-align: center;
 }
 
 .setting {
   display: inline-block;
   vertical-align: top;
+  padding: 10px;
 }
 
+/*
 .setting-b {
   width: 100px;
   margin: 10px;
@@ -40,6 +48,46 @@
     border: .25rem solid red;
     transition:.25s;
     border-radius:1rem;
+  }
+}
+*/
+
+.setting-b {
+  width: 130px;
+  margin: 10px;
+  text-align: center;
+  display: inline-block;
+  border: .25rem solid;
+  border-radius: 1rem;
+  padding: 3px;
+}
+
+.setting-b.true {
+  border-color: green;
+  opacity: 1;
+}
+
+.setting-b.false {
+  border-color: black;
+  opacity: 0.4;
+}
+
+.setting-c {
+  .setting-o {
+    font-size: 2em;
+    display: inline-block;
+    border: .25rem solid;
+    border-radius: 1rem;
+    padding-left: 13px;
+    padding-right: 13px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    margin: 10px;
+    opacity: 0.4;
+  }
+  .setting-o.true {
+    border-color: green;
+    opacity: 1;
   }
 }
 

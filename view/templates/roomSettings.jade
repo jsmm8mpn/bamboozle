@@ -6,36 +6,33 @@ h3 Settings
   //label(for='public') Public Room
   //a.toggler(href='', ng-click='toggleSettings()') Settings
 
-  .setting-b
-    .true(ng-show='settings.public', ng-click='settings.public = false')
-      div(class='unlock-img').centered
-      div Public Room
-    .false(ng-show='!settings.public', ng-click='settings.public = true')
-      div(class='lock-img').centered
-      div Private Room
+  .setting-b(ng-class='{"true": settings.public, "false": !settings.public}', ng-click='settings.public = !settings.public')
+    div(class='unlock-img').centered
+    div Public Room
 
-  .setting-b
-    .true(ng-show='settings.plural', ng-click='settings.plural = false')
-      div(class='addfile-img').centered
-      div Allow Plural
-    .false(ng-show='!settings.plural', ng-click='settings.plural = true')
-      div(class='file-img').centered
-      div Deny Plural
+  .setting-b(ng-class='{"true": settings.allowPlural, "false": !settings.allowPlural}', ng-click='settings.allowPlural = !settings.allowPlural')
+    div(class='addfile-img').centered
+    div Allow Plural
 
-  form(name='roomSettingsForm', ng-submit='changeSettings()')
-    .setting
-      label(for='timeLimit') Time Limit
-      input(type='text', name='timeLimit', size='3', value='90', class='form-control'))
-    .setting
-      label(for='minWordLength') Min Word Length
-      input(type='text', name='minWordLength', size='1', value='3', class='form-control'))
-    .setting
-      label(for='allowPlural') Allow Plural
-      input(type='checkbox', name='allowPlural', class='form-control'))
-    .setting
-      label(for='negativePoints') Negative Points
-      input(type='checkbox', name='negativePoints', class='form-control'))
-    .setting
-      label(for='restartAllowed') Vote Restart Allowed
-      input(type='checkbox', name='restartAllowed', class='form-control')
-    //button(type='submit', class='btn btn-primary') Change Settings
+  .setting-b(ng-class='{"true": settings.negativePoints, "false": !settings.negativePoints}', ng-click='settings.negativePoints = !settings.negativePoints')
+    div(class='minus-img').centered
+    div Enable Penalties
+
+  .setting-b(ng-class='{"true": settings.restartAllowed, "false": !settings.restartAllowed}', ng-click='settings.restartAllowed = !settings.restartAllowed')
+    div(class='cycle-img').centered
+    div Allow Restart
+
+  .setting-c Min Word Length
+    .setting-o(ng-class='{"true": settings.minWordLength == 2}', ng-click='settings.minWordLength = 2') 2
+    .setting-o(ng-class='{"true": settings.minWordLength == 3}', ng-click='settings.minWordLength = 3') 3
+    .setting-o(ng-class='{"true": settings.minWordLength == 4}', ng-click='settings.minWordLength = 4') 4
+    .setting-o(ng-class='{"true": settings.minWordLength == 5}', ng-click='settings.minWordLength = 5') 5
+
+  .setting-c Time Limit
+    .setting-o(ng-class='{"true": settings.timeLimit == 30}', ng-click='settings.timeLimit = 30') 30
+    .setting-o(ng-class='{"true": settings.timeLimit == 60}', ng-click='settings.timeLimit = 60') 60
+    .setting-o(ng-class='{"true": settings.timeLimit == 90}', ng-click='settings.timeLimit = 90') 90
+    .setting-o(ng-class='{"true": settings.timeLimit == 120}', ng-click='settings.timeLimit = 120') 120
+    .setting-o(ng-class='{"true": settings.timeLimit == 150}', ng-click='settings.timeLimit = 150') 150
+    .setting-o(ng-class='{"true": settings.timeLimit == 180}', ng-click='settings.timeLimit = 180') 180
+    //.setting-o(ng-class='{"true": settings.timeLimit == -1}', ng-click='settings.timeLimit = -1') Unlimited
