@@ -72,8 +72,6 @@ myDir.directive('roomList', ->
   return {
     restrict: 'A'
     templateUrl: 'view/templates/roomList'
-    link: (scope, elem, attrs) ->
-
   }
 )
 
@@ -212,8 +210,6 @@ myDir.directive('results', ->
   return {
     restrict: 'A'
     templateUrl: 'view/templates/results'
-    link: (scope, elem, attrs) ->
-
   }
 )
 
@@ -257,14 +253,15 @@ myDir.directive('roomSettings', ['$timeout', 'socket', ($timeout, socket) ->
   }
 ])
 
-myDir.directive('largeCheckbox', ->
+myDir.directive('settingB', ->
   return {
-    restrict: 'A'
+    restrict: 'EA'
     scope:
-      label: '@label'
-    templateUrl: 'view/templates/checkbox'
-    link: (scope, elem, attrs) ->
-
-
+      master: '='
+      settingName: '='
+      iconCls: '@'
+      text: '@'
+    templateUrl: 'view/templates/setting-b'
   }
 )
+
