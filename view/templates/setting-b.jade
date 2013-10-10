@@ -1,3 +1,6 @@
 .setting-b(ng-class='{"true": settingName, "false": !settingName}', ng-click='settingName = !settingName', ng-show='master')
   div(class='{{iconCls}}').centered
   div {{text}}
+.setting-b(ng-class='{"true": settingName, "false": !settingName}', ng-show='!master')
+  div(class='{{iconCls}}').centered
+  div {{text}}

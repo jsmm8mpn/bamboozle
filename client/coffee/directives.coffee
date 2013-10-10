@@ -231,6 +231,10 @@ myDir.directive('roomSettings', ['$timeout', 'socket', ($timeout, socket) ->
     restrict: 'A'
     templateUrl: 'view/templates/roomSettings'
     link: (scope, elem, attrs) ->
+
+      scope.minWordLengthValues = ['2', '3', '4', '5']
+      scope.timeLimitValues = ['30', '60', '90', '120', '150', '180']
+
       settings =
         allowPlural: false
         negativePoints: false
@@ -262,6 +266,18 @@ myDir.directive('settingB', ->
       iconCls: '@'
       text: '@'
     templateUrl: 'view/templates/setting-b'
+  }
+)
+
+myDir.directive('settingC', ->
+  return {
+    restrict: 'EA'
+    scope:
+      master: '='
+      settingName: '='
+      values: '='
+      text: '@'
+    templateUrl: 'view/templates/setting-c'
   }
 )
 

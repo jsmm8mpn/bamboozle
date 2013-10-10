@@ -11,17 +11,5 @@ h3 Settings
   setting-b(setting-name='settings.negativePoints', icon-cls='minus-img', text='Enable Penalties', master='player.master')
   setting-b(setting-name='settings.restartAllowed', icon-cls='cycle-img', text='Allow Restart', master='player.master')
 
-  .setting-c Min Word Length
-    .setting-o(ng-class='{"true": settings.minWordLength == 2}', ng-click='settings.minWordLength = 2') 2
-    .setting-o(ng-class='{"true": settings.minWordLength == 3}', ng-click='settings.minWordLength = 3') 3
-    .setting-o(ng-class='{"true": settings.minWordLength == 4}', ng-click='settings.minWordLength = 4') 4
-    .setting-o(ng-class='{"true": settings.minWordLength == 5}', ng-click='settings.minWordLength = 5') 5
-
-  .setting-c Time Limit
-    .setting-o(ng-class='{"true": settings.timeLimit == 30}', ng-click='settings.timeLimit = 30') 30
-    .setting-o(ng-class='{"true": settings.timeLimit == 60}', ng-click='settings.timeLimit = 60') 60
-    .setting-o(ng-class='{"true": settings.timeLimit == 90}', ng-click='settings.timeLimit = 90') 90
-    .setting-o(ng-class='{"true": settings.timeLimit == 120}', ng-click='settings.timeLimit = 120') 120
-    .setting-o(ng-class='{"true": settings.timeLimit == 150}', ng-click='settings.timeLimit = 150') 150
-    .setting-o(ng-class='{"true": settings.timeLimit == 180}', ng-click='settings.timeLimit = 180') 180
-    //.setting-o(ng-class='{"true": settings.timeLimit == -1}', ng-click='settings.timeLimit = -1') Unlimited
+  setting-c(setting-name='settings.minWordLength', master='player.master', values='minWordLengthValues', text='Min Word Length')
+  setting-c(setting-name='settings.timeLimit', master='player.master', values='timeLimitValues', text='Time Limit')

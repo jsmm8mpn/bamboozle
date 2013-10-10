@@ -1,0 +1,4 @@
+.setting-c(ng-show='master') {{text}}
+  .setting-o(ng-repeat='value in values', ng-class='{"true": $parent.settingName == {{value}}}', ng-click='$parent.settingName = {{value}}') {{value}}
+.setting-c(ng-show='!master') {{text}}
+  .setting-o(ng-repeat='value in values', ng-class='{"true": $parent.settingName == {{value}}}') {{value}}
