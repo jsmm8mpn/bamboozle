@@ -93,9 +93,11 @@ $scope.submitWord = ->
   writeResults = (results) ->
     $scope.results = results
     #$scope.$broadcast('results', results)
-    hide "mainDiv"
+    #hide "mainDiv"
     show "results"
     show "startDiv"
+    $('#resultsModal').modal()
+    $('#resultsModal').modal('show')
 
   socket.on "game", setupGame
   socket.on "letters", onLetters
