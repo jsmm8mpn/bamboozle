@@ -11,8 +11,11 @@ fs = require 'fs'
 less = require 'less-middleware',
 passport = require 'passport',
 GoogleStrategy = require('passport-google').Strategy
+config = require('config')
+require 'js-yaml'
 
-process.env.AUTH_DISABLED = true;
+if config.mock
+  mock = require(config.mock)
 
 passport.serializeUser( (player, done) ->
   user =
@@ -22,10 +25,9 @@ passport.serializeUser( (player, done) ->
 )
 
 deserializeUser = (user, done) ->
-  if process.env.AUTH_DISABLED
+  unless config.auth.enabled
     user =
-      userId: 'blah'
-      displayName: 'blah blah'
+      userId: 'p1'
   player = new Player(user.userId, user.displayName)
   done(null, player)
 
@@ -96,7 +98,7 @@ app.get('/auth/google/return', passport.authenticate('google',
 )
 
 ensureAuthenticated = (req, res, next) ->
-  if process.env.AUTH_DISABLED || req.isAuthenticated()
+  if config.auth.enabled and req.isAuthenticated()
     next()
   else
     req.session.redirect_to = req.originalUrl #'/room/' + req.params.room

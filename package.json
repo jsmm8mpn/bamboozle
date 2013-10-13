@@ -29,7 +29,9 @@
     "coffee-middleware": "*",
     "less-middleware": "*",
     "passport": "*",
-    "passport-google": "*"
+    "passport-google": "*",
+    "config": "*",
+    "js-yaml": "*"
   },
   "devDependencies": {
     "grunt": "*",

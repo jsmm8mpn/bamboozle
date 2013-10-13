@@ -38,7 +38,7 @@ module.exports = (grunt) ->
       #server:
       #  files: ["server.coffee", "routes/*.coffee"]
       javascript:
-        files: ["client/coffee/*.coffee"]
+        files: ["client/coffee/**/*.coffee"]
         tasks: "coffee"
       less:
         files: ['client/stylesheets/*.less']

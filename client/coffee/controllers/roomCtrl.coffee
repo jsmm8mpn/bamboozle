@@ -1,4 +1,4 @@
-@RoomCtrl = ($scope, $routeParams, socket) ->
+@RoomCtrl = ($scope, $routeParams, $location, socket, Results) ->
 
   $scope.ready = ->
     clearResults()
@@ -92,12 +92,16 @@ $scope.submitWord = ->
 
   writeResults = (results) ->
     $scope.results = results
+    #Results.setResults(results)
+    #Results.setLetters($scope.letters)
+
     #$scope.$broadcast('results', results)
     #hide "mainDiv"
     show "results"
-    show "startDiv"
-    $('#resultsModal').modal()
-    $('#resultsModal').modal('show')
+    #show "startDiv"
+    #$('#resultsModal').modal()
+    #$('#resultsModal').modal('show')
+    #$location.path('/results')
 
   socket.on "game", setupGame
   socket.on "letters", onLetters
@@ -113,12 +117,16 @@ $scope.submitWord = ->
   #  $(this).parent().find('.toggled').slideToggle()
   #)
 
+  joinSuccess = (data) ->
+    $scope.player = data.player
+    show 'game'
+    runMock()
+
   socket.emit 'join',
     roomId: roomId
   , (data) ->
     if data.success
-      $scope.player = data.player
-      show 'game'
+      joinSuccess(data)
     else
       console.log('could not register: ' + data.error)
       if data.error is 'roomDoesNotExist'
@@ -131,5 +139,17 @@ $scope.submitWord = ->
               roomId: roomId
             , (data) ->
               if data.success
-                $scope.player = data.player
-                show 'game'
+                joinSuccess(data)
+
+
+  runMock = () ->
+    updatePlayers(
+      p1:
+        id: 'p1'
+        name: 'player one'
+        score: 25
+      p2:
+        id: 'p2'
+        name: 'player two'
+        score: 106
+    )

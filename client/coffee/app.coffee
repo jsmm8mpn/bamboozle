@@ -5,6 +5,9 @@ angular.module('bamboozle', ['myDir', 'myServices']).config(['$routeProvider', (
   ).when('/room/:roomId',
     templateUrl: 'view/game'
     controller: RoomCtrl
+  ).when('/results',
+    templateUrl: 'view/results'
+    controller: RoomCtrl
   ).otherwise(
     redirectTo: '/rooms'
   )

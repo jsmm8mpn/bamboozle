@@ -15,7 +15,7 @@ class Room
 
     # TODO: Do we have default settings here?
     @settings =
-      timeLimit: 90
+      timeLimit: 10
       minWordLength: 3
       allowPlural: false
       negativePoints: false

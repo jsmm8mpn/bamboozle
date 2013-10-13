@@ -7,3 +7,4 @@ socket:
 auth:
   enabled: true
   realm: 'http://localhost:8080'
+mock: ./config/mock.yml

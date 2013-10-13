@@ -1,15 +1,8 @@
-
-.modal.fade(id='resultsModal', role="dialog")
-  .modal-dialog
-    .modal-content
-      .modal-header
-        h1 Results
-      .modal-body
-        div.playerResult(ng-repeat='(playerId, result) in results')
-          h2 {{players[playerId].name}}
-          h2 {{result.score}}
-          li(ng-repeat='(word, scored) in result.words track by $index')
-            div(ng-switch='scored')
-              div(ng-switch-when='true', class='scored') {{word}}
-              div(ng-switch-default, class='unscored') {{word}} {{scored}}
+div.playerResult(ng-repeat='(playerId, result) in results')
+  h2 {{players[playerId].name}}
+  h2 {{result.score}}
+  li(ng-repeat='(word, scored) in result.words track by $index')
+    div(ng-switch='scored')
+      div(ng-switch-when='true', class='scored') {{word}}
+      div(ng-switch-default, class='unscored') {{word}} {{scored}}
 

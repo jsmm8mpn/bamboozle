@@ -101,17 +101,18 @@
     <library name="Generated files" type="javaScript">
       <properties>
         <sourceFilesUrls>
+          <item url="file://$PROJECT_DIR$/client/coffee/controllers/resultsCtrl.js" />
           <item url="file://$PROJECT_DIR$/routes/game.js" />
           <item url="file://$PROJECT_DIR$/Gruntfile.js" />
           <item url="file://$PROJECT_DIR$/client/coffee/services.js" />
           <item url="file://$PROJECT_DIR$/routes/game-room.js" />
-          <item url="file://$PROJECT_DIR$/server.js" />
+          <item url="file://$PROJECT_DIR$/client/coffee/mock.js" />
           <item url="file://$PROJECT_DIR$/client/coffee/directives.js" />
+          <item url="file://$PROJECT_DIR$/server.js" />
           <item url="file://$PROJECT_DIR$/client/coffee/validation.js" />
-          <item url="file://$PROJECT_DIR$/client/coffee/controllers.js" />
           <item url="file://$PROJECT_DIR$/routes/player.js" />
-          <item url="file://$PROJECT_DIR$/client/coffee/controllers/roomListCtrl.js" />
           <item url="file://$PROJECT_DIR$/client/coffee/app.js" />
+          <item url="file://$PROJECT_DIR$/client/coffee/controllers/roomListCtrl.js" />
           <item url="file://$PROJECT_DIR$/routes/simple-rest.js" />
           <item url="file://$PROJECT_DIR$/client/coffee/controllers/roomCtrl.js" />
         </sourceFilesUrls>
@@ -119,17 +120,19 @@
       <CLASSES>
         <root url="file://$PROJECT_DIR$/client/coffee/a.js" />
         <root url="file://$PROJECT_DIR$/client/coffee/a.js" />
+        <root url="file://$PROJECT_DIR$/client/coffee/controllers.js" />
+        <root url="file://$PROJECT_DIR$/client/coffee/controllers/resultsCtrl.js" />
         <root url="file://$PROJECT_DIR$/routes/game.js" />
         <root url="file://$PROJECT_DIR$/Gruntfile.js" />
         <root url="file://$PROJECT_DIR$/client/coffee/services.js" />
         <root url="file://$PROJECT_DIR$/routes/game-room.js" />
-        <root url="file://$PROJECT_DIR$/client/coffee/directives.js" />
         <root url="file://$PROJECT_DIR$/server.js" />
+        <root url="file://$PROJECT_DIR$/client/coffee/directives.js" />
+        <root url="file://$PROJECT_DIR$/client/coffee/mock.js" />
         <root url="file://$PROJECT_DIR$/client/coffee/validation.js" />
         <root url="file://$PROJECT_DIR$/routes/player.js" />
-        <root url="file://$PROJECT_DIR$/client/coffee/controllers.js" />
-        <root url="file://$PROJECT_DIR$/client/coffee/app.js" />
         <root url="file://$PROJECT_DIR$/client/coffee/controllers/roomListCtrl.js" />
+        <root url="file://$PROJECT_DIR$/client/coffee/app.js" />
         <root url="file://$PROJECT_DIR$/routes/simple-rest.js" />
         <root url="file://$PROJECT_DIR$/client/coffee/controllers/roomCtrl.js" />
       </CLASSES>

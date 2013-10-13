@@ -1,0 +1,7 @@
+players:
+  p1:
+    id: p1
+    name: player one
+  p2:
+    id: p2
+    name: player two
