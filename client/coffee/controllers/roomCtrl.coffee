@@ -76,7 +76,6 @@ $scope.submitWord = ->
     #clear "board"
     #clear "wordList"
     #clear "wordResult"
-    clear "results"
     #clear "timer"
 
     hide "results"
@@ -148,8 +147,29 @@ $scope.submitWord = ->
         id: 'p1'
         name: 'player one'
         score: 25
+        master: true
       p2:
         id: 'p2'
         name: 'player two'
         score: 106
+        master: false
+    )
+
+    writeResults(
+      p1:
+        score: 15
+        words:
+          dude: true
+          some: false
+          crazy: true
+          dad: false
+      p2:
+        score: 25
+        words:
+          some: false
+          dad: false
+          people: true
+          bad: true
+          ate: true
+          rate: true
     )

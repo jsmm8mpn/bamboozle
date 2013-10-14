@@ -198,22 +198,35 @@
   display:none;
 
   .playerResult {
-    display: inline;
+    vertical-align: top;
+    display: inline-block;
     //float: left;
-    padding: 5px;
+    //padding: 10px;
     margin: 5px;
+    border: .1rem solid #999999;
+    border-radius: 1rem;
+
+    width: 200px;
+
+    li {
+      list-style-type: none;
+      float: left;
+      display: inline;
+      margin-left: 7px;
+      margin-right: 7px;
+      margin-bottom: 7px;
+      margin-top: 0px;
+    }
+
+    h3 {
+      margin: 3px;
+    }
 
     .score {
       border-top: #000000 solid 1px;
     }
   }
-  li {
-    list-style-type: none;
-  }
-  h1 {
-    font-size: 20px;
-    margin: 0px;
-  }
+
 
   .scored {
 

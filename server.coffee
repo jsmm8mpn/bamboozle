@@ -14,6 +14,8 @@ GoogleStrategy = require('passport-google').Strategy
 config = require('config')
 require 'js-yaml'
 
+console.log('auth enabled: ' + config.auth.enabled)
+
 if config.mock
   mock = require(config.mock)
 
@@ -34,8 +36,8 @@ deserializeUser = (user, done) ->
 passport.deserializeUser(deserializeUser)
 
 myStrategy = new GoogleStrategy(
-  returnURL: 'http://localhost:8080/auth/google/return',
-  realm: 'http://localhost:8080'
+  returnURL: config.auth.return
+  realm: config.auth.realm
 , (identifier, profile, done) ->
   player = new Player(identifier, profile.displayName)
   console.log('user logged in: ' + JSON.stringify(player))
@@ -98,7 +100,7 @@ app.get('/auth/google/return', passport.authenticate('google',
 )
 
 ensureAuthenticated = (req, res, next) ->
-  if config.auth.enabled and req.isAuthenticated()
+  if !config.auth.enabled or req.isAuthenticated()
     next()
   else
     req.session.redirect_to = req.originalUrl #'/room/' + req.params.room
