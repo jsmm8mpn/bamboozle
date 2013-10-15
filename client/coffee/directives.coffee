@@ -128,9 +128,10 @@ myDir.directive('board', ->
   }
 )
 
-myDir.directive('timer', ->
-  return (scope, elem, attrs) ->
-
+myDir.directive('timer', ['$timeout', 'socket', ($timeout, socket) ->
+  return {
+  templateUrl: 'view/templates/timer'
+  link: (scope, elem, attrs) ->
     scope.$on('updateTime', (event, timeLeft) ->
       scope.timer = timeLeft
     )
@@ -141,23 +142,29 @@ myDir.directive('timer', ->
       timeLimit = game.timeLimit
       scope.timer = serverTimeLeft
       show "timer"
-      timerId = setInterval(->
+
+      timerFn = () ->
         scope.timer = scope.timer - 1
         secondsLeft = scope.timer
         if secondsLeft > timeLimit
           secondsLeft = secondsLeft - timeLimit
           scope.preStartTimeLeft = secondsLeft
+          $timeout(timerFn, 1000)
         else
           $("#timer").addClass("timer-warn")  if secondsLeft < 15
-          elem.html(secondsLeft)
+          #elem.html('<h3>' + secondsLeft + '</h3>')
+          scope.timeLeft = secondsLeft
           if secondsLeft <= 0
-            clearInterval timerId
+            #clearInterval timerId
             scope.$emit('timerExpired')
-      , 1000
-      )
+          else
+            $timeout(timerFn, 1000)
+
+      $timeout(timerFn, 1000)
 
     )
-)
+  }
+])
 
 myDir.directive('wordInput', ['socket', (socket) ->
   return {
@@ -261,11 +268,14 @@ myDir.directive('settingB', ->
   return {
     restrict: 'EA'
     scope:
-      master: '='
+      master: '=?'
       settingName: '='
       iconCls: '@'
       text: '@'
     templateUrl: 'view/templates/setting-b'
+    link: (scope, element) ->
+      scope.master = true if not scope.master
+      scope.text = '' if not scope.text
   }
 )
 

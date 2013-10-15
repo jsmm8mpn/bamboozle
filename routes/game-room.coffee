@@ -15,7 +15,7 @@ class Room
 
     # TODO: Do we have default settings here?
     @settings =
-      timeLimit: 10
+      timeLimit: 90
       minWordLength: 3
       allowPlural: false
       negativePoints: false
@@ -119,8 +119,8 @@ class Room
     for id, player of @players
       player.reset()
 
-  voteRestart: (userId) ->
-    @players[userId].voteRestart()
+  voteRestart: (userId, value) ->
+    @players[userId].voteRestart(value)
     @sendPlayerUpdate()
     @checkRestart()
 

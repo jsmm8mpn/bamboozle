@@ -6,10 +6,15 @@
     .game-panel
       #game
           #mainDiv
-            #timer(timer)
+            div
+              .third
+              .third
+                #timer(timer)
+              .third.right
+                setting-b#voteRestart(setting-name='voteRestart', icon-cls='cycle-img')
             #board(board ng-show='showBoard')
             #wordInput(word-input)
-          #gameControls(game-controls)
+          //#gameControls(game-controls)
     .game-panel
       #wordList(word-list)
   hr

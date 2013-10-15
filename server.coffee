@@ -210,9 +210,9 @@ io.sockets.on 'connection', (socket) ->
       room.public = value
       socket.broadcast.emit 'rooms', getRooms()
 
-  socket.on 'voteRestart', ->
+  socket.on 'voteRestart', (value) ->
     room = rooms[socket.room]
-    room.voteRestart(socket.username)
+    room.voteRestart(socket.username, value)
 
   socket.on 'word', (word, fn) ->
     room = rooms[socket.room]

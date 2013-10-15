@@ -21,8 +21,10 @@ class Player
   setReady: ->
     @ready = true
 
-  voteRestart: ->
-    @restart = true
+  voteRestart: (value) ->
+    if value == undefined
+      value = true
+    @restart = value
 
   isReady: ->
     @ready

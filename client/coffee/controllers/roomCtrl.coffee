@@ -24,6 +24,10 @@
   $scope.changePublic = ->
     socket.emit 'public', $(this).prop('checked')
 
+  $scope.$watch('voteRestart', (voteRestart) ->
+    if voteRestart is true or voteRestart is false
+      socket.emit('voteRestart', voteRestart)
+  )
 
   ###
 $scope.submitWord = ->
@@ -141,35 +145,35 @@ $scope.submitWord = ->
                 joinSuccess(data)
 
 
-  runMock = () ->
-    updatePlayers(
-      p1:
-        id: 'p1'
-        name: 'player one'
-        score: 25
-        master: true
-      p2:
-        id: 'p2'
-        name: 'player two'
-        score: 106
-        master: false
-    )
-
-    writeResults(
-      p1:
-        score: 15
-        words:
-          dude: true
-          some: false
-          crazy: true
-          dad: false
-      p2:
-        score: 25
-        words:
-          some: false
-          dad: false
-          people: true
-          bad: true
-          ate: true
-          rate: true
-    )
+#  runMock = () ->
+#    updatePlayers(
+#      p1:
+#        id: 'p1'
+#        name: 'player one'
+#        score: 25
+#        master: true
+#      p2:
+#        id: 'p2'
+#        name: 'player two'
+#        score: 106
+#        master: false
+#    )
+#
+#    writeResults(
+#      p1:
+#        score: 15
+#        words:
+#          dude: true
+#          some: false
+#          crazy: true
+#          dad: false
+#      p2:
+#        score: 25
+#        words:
+#          some: false
+#          dad: false
+#          people: true
+#          bad: true
+#          ate: true
+#          rate: true
+#    )
