@@ -1,6 +1,10 @@
-.board-contents(ng-show='!player.ready')
+.board-contents-float(ng-show='!player.ready')
   button(ng-click='ready()', class='btn btn-success') Ready
 .board-contents(ng-show='player.ready && !game') Waiting for other players...
   button(ng-click='startNow()', class='btn btn-success', ng-show='player.master')
-.board-contents(ng-show='game') The game will start in:
+.board-contents(ng-show='game && !letters') The game will start in:
   h3 {{preStartTimeLeft}}
+.board-contents(ng-show='letters')
+  table
+    tr(ng-repeat='lettersRow in letters')
+      td(ng-repeat='letter in lettersRow track by $index') {{letter}}

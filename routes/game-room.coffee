@@ -15,7 +15,7 @@ class Room
 
     # TODO: Do we have default settings here?
     @settings =
-      timeLimit: 90
+      timeLimit: 10
       minWordLength: 3
       allowPlural: false
       negativePoints: false
@@ -67,7 +67,7 @@ class Room
     @startGame()
 
   createGame: ->
-    @resetGame()
+    #@resetGame()
     @currentGame = new Game(@settings)
     @socket.emit('game', @currentGame.serialize())
     @startGame()
@@ -79,8 +79,8 @@ class Room
         if @currentGame.getTimeRemaining() > 0
           @socket.emit('time', @currentGame.getTimeRemaining())
         else
-          clearInterval(@timerId)
           @socket.emit('results', @populateResults())
+          @resetGame()
       , 5000)
     , @currentGame.startDelay)
 
@@ -110,7 +110,6 @@ class Room
     playerResults = @currentGame.score(@players)
     result = new Result(@currentGame, playerResults)
     @results.push(result)
-    @resetGame()
     playerResults
 
   resetGame: ->
@@ -118,6 +117,7 @@ class Room
     @currentGame = undefined
     for id, player of @players
       player.reset()
+    @sendPlayerUpdate()
 
   voteRestart: (userId, value) ->
     @players[userId].voteRestart(value)

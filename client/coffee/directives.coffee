@@ -102,20 +102,20 @@ myDir.directive('board', ->
       )
 
       scope.$on('letters', (event, letters) ->
-        table = "<table>"
-        y = 0
-
-        while y < letters.length
-          table += "<tr>"
-          x = 0
-
-          while x < letters[y].length
-            table += "<td>" + letters[y][x] + "</td>"
-            x++
-          table += "</tr>"
-          y++
-        table += "</table>"
-        elem.html(table)
+#        table = "<table>"
+#        y = 0
+#
+#        while y < letters.length
+#          table += "<tr>"
+#          x = 0
+#
+#          while x < letters[y].length
+#            table += "<td>" + letters[y][x] + "</td>"
+#            x++
+#          table += "</tr>"
+#          y++
+#        table += "</table>"
+#        elem.html(table)
 
         $('#wordInputField').focus()
 
@@ -155,6 +155,7 @@ myDir.directive('timer', ['$timeout', 'socket', ($timeout, socket) ->
           #elem.html('<h3>' + secondsLeft + '</h3>')
           scope.timeLeft = secondsLeft
           if secondsLeft <= 0
+            scope.timeLeft = undefined
             #clearInterval timerId
             scope.$emit('timerExpired')
           else

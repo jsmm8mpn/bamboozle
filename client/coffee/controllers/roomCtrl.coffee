@@ -8,9 +8,9 @@
   $scope.startNow = ->
     socket.emit 'start'
 
-  $scope.quit = ->
-    hide "quitDiv"
-    socket.emit "voteRestart"
+#  $scope.quit = ->
+#    hide "voteRestart"
+#    socket.emit "voteRestart"
 
   $scope.changeSettings = ->
     values = {}
@@ -60,11 +60,14 @@ $scope.submitWord = ->
     hide "startDiv"
     if game.letters
       onLetters(game.letters)
+    else
+      $scope.letters = undefined
 
   onLetters = (letters) ->
+    $scope.letters = letters
     $scope.$broadcast('letters', letters)
     displayBoard()
-    show "quitDiv"
+    show "voteRestart"
 
   updatePlayers = (players) ->
     $scope.players = players
@@ -86,7 +89,7 @@ $scope.submitWord = ->
     show "mainDiv"
 
   $scope.$on('timerExpired', (event, timerExpired)->
-    hide "quitDiv"
+    hide "voteRestart"
     hide "wordInput"
   )
 
