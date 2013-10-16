@@ -5,7 +5,7 @@ h3 Players
       th Name
       th Score
       th Status
-      th(ng-show='player.master') Kick
+      //th(ng-show='player.master') Kick
     tr(ng-repeat='(id,player) in players')
       td {{player.name}}
       td.right {{player.score}}
@@ -18,7 +18,7 @@ h3 Players
       td(class='restart-img', ng-show='game && player.restart')
       td(ng-show='game && !player.restart')
 
-      td(ng-show='player.master', class='delete-img')
+      //td(ng-show='player.master', class='delete-img')
 form#invites(ng-submit='invite()', name='inviteForm', class='form-horizontal', ng-class='{"has-error": inviteForm.$dirty && inviteForm.$invalid}')
   label(for='invite') Invite a person
   table

@@ -97,6 +97,7 @@ $scope.submitWord = ->
     $scope.$broadcast('updateTime', time)
 
   writeResults = (results) ->
+    $scope.game = undefined
     $scope.results = results
     #Results.setResults(results)
     #Results.setLetters($scope.letters)

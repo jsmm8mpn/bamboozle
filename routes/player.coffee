@@ -43,6 +43,7 @@ class Player
     if @lastResult
       @prevResults.push(@lastResult)
     @lastResult = result
+    @score += result.score
 
   reset: () ->
     @ready = false
