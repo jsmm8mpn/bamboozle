@@ -1,0 +1,11 @@
+server: 
+  host: http://bamboozle-zarala.rhcloud.com
+  port: 80
+socket:
+  host: http://bamboozle-zarala.rhcloud.com
+  port: 8000
+auth:
+  enabled: true
+  realm: http://bamboozle-zarala.rhcloud.com
+  return: http://bamboozle-zarala.rhcloud.com/auth/google/return
+mock: ./config/mock.yml
