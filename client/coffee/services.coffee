@@ -1,7 +1,7 @@
 myServices = angular.module('myServices', [])
 
 myServices.factory "socket", ($rootScope) ->
-  socket = io.connect("http://localhost:8080")
+  socket = io.connect(window.location.hostname")
   on: (eventName, callback) ->
     socket.on eventName, ->
       args = arguments

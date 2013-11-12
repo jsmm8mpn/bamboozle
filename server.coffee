@@ -45,10 +45,14 @@ myStrategy = new GoogleStrategy(
 )
 passport.use(myStrategy)
 
-ipaddr  = process.env.OPENSHIFT_NODEJS_IP || process.env.IP || "127.0.0.1"
+ipaddr  = process.env.OPENSHIFT_NODEJS_IP || process.env.IP || "10.0.0.15"
 port    = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080
 
-http.listen(port, ipaddr)
+#http.listen(port, ipaddr)
+
+http.listen(port, ->
+  console.log("Listening on " + port)
+)
 
 module.exports = http
 
