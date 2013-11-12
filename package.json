@@ -31,20 +31,22 @@
     "passport": "*",
     "passport-google": "*",
     "config": "*",
-    "js-yaml": "*"
+    "js-yaml": "*",
+
+  "grunt": "*",
+  "grunt-contrib-watch": "*",
+  "grunt-contrib-coffee": "*",
+  "grunt-contrib-less": "*",
+  "grunt-contrib-copy": "*",
+  "grunt-contrib-jade": "*",
+  "grunt-contrib-clean": "*",
+  "grunt-contrib-uglify": "*",
+  "grunt-mocha-cli": "*",
+  "grunt-nodemon": "*",
+  "grunt-concurrent": "*"
   },
   "devDependencies": {
-    "grunt": "*",
-    "grunt-contrib-watch": "*",
-    "grunt-contrib-coffee": "*",
-    "grunt-contrib-less": "*",
-    "grunt-contrib-copy": "*",
-    "grunt-contrib-jade": "*",
-    "grunt-contrib-clean": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-mocha-cli": "*",
-    "grunt-nodemon": "*",
-    "grunt-concurrent": "*"
+
   },
   "bundleDependencies": [],
   "private": true,

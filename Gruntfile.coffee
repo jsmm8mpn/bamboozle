@@ -107,6 +107,9 @@ module.exports = (grunt) ->
       done()
     )
 
+  grunt.registerTask "heroku:production", ["compile", "copy"]
+
+
   grunt.registerTask 'serverDev', ['compile', 'copy', 'concurrent:dev']
 
   grunt.registerTask 'start', ->
