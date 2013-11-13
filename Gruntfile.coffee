@@ -50,7 +50,7 @@ module.exports = (grunt) ->
       compile:
         files:
           "public/javascripts/client.js": ["client/coffee/app.coffee", "client/coffee/controllers/*.coffee", "client/coffee/directives.coffee", "client/coffee/services.coffee", "client/coffee/helper.coffee"]
-          "routes/server.js": ["routes/server.coffee"]
+          "server.js": ["server.coffee"]
           "routes/game.js": ["routes/game.coffee"]
           "routes/game-room.js": ["routes/game-room.coffee"]
           "routes/player.js": ["routes/player.coffee"]
