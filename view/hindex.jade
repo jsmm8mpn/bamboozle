@@ -12,4 +12,9 @@ html
     script(src="socket.io/socket.io.js")
     script(src="javascripts/client.js")
   body(ng-app='bamboozle')
-    div.view(ng-view)
+
+    script
+      var hangoutId = gapi.hangout.getHangoutId();
+      hangoutId = 'myHangout2i409324809';
+
+    div.view(ng-view, env='hangout')

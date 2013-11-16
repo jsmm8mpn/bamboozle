@@ -45,7 +45,7 @@ myStrategy = new GoogleStrategy(
 )
 passport.use(myStrategy)
 
-ipaddr  = process.env.OPENSHIFT_NODEJS_IP || process.env.IP || "10.0.0.15"
+ipaddr  = process.env.OPENSHIFT_NODEJS_IP || process.env.IP || "10.0.0.1"
 port    = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080
 
 #http.listen(port, ipaddr)
@@ -115,7 +115,7 @@ app.get('/logout', (req, res) ->
   res.redirect('done')
 )
 
-app.get '/h', (req, res) ->
+app.get '/h', ensureAuthenticated, (req, res) ->
   res.render(__dirname+'/view/hindex.jade')
 
 app.get '/', ensureAuthenticated, (req, res) ->

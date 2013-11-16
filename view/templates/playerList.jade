@@ -19,7 +19,7 @@ h3 Players
       td(ng-show='game && !player.restart')
 
       //td(ng-show='player.master', class='delete-img')
-form#invites(ng-submit='invite()', name='inviteForm', class='form-horizontal', ng-class='{"has-error": inviteForm.$dirty && inviteForm.$invalid}')
+form#invites(ng-show='!isHangout', ng-submit='invite()', name='inviteForm', class='form-horizontal', ng-class='{"has-error": inviteForm.$dirty && inviteForm.$invalid}')
   label(for='invite') Invite a person
   table
     tr

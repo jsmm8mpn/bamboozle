@@ -9,6 +9,13 @@ angular.module('bamboozle', ['myDir', 'myServices']).config(['$routeProvider', (
     templateUrl: 'view/results'
     controller: RoomCtrl
   ).otherwise(
-    redirectTo: '/rooms'
+
+    retObj = {}
+    if hangoutId
+      retObj.redirectTo = '/room/'+hangoutId
+    else
+      retObj.redirectTo = '/rooms'
+
+    retObj
   )
 ])

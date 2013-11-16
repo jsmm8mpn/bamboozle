@@ -1,5 +1,7 @@
 @RoomCtrl = ($scope, $routeParams, $location, socket, Results) ->
 
+  $scope.isHangout = (hangoutId != undefined)
+
   $scope.ready = ->
     clearResults()
     socket.emit "ready"
@@ -127,7 +129,6 @@ $scope.submitWord = ->
   joinSuccess = (data) ->
     $scope.player = data.player
     show 'game'
-    runMock()
 
   socket.emit 'join',
     roomId: roomId

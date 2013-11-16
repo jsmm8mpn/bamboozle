@@ -10,4 +10,8 @@ html
     script(src="socket.io/socket.io.js")
     script(src="javascripts/client.js")
   body(ng-app='bamboozle')
-    div.view(ng-view)
+
+    script
+      var hangoutId;
+
+    div.view(ng-view, env='normal')

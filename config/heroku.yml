@@ -6,6 +6,6 @@ socket:
   port: '8080'
 auth:
   enabled: true
-  realm: http://localhost:8080
-  return: http://localhost:8080/auth/google/return
+  realm: http://bamboozle.herokuapp.com
+  return: http://bamboozle.herokuapp.com/auth/google/return
 mock: ./config/mock.yml
