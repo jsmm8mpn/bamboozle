@@ -11,27 +11,5 @@ html
     script(src="javascripts/app.js")
     script(src="javascripts/ajax.js")
     script(src="javascripts/helper.js")
-  body
-    #mainDiv
-      table
-        tr
-          td 
-            #timer 
-            #board
-            input#wordInput(type='text', style='display: none;', onkeypress='return submitWord(event)')
-            #wordResult
-          td
-            #wordList
-    #results(style='display:none;')
-    #startDiv(style='display:none;')
-      input(type='button', name='ready', value='Start', onclick='javascript:ready()')
-    #quitDiv(style='display:none;')
-      input(type='button', name='quit', value='Vote Quit', onclick='javascript:voteQuit()')
-    #settingsDiv
-      a(href='javascript:document.getElementById("innerSettingsDiv").style.display = (document.getElementById("innerSettingsDiv").style.display=="none")?"block":"none"') Settings
-      #innerSettingsDiv(style='display:none')
-        input#timeLimit(type='text', name='timeLimit', size='3', value='90')
-        input(type='button', name='start', value='Change Settings', onclick='javascript:newGame()')
-        
-    script(type='text/javascript')
-      init();
+  body(ng-app='bamboozle')
+    div.view(ng-view)
